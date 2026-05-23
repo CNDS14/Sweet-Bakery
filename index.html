@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sweet Bakery — Repostería artesanal de alta repostería en Chihuahua. Pasteles personalizados, mostachones, cheesecakes y galletas gourmet." />
+  <meta name="theme-color" content="#FDFBF7" />
+  <title>Sweet Bakery · Repostería Artesanal en Chihuahua</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============== NAVBAR ============== -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="logo" aria-label="Sweet Bakery — Inicio">
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <filter id="rough">
+              <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/>
+              <feDisplacementMap in="SourceGraphic" scale="1.2"/>
+            </filter>
+          </defs>
+          <circle cx="60" cy="60" r="54" fill="none" stroke="#D4A396" stroke-width="1.6" filter="url(#rough)"/>
+          <circle cx="60" cy="60" r="50" fill="none" stroke="#D4A396" stroke-width="0.6" opacity="0.5"/>
+          <text x="60" y="56" text-anchor="middle" font-family="Playfair Display, serif" font-style="italic" font-size="26" fill="#D4A396" font-weight="600">SB</text>
+          <text x="60" y="78" text-anchor="middle" font-family="Inter, sans-serif" font-size="7" fill="#8A9A86" letter-spacing="2.4">SWEET BAKERY</text>
+        </svg>
+      </a>
+
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a href="#vitrina">Vitrina</a>
+        <a href="#cotizador">Cotizador</a>
+        <a href="#clasicos">Clásicos</a>
+        <a href="#momentos">Momentos</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+
+      <div class="status-badge" id="statusBadge" role="status" aria-live="polite">
+        <span class="status-dot"></span>
+        <span class="status-text">Verificando…</span>
+      </div>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============== HERO ============== -->
+  <section class="hero reveal" id="hero">
+    <div class="hero-bg-shape shape-1" aria-hidden="true"></div>
+    <div class="hero-bg-shape shape-2" aria-hidden="true"></div>
+
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Pastelería · Chihuahua, Chih.</span>
+        <h1 class="hero-title">
+          Creamos <em>historias dulces</em><br/>para tus días más especiales.
+        </h1>
+        <p class="hero-subtitle">
+          Repostería artesanal sobre diseño y postres listos para llevar en Chihuahua.
+        </p>
+        <div class="hero-ctas">
+          <a href="#cotizador" class="btn btn-primary">Cotizar Pastel Personalizado</a>
+          <a href="#vitrina" class="btn btn-ghost">Vitrina del Día</a>
+        </div>
+        <ul class="hero-bullets" aria-label="Garantías">
+          <li>· 100% artesanal</li>
+          <li>· Recolección en tienda</li>
+          <li>· 4 días de anticipación</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-cake" aria-hidden="true">
+          <!-- Mockup SVG de pastel decorativo -->
+          <svg viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="plate" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#F5E9DF"/>
+                <stop offset="100%" stop-color="#E8D4C4"/>
+              </radialGradient>
+              <linearGradient id="cake1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#FAF0E6"/>
+                <stop offset="100%" stop-color="#E8D5C4"/>
+              </linearGradient>
+              <linearGradient id="cake2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#E5C5B5"/>
+                <stop offset="100%" stop-color="#D4A396"/>
+              </linearGradient>
+              <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="6"/>
+              </filter>
+            </defs>
+            <!-- sombra -->
+            <ellipse cx="200" cy="450" rx="160" ry="14" fill="#D4A396" opacity="0.18" filter="url(#soft)"/>
+            <!-- plato -->
+            <ellipse cx="200" cy="430" rx="170" ry="22" fill="url(#plate)"/>
+            <!-- piso 1 -->
+            <rect x="60" y="280" width="280" height="140" rx="8" fill="url(#cake1)"/>
+            <ellipse cx="200" cy="280" rx="140" ry="18" fill="#FAF0E6"/>
+            <!-- drip rosa -->
+            <path d="M60 295 Q90 315 110 300 Q130 330 150 305 Q170 335 195 308 Q220 340 245 305 Q270 335 290 305 Q310 330 340 298 L340 285 L60 285 Z" fill="#D4A396" opacity="0.85"/>
+            <!-- piso 2 -->
+            <rect x="100" y="170" width="200" height="120" rx="6" fill="url(#cake2)"/>
+            <ellipse cx="200" cy="170" rx="100" ry="13" fill="#E5C5B5"/>
+            <!-- detalles -->
+            <circle cx="200" cy="155" r="6" fill="#8A9A86"/>
+            <circle cx="180" cy="160" r="4" fill="#D4A396"/>
+            <circle cx="220" cy="160" r="4" fill="#D4A396"/>
+            <!-- topper -->
+            <line x1="200" y1="155" x2="200" y2="100" stroke="#8A9A86" stroke-width="1.5"/>
+            <path d="M180 100 Q200 80 220 100 Q210 95 200 100 Q190 95 180 100 Z" fill="#D4A396"/>
+            <text x="200" y="92" text-anchor="middle" font-family="Great Vibes, cursive" font-size="22" fill="#8A9A86">love</text>
+            <!-- macarons decorativos -->
+            <ellipse cx="135" cy="278" rx="14" ry="8" fill="#D4A396"/>
+            <ellipse cx="265" cy="278" rx="14" ry="8" fill="#8A9A86" opacity="0.7"/>
+            <!-- flor decorativa -->
+            <g transform="translate(75,255)">
+              <circle r="6" fill="#D4A396"/>
+              <circle cx="-6" cy="-4" r="5" fill="#E5C5B5"/>
+              <circle cx="6" cy="-4" r="5" fill="#E5C5B5"/>
+            </g>
+          </svg>
+        </div>
+        <span class="hero-stamp">Hecho a mano · 2024</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== VITRINA DEL DÍA ============== -->
+  <section class="section vitrina reveal" id="vitrina">
+    <div class="section-decor decor-top" aria-hidden="true"></div>
+    <div class="container">
+      <span class="eyebrow center">Sin esperas</span>
+      <h2 class="section-title">¡Lo quiero ya! — Vitrina del Día</h2>
+      <p class="section-lead">
+        Cada mañana horneamos opciones frescas listas para llevar: <em>Tres Leches</em>, pays, gelatinas artesanales, mini cheesecakes y nuestros clásicos del día. Pasa por tu antojo sin agendar.
+      </p>
+
+      <div class="vitrina-grid">
+        <div class="vitrina-card">
+          <div class="vitrina-icon">🍰</div>
+          <h3>Tres Leches</h3>
+          <p>Esponjoso, bañado al momento.</p>
+        </div>
+        <div class="vitrina-card">
+          <div class="vitrina-icon">🥧</div>
+          <h3>Pays del día</h3>
+          <p>Limón, queso, manzana de temporada.</p>
+        </div>
+        <div class="vitrina-card">
+          <div class="vitrina-icon">🍮</div>
+          <h3>Gelatinas</h3>
+          <p>Mosaico, rompope, frutos rojos.</p>
+        </div>
+        <div class="vitrina-card">
+          <div class="vitrina-icon">🧁</div>
+          <h3>Mini postres</h3>
+          <p>Cupcakes, brownies, alfajores.</p>
+        </div>
+      </div>
+
+      <div class="vitrina-cta-wrap">
+        <a href="#" class="btn btn-whatsapp" id="vitrinaWhatsapp" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11 11 0 0 0 3.6 17.3L2 22l4.8-1.6A11 11 0 0 0 20.5 3.5zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-2.9 1 1-2.8-.2-.3a9 9 0 1 1 7 3.6zm5-6.7c-.3-.1-1.6-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1a7.4 7.4 0 0 1-3.6-3.1c-.3-.5.3-.4.8-1.4 0-.2 0-.4-.1-.5l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4a3 3 0 0 0-1 2.3c0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.2 1.7.7 2.4.8 3.2.6.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3z"/></svg>
+          <span id="vitrinaWhatsappText">Pregunta por la vitrina de hoy</span>
+        </a>
+        <small class="vitrina-note" id="vitrinaNote">Horario: Lun–Vie 10–19h · Sáb 10–16h · Dom cerrado</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== COTIZADOR ============== -->
+  <section class="section cotizador reveal" id="cotizador">
+    <div class="container">
+      <span class="eyebrow center">Tu pastel, tu diseño</span>
+      <h2 class="section-title">Cotizador Interactivo</h2>
+      <p class="section-lead">
+        Construye tu pastel paso a paso. El total se actualiza en tiempo real y al finalizar enviamos tu pedido a WhatsApp para confirmar con anticipo.
+      </p>
+
+      <div class="wizard">
+        <!-- Barra de progreso -->
+        <div class="wizard-progress" aria-label="Progreso">
+          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+          <div class="progress-steps">
+            <span class="step-pill active" data-pill="1">1 · Tamaño</span>
+            <span class="step-pill" data-pill="2">2 · Sabor</span>
+            <span class="step-pill" data-pill="3">3 · Betún</span>
+            <span class="step-pill" data-pill="4">4 · Extras</span>
+            <span class="step-pill" data-pill="5">5 · Recolección</span>
+          </div>
+        </div>
+
+        <div class="wizard-body">
+          <!-- PASO 1 -->
+          <div class="step active" data-step="1">
+            <h3 class="step-title">¿Qué tamaño necesitas?</h3>
+            <p class="step-hint">Elige las porciones según tus invitados.</p>
+            <div class="size-grid">
+              <label class="size-card">
+                <input type="radio" name="size" value="Lunchbox" data-price="249" data-tier="small" />
+                <div class="card-inner">
+                  <span class="card-icon">🍱</span>
+                  <h4>Lunchbox</h4>
+                  <p>2 porciones</p>
+                  <span class="price">$249</span>
+                </div>
+              </label>
+              <label class="size-card">
+                <input type="radio" name="size" value="Pequeño" data-price="490" data-tier="small" />
+                <div class="card-inner">
+                  <span class="card-icon">🎂</span>
+                  <h4>Pequeño</h4>
+                  <p>6–8 porciones</p>
+                  <span class="price">$490</span>
+                </div>
+              </label>
+              <label class="size-card">
+                <input type="radio" name="size" value="Chico" data-price="670" data-tier="small" />
+                <div class="card-inner">
+                  <span class="card-icon">🎂</span>
+                  <h4>Chico</h4>
+                  <p>12–16 porciones</p>
+                  <span class="price">$670</span>
+                </div>
+              </label>
+              <label class="size-card">
+                <input type="radio" name="size" value="Mediano" data-price="920" data-tier="large" />
+                <div class="card-inner">
+                  <span class="card-icon">🎂</span>
+                  <h4>Mediano</h4>
+                  <p>22–25 porciones</p>
+                  <span class="price">$920</span>
+                </div>
+              </label>
+              <label class="size-card">
+                <input type="radio" name="size" value="Grande" data-price="1100" data-tier="large" />
+                <div class="card-inner">
+                  <span class="card-icon">🎂</span>
+                  <h4>Grande</h4>
+                  <p>30–35 porciones</p>
+                  <span class="price">$1100</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- PASO 2 -->
+          <div class="step" data-step="2">
+            <h3 class="step-title">Sabor y rellenos</h3>
+            <p class="step-hint">Diseña el corazón de tu pastel.</p>
+
+            <div class="field">
+              <label class="field-label">Pan</label>
+              <select name="pan" id="panSelect">
+                <option value="Vainilla">Vainilla</option>
+                <option value="Chocolate">Chocolate</option>
+                <option value="Zanahoria">Zanahoria</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label class="field-label">Relleno cremoso</label>
+              <div class="chip-grid">
+                <label class="chip"><input type="radio" name="cremoso" value="Mermelada de frutos rojos" checked /><span>Mermelada frutos rojos</span></label>
+                <label class="chip"><input type="radio" name="cremoso" value="Nutella" /><span>Nutella</span></label>
+                <label class="chip"><input type="radio" name="cremoso" value="Queso crema" /><span>Queso crema</span></label>
+                <label class="chip"><input type="radio" name="cremoso" value="Dulce de leche" /><span>Dulce de leche</span></label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field-label">Relleno crujiente <small>(+$30 c/u)</small></label>
+              <div class="chip-grid">
+                <label class="chip"><input type="checkbox" name="crujiente" value="Nuez" data-price="30" /><span>Nuez</span></label>
+                <label class="chip"><input type="checkbox" name="crujiente" value="Chispas de chocolate" data-price="30" /><span>Chispas de chocolate</span></label>
+                <label class="chip"><input type="checkbox" name="crujiente" value="Oreo" data-price="30" /><span>Oreo</span></label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field-label">Relleno especial</label>
+              <div class="chip-grid">
+                <label class="chip"><input type="checkbox" name="especial" value="Relleno Especial del Mes" data-price="80" /><span>Especial del Mes <small>(+$80)</small></span></label>
+              </div>
+            </div>
+          </div>
+
+          <!-- PASO 3 -->
+          <div class="step" data-step="3">
+            <h3 class="step-title">Estilo de betún</h3>
+            <p class="step-hint" id="betunHint">Selecciona uno o varios acabados.</p>
+            <div class="chip-grid" id="betunGrid">
+              <!-- Generado dinámicamente -->
+            </div>
+          </div>
+
+          <!-- PASO 4 -->
+          <div class="step" data-step="4">
+            <h3 class="step-title">Extras y decoración</h3>
+            <p class="step-hint">Personaliza cada detalle.</p>
+
+            <details class="extras-group" open>
+              <summary>Toppers MDF</summary>
+              <div class="chip-grid">
+                <label class="chip"><input type="checkbox" name="extra" value="Topper MDF Nombre" data-price="50" /><span>Nombre <small>(+$50)</small></span></label>
+                <label class="chip"><input type="checkbox" name="extra" value="Topper MDF Cruz" data-price="40" /><span>Cruz <small>(+$40)</small></span></label>
+                <label class="chip"><input type="checkbox" name="extra" value="Topper MDF Número" data-price="40" /><span>Número <small>(+$40)</small></span></label>
+              </div>
+            </details>
+
+            <details class="extras-group">
+              <summary>Toppers Acrílico</summary>
+              <div class="chip-grid">
+                <label class="chip"><input type="checkbox" name="extra" value="Topper Acrílico Nombre" data-price="150" /><span>Nombre <small>(+$150)</small></span></label>
+                <label class="chip"><input type="checkbox" name="extra" value="Topper Acrílico Cruz" data-price="70" /><span>Cruz <small>(+$70)</small></span></label>
+                <label class="chip"><input type="checkbox" name="extra" value="Topper Acrílico Número" data-price="70" /><span>Número <small>(+$70)</small></span></label>
+              </div>
+            </details>
+
+            <details class="extras-group">
+              <summary>Topper Cartoncillo</summary>
+              <div class="chip-grid">
+                <label class="chip"><input type="checkbox" name="extra" value="Topper Cartoncillo" data-price="200" /><span>Topper Cartoncillo <small>(+$200)</small></span></label>
+              </div>
+            </details>
+
+            <details class="extras-group">
+              <summary>Detalles</summary>
+              <div class="chip-grid">
+                <label class="chip"><input type="checkbox" name="extra" value="Sprinkles" data-price="10" /><span>Sprinkles <small>(+$10)</small></span></label>
+                <label class="chip"><input type="checkbox" name="extra" value="Mariposas Cartón" data-price="30" /><span>Mariposas cartón <small>(+$30)</small></span></label>
+                <label class="chip quantity-chip">
+                  <input type="checkbox" name="extra" value="Macarons" data-price="20" data-quantity="true" />
+                  <span>Macarons <small>(+$20 pza)</small></span>
+                  <input type="number" min="1" max="20" value="1" class="qty-input" disabled />
+                </label>
+                <label class="chip"><input type="checkbox" name="extra" value="Letras Chocolate" data-price="20" /><span>Letras chocolate <small>(+$20)</small></span></label>
+                <label class="chip"><input type="checkbox" name="extra" value="Bolas acrílico" data-price="150" /><span>Bolas acrílico <small>(+$150)</small></span></label>
+                <label class="chip"><input type="checkbox" name="extra" value="Isomalt" data-price="150" /><span>Isomalt <small>(+$150)</small></span></label>
+              </div>
+            </details>
+
+            <details class="extras-group">
+              <summary>Dorados y brillos</summary>
+              <div class="chip-grid">
+                <label class="chip"><input type="checkbox" name="extra" value="Salpicado dorado" data-price="10" /><span>Salpicado <small>(+$10)</small></span></label>
+                <label class="chip"><input type="checkbox" name="extra" value="Hoja de oro" data-price="10" /><span>Hoja de oro <small>(+$10)</small></span></label>
+                <label class="chip"><input type="checkbox" name="extra" value="Pintado completo" data-price="50" /><span>Pintado completo <small>(+$50)</small></span></label>
+                <label class="chip"><input type="checkbox" name="extra" value="Glitter" data-price="30" /><span>Glitter <small>(+$30)</small></span></label>
+                <label class="chip"><input type="checkbox" name="extra" value="Glitter para soplar" data-price="60" /><span>Glitter para soplar <small>(+$60)</small></span></label>
+              </div>
+            </details>
+
+            <details class="extras-group">
+              <summary>Flor natural</summary>
+              <div class="chip-grid">
+                <label class="chip"><input type="radio" name="flor" value="Sin flor" data-price="0" checked /><span>Sin flor</span></label>
+                <label class="chip"><input type="radio" name="flor" value="Flor — Poca variedad" data-price="150" /><span>Poca variedad <small>(+$150)</small></span></label>
+                <label class="chip"><input type="radio" name="flor" value="Flor — Mucha variedad" data-price="300" /><span>Mucha variedad <small>(+$300)</small></span></label>
+                <label class="chip"><input type="radio" name="flor" value="Flor — Tulipanes" data-price="900" /><span>Tulipanes <small>(+$900)</small></span></label>
+                <label class="chip"><input type="radio" name="flor" value="Flor — Anturios" data-price="300" /><span>Anturios <small>(+$300)</small></span></label>
+              </div>
+            </details>
+
+            <details class="extras-group">
+              <summary>Velas</summary>
+              <div class="chip-grid">
+                <label class="chip"><input type="checkbox" name="extra" value="Vela palito" data-price="10" /><span>Palito <small>(+$10)</small></span></label>
+                <label class="chip"><input type="checkbox" name="extra" value="Bengala" data-price="40" /><span>Bengala <small>(+$40)</small></span></label>
+                <label class="chip"><input type="checkbox" name="extra" value="Bengala número" data-price="40" /><span>Bengala número <small>(+$40)</small></span></label>
+                <label class="chip"><input type="checkbox" name="extra" value="Vela número" data-price="40" /><span>Número <small>(+$40)</small></span></label>
+              </div>
+            </details>
+          </div>
+
+          <!-- PASO 5 -->
+          <div class="step" data-step="5">
+            <h3 class="step-title">Fecha y hora de recolección</h3>
+            <p class="step-hint">Requerimos mínimo 4 días de anticipación. Solo recolección en tienda.</p>
+
+            <div class="field-row">
+              <div class="field">
+                <label class="field-label" for="pickupDate">Fecha</label>
+                <input type="date" id="pickupDate" name="pickupDate" required />
+                <small class="field-help" id="dateHelp">Disponible a partir de la fecha mínima permitida.</small>
+              </div>
+              <div class="field">
+                <label class="field-label" for="pickupTime">Hora</label>
+                <select id="pickupTime" name="pickupTime" required>
+                  <option value="">Selecciona una hora</option>
+                </select>
+                <small class="field-help">Horarios: Lun–Vie 10–19h · Sáb 10–16h</small>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="customerName">Tu nombre</label>
+              <input type="text" id="customerName" name="customerName" placeholder="Ej. María González" />
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="customerNotes">Notas adicionales (opcional)</label>
+              <textarea id="customerNotes" name="customerNotes" rows="3" placeholder="Colores, referencia, alergias, dedicatoria…"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Total + Controles -->
+        <div class="wizard-footer">
+          <div class="total-display" aria-live="polite">
+            <span class="total-label">Total estimado</span>
+            <span class="total-amount" id="totalAmount">$0</span>
+          </div>
+          <div class="wizard-controls">
+            <button type="button" class="btn btn-ghost" id="btnPrev" disabled>← Anterior</button>
+            <button type="button" class="btn btn-primary" id="btnNext">Siguiente →</button>
+            <button type="button" class="btn btn-whatsapp hidden" id="btnSubmit">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11 11 0 0 0 3.6 17.3L2 22l4.8-1.6A11 11 0 0 0 20.5 3.5zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-2.9 1 1-2.8-.2-.3a9 9 0 1 1 7 3.6zm5-6.7c-.3-.1-1.6-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1a7.4 7.4 0 0 1-3.6-3.1c-.3-.5.3-.4.8-1.4 0-.2 0-.4-.1-.5l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4a3 3 0 0 0-1 2.3c0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.2 1.7.7 2.4.8 3.2.6.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3z"/></svg>
+            <span>Enviar cotización por WhatsApp</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== CLÁSICOS DE LÍNEA ============== -->
+  <section class="section clasicos reveal" id="clasicos">
+    <div class="section-decor decor-side" aria-hidden="true"></div>
+    <div class="container">
+      <span class="eyebrow center">Nuestra carta fija</span>
+      <h2 class="section-title">Clásicos de Línea</h2>
+      <p class="section-lead">Productos estrella siempre disponibles bajo pedido.</p>
+
+      <div class="clasicos-grid">
+        <article class="clasico-card">
+          <div class="clasico-img clasico-img-1" aria-hidden="true"></div>
+          <h3>Mostachón Base</h3>
+          <span class="clasico-price">$550</span>
+          <p class="clasico-desc">Sabores: Higo, Fresas, Mango, Duraznos en almíbar, Plátano con cajeta y nuez.</p>
+          <button class="btn btn-outline" data-product="Mostachón Base">Preguntar disponibilidad</button>
+        </article>
+
+        <article class="clasico-card">
+          <div class="clasico-img clasico-img-2" aria-hidden="true"></div>
+          <h3>Mostachón Premium</h3>
+          <span class="clasico-price">$630</span>
+          <p class="clasico-desc">Frutos Rojos · Higos con Pistache.</p>
+          <button class="btn btn-outline" data-product="Mostachón Premium">Preguntar disponibilidad</button>
+        </article>
+
+        <article class="clasico-card">
+          <div class="clasico-img clasico-img-3" aria-hidden="true"></div>
+          <h3>Cheesecake Vasco</h3>
+          <span class="clasico-price">$720</span>
+          <p class="clasico-desc">Compota de frutos rojos, crema de queso, fresas y frambuesas naturales.</p>
+          <button class="btn btn-outline" data-product="Cheesecake Vasco">Preguntar disponibilidad</button>
+        </article>
+
+        <article class="clasico-card clasico-card-wide">
+          <div class="clasico-img clasico-img-4" aria-hidden="true"></div>
+          <h3>Galletas Gourmet SB</h3>
+          <div class="galletas-prices">
+            <span><strong>$38</strong> pieza</span>
+            <span><strong>$150</strong> caja de 4</span>
+            <span><strong>$220</strong> caja de 6</span>
+          </div>
+          <p class="clasico-desc">Oreo · Original · Sweet Velvet · M&amp;M'S · Conejito Turín · Kinder · Triple Chocolate · Birthday Cake.</p>
+          <button class="btn btn-outline" data-product="Galletas Gourmet SB">Preguntar disponibilidad</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== MOMENTOS ============== -->
+  <section class="section momentos reveal" id="momentos">
+    <div class="container">
+      <span class="eyebrow center">Social proof</span>
+      <h2 class="section-title">Tus Momentos</h2>
+      <p class="section-lead">Algunos de los pasteles que hemos creado para nuestros clientes.</p>
+
+      <div class="mosaic">
+        <div class="mosaic-item m-1" style="background: linear-gradient(135deg, #FAF0E6, #D4A396);"><span>🎂</span></div>
+        <div class="mosaic-item m-2" style="background: linear-gradient(135deg, #E8D4C4, #8A9A86);"><span>🌸</span></div>
+        <div class="mosaic-item m-3" style="background: linear-gradient(135deg, #F5E9DF, #D4A396);"><span>💍</span></div>
+        <div class="mosaic-item m-4" style="background: linear-gradient(135deg, #D4A396, #B88675);"><span>✨</span></div>
+        <div class="mosaic-item m-5" style="background: linear-gradient(135deg, #E5C5B5, #8A9A86);"><span>🍓</span></div>
+        <div class="mosaic-item m-6" style="background: linear-gradient(135deg, #FAF0E6, #E5C5B5);"><span>🧁</span></div>
+        <div class="mosaic-item m-7" style="background: linear-gradient(135deg, #8A9A86, #6B7E68);"><span>🌿</span></div>
+      </div>
+
+      <div class="instagram-banner">
+        <div class="ig-content">
+          <h3>Comparte tu momento dulce</h3>
+          <p>Sube tu foto a Instagram celebrando con nosotros, menciónanos como <strong>@SweetBakeryCUU</strong> y forma parte de nuestro muro de recuerdos.</p>
+        </div>
+        <a href="https://instagram.com/SweetBakeryCUU" target="_blank" rel="noopener" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2 0 1.8.2 2.2.4.6.2 1 .5 1.4 1 .5.4.8.8 1 1.4.2.4.4 1 .4 2.2.1 1.2.1 1.6.1 4.8s0 3.6-.1 4.8c0 1.2-.2 1.8-.4 2.2-.2.6-.5 1-1 1.4-.4.5-.8.8-1.4 1-.4.2-1 .4-2.2.4-1.2.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2 0-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-1-.5-.4-.8-.8-1-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c0-1.2.2-1.8.4-2.2.2-.6.5-1 1-1.4.4-.5.8-.8 1.4-1 .4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1 0-1.7.2-2.1.3-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.1.4-.3 1-.3 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c0 1.1.2 1.7.3 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.1 1 .3 2.1.3 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1 0 1.7-.2 2.1-.3.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.1-.4.3-1 .3-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c0-1.1-.2-1.7-.3-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.1-1-.3-2.1-.3-1.2-.1-1.6-.1-4.7-.1zm0 3.1a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4zm5.2-2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/></svg>
+          Síguenos en Instagram
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== FOOTER / CONTACTO ============== -->
+  <footer class="footer reveal" id="contacto">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <svg viewBox="0 0 120 120" width="80" height="80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="60" cy="60" r="54" fill="none" stroke="#D4A396" stroke-width="1.6"/>
+          <text x="60" y="58" text-anchor="middle" font-family="Playfair Display, serif" font-style="italic" font-size="26" fill="#D4A396" font-weight="600">SB</text>
+          <text x="60" y="78" text-anchor="middle" font-family="Inter, sans-serif" font-size="6.5" fill="#8A9A86" letter-spacing="2">SWEET BAKERY</text>
+        </svg>
+        <p class="footer-tagline">Repostería artesanal de autor.<br/>Chihuahua, México.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Visítanos</h4>
+        <address>
+          Calle 24 #2104<br/>
+          Chihuahua, Chihuahua<br/>
+          C.P. 31205
+        </address>
+        <a href="https://www.google.com/maps/search/?api=1&query=Calle+24+%232104+Chihuahua+Chihuahua+31205" target="_blank" rel="noopener" class="btn btn-outline btn-small">📍 Cómo llegar al local</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Horarios</h4>
+        <ul class="hours-list">
+          <li><span>Lun – Vie</span><span>10:00 – 19:00</span></li>
+          <li><span>Sábado</span><span>10:00 – 16:00</span></li>
+          <li><span>Domingo</span><span>Cerrado</span></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <p><a href="https://wa.me/5216141234567" target="_blank" rel="noopener">WhatsApp Business</a></p>
+        <p><a href="https://instagram.com/SweetBakeryCUU" target="_blank" rel="noopener">@SweetBakeryCUU</a></p>
+      </div>
+    </div>
+
+    <div class="container pickup-warning">
+      <p>⚠️ <strong>Nota de cuidado:</strong> Para garantizar la estructura de tu pastel personalizado, todas las entregas se realizan exclusivamente en tienda. Te recomendamos transportarlo sobre una superficie completamente plana y con el aire acondicionado encendido.</p>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="year"></span> Sweet Bakery · Hecho con cariño en Chihuahua.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
