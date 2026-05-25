@@ -1,577 +1,456 @@
 /* ==========================================================
-   SWEET BAKERY · script.js
-   Lógica de cotizador, estado del local en tiempo real,
-   reveal on scroll y generación de mensajes WhatsApp.
+   SWEET BAKERY · script.js  (v2 — corregido y mejorado)
    ========================================================== */
 
 (function () {
-  'use strict';
+     'use strict';
 
-  // === CONFIGURACIÓN ===
-  // ⚠️ Reemplaza este número por el WhatsApp Business real (formato internacional sin "+")
-  const WHATSAPP_NUMBER = '5216141234567';
+   /* ── CONFIGURACIÓN ─────────────────────────────────────── */
+   const WHATSAPP_NUMBER = '5216141234567'; // ← reemplaza con el número real
+   const MIN_DAYS_AHEAD  = 4;
 
-  const SCHEDULE = {
-    // 0=Dom, 1=Lun, ..., 6=Sáb
-    0: null,                     // Domingo cerrado
-    1: { open: 10, close: 19 },  // Lunes
-    2: { open: 10, close: 19 },
-    3: { open: 10, close: 19 },
-    4: { open: 10, close: 19 },
-    5: { open: 10, close: 19 },
-    6: { open: 10, close: 16 }   // Sábado
-  };
+   const SCHEDULE = {
+          0: null,
+          1: { open: 10, close: 19 },
+          2: { open: 10, close: 19 },
+          3: { open: 10, close: 19 },
+          4: { open: 10, close: 19 },
+          5: { open: 10, close: 19 },
+          6: { open: 10, close: 16 }
+   };
 
-  const MIN_DAYS_AHEAD = 4;
+   /* ── HELPERS ───────────────────────────────────────────── */
+   const $  = (sel, ctx = document) => ctx.querySelector(sel);
+     const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+     const formatMoney = (n) => '$' + Math.round(n).toLocaleString('es-MX');
+     const pad = (n) => String(n).padStart(2, '0');
+     const toLocalISO = (d) =>
+            `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 
-  // === HELPERS ===
-  const $ = (sel, ctx = document) => ctx.querySelector(sel);
-  const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
-  const formatMoney = (n) => '$' + Math.round(n).toLocaleString('es-MX');
+   /* ── 1) ESTADO DEL LOCAL ───────────────────────────────── */
+   function isStoreOpenNow() {
+          const now   = new Date();
+          const sched = SCHEDULE[now.getDay()];
+          if (!sched) return false;
+          const hours = now.getHours() + now.getMinutes() / 60;
+          return hours >= sched.open && hours < sched.close;
+   }
 
-  const pad = (n) => String(n).padStart(2, '0');
-  const toLocalISO = (date) =>
-    `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+   function updateStatusBadge() {
+          const badge = $('#statusBadge');
+          if (!badge) return;
+          const dot  = badge.querySelector('.status-dot');
+          const text = badge.querySelector('.status-text');
+          const open = isStoreOpenNow();
+          badge.classList.toggle('open',   open);
+          badge.classList.toggle('closed', !open);
+          if (text) text.textContent = open
+            ? '● Abierto ahora — Pasa por tu antojo'
+                   : '○ Cerrado por hoy — Consulta el catálogo';
+   }
 
-  // ====================================================
-  // 1) ESTADO DEL LOCAL EN TIEMPO REAL
-  // ====================================================
-  function isStoreOpenNow() {
-    const now = new Date();
-    const day = now.getDay();
-    const hours = now.getHours() + now.getMinutes() / 60;
-    const sched = SCHEDULE[day];
-    if (!sched) return false;
-    return hours >= sched.open && hours < sched.close;
-  }
+   /* ── 2) BOTÓN VITRINA WHATSAPP ─────────────────────────── */
+   function updateVitrinaButton() {
+          const btn  = $('#vitrinaWhatsapp');
+          const txt  = $('#vitrinaWhatsappText');
+          const note = $('#vitrinaNote');
+          if (!btn || !txt) return;
 
-  function updateStatusBadge() {
-    const badge = $('#statusBadge');
-    if (!badge) return;
-    const text = $('.status-text', badge);
-    if (isStoreOpenNow()) {
-      badge.classList.add('open');
-      badge.classList.remove('closed');
-      text.textContent = '● Abierto ahora — Pasa por tu antojo';
-    } else {
-      badge.classList.add('closed');
-      badge.classList.remove('open');
-      text.textContent = '○ Cerrado por hoy — Consulta el catálogo';
-    }
-  }
+       const now  = new Date();
+     const day  = now.getDay();
+          const h    = now.getHours() + now.getMinutes() / 60;
+          const cerrado = day === 0 || (day === 6 && h >= 16);
 
-  // ====================================================
-  // 2) BOTÓN DINÁMICO DE WHATSAPP — VITRINA
-  // ====================================================
-  function updateVitrinaButton() {
-    const btn = $('#vitrinaWhatsapp');
-    const txt = $('#vitrinaWhatsappText');
-    const note = $('#vitrinaNote');
-    if (!btn || !txt) return;
+       if (cerrado) {
+                btn.classList.add('disabled');
+                btn.setAttribute('aria-disabled', 'true');
+                btn.removeAttribute('href');
+                txt.textContent = 'Vitrina cerrada — Volvemos el lunes a las 10:00 AM';
+                if (note) note.textContent = '¡Te esperamos el lunes desde temprano!';
+       } else {
+                btn.classList.remove('disabled');
+                btn.removeAttribute('aria-disabled');
+                const msg = '¡Hola Sweet Bakery! Vi la sección de Vitrina en la web. ¿Qué postres o sabores tienen disponibles hoy para pasar a recoger?';
+                btn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+                txt.textContent = 'Pregunta por la vitrina de hoy';
+                if (note) note.textContent = 'Horario: Lun–Vie 10–19h · Sáb 10–16h · Dom cerrado';
+       }
+   }
 
-    const now = new Date();
-    const day = now.getDay();
-    const hours = now.getHours() + now.getMinutes() / 60;
+   /* ── 3) BOTONES CLÁSICOS ───────────────────────────────── */
+   function bindClasicoButtons() {
+          $$('[data-product]').forEach((btn) => {
+                   btn.addEventListener('click', () => {
+                              const product = btn.dataset.product;
+                              const msg = `¡Hola Sweet Bakery! Vi su catálogo en la web y me interesa ${product}. ¿Cuál es la disponibilidad y cómo puedo apartar?`;
+                              window.open(
+                                           `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,
+                                           '_blank', 'noopener'
+                                         );
+                   });
+          });
+   }
 
-    // Sábado después de las 16:00 + todo el domingo => deshabilitado
-    const sabadoCerrado = day === 6 && hours >= 16;
-    const domingo = day === 0;
+   /* ── 4) NAVBAR ─────────────────────────────────────────── */
+   function bindNavbar() {
+          const nav    = $('#navbar');
+          const toggle = $('#navToggle');
+          const links  = $('.nav-links');
+          if (!nav || !toggle || !links) return;
 
-    if (sabadoCerrado || domingo) {
-      btn.classList.add('disabled');
-      btn.setAttribute('aria-disabled', 'true');
-      btn.removeAttribute('href');
-      txt.textContent = 'Vitrina cerrada — Volvemos el lunes a las 10:00 AM';
-      if (note) note.textContent = '¡Te esperamos el lunes desde temprano!';
-    } else {
-      btn.classList.remove('disabled');
-      btn.removeAttribute('aria-disabled');
-      const msg = '¡Hola Sweet Bakery! Vi la sección de Vitrina en la web. ¿Qué postres o sabores tienen disponibles hoy para pasar a recoger?';
-      btn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-      txt.textContent = 'Pregunta por la vitrina de hoy';
-      if (note) note.textContent = 'Horario: Lun–Vie 10–19h · Sáb 10–16h · Dom cerrado';
-    }
-  }
+       window.addEventListener('scroll', () => {
+                nav.classList.toggle('scrolled', window.scrollY > 40);
+       }, { passive: true });
 
-  // ====================================================
-  // 3) BOTONES "CLÁSICOS" — Preguntar disponibilidad
-  // ====================================================
-  function bindClasicoButtons() {
-    $$('[data-product]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const product = btn.dataset.product;
-        const msg = `¡Hola Sweet Bakery! Vi su catálogo en la web y me interesa ${product}. ¿Cuál es la disponibilidad y cómo puedo apartar?`;
-        window.open(
-          `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,
-          '_blank',
-          'noopener'
-        );
-      });
-    });
-  }
+       toggle.addEventListener('click', () => {
+                const expanded = toggle.getAttribute('aria-expanded') === 'true';
+                toggle.setAttribute('aria-expanded', String(!expanded));
+                links.classList.toggle('open');
+       });
 
-  // ====================================================
-  // 4) NAVBAR — Scroll y toggle móvil
-  // ====================================================
-  function bindNavbar() {
-    const nav = $('#navbar');
-    const toggle = $('#navToggle');
-    const links = $('.nav-links');
+       $$('.nav-links a').forEach((a) => {
+                a.addEventListener('click', () => {
+                           links.classList.remove('open');
+                           toggle.setAttribute('aria-expanded', 'false');
+                });
+       });
+   }
 
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 30);
-    });
+   /* ── 5) REVEAL ON SCROLL (CORREGIDO) ──────────────────── */
+   function bindRevealObserver() {
+          const items = $$('.reveal');
+          if (!items.length) return;
 
-    toggle.addEventListener('click', () => {
-      const open = links.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', String(open));
-    });
+       // Agrega la clase de inmediato a los que ya están en el viewport
+       const triggerAll = () => items.forEach(el => el.classList.add('in-view'));
 
-    $$('.nav-links a').forEach((a) =>
-      a.addEventListener('click', () => {
-        links.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-      })
-    );
-  }
+       if (!('IntersectionObserver' in window)) {
+                triggerAll();
+                return;
+       }
 
-  // ====================================================
-  // 5) REVEAL ON SCROLL · Intersection Observer
-  // ====================================================
-  function bindRevealObserver() {
-    const items = $$('.reveal');
-    if (!('IntersectionObserver' in window) || items.length === 0) {
-      items.forEach((el) => el.classList.add('in-view'));
-      return;
-    }
+       const obs = new IntersectionObserver(
+                (entries) => {
+                           entries.forEach((entry) => {
+                                        if (entry.isIntersecting) {
+                                                       entry.target.classList.add('in-view');
+                                                       obs.unobserve(entry.target);
+                                        }
+                           });
+                },
+          { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+              );
 
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            obs.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
-    );
-    items.forEach((el) => obs.observe(el));
-  }
+       items.forEach(el => obs.observe(el));
 
-  // ====================================================
-  // 6) COTIZADOR — Wizard de 5 pasos
-  // ====================================================
-  const Cotizador = (() => {
-    let currentStep = 1;
-    const totalSteps = 5;
+       // Forzar check inicial para elementos ya visibles al cargar
+       setTimeout(() => {
+                items.forEach(el => {
+                           const rect = el.getBoundingClientRect();
+                           if (rect.top < window.innerHeight && rect.bottom > 0) {
+                                        el.classList.add('in-view');
+                                        obs.unobserve(el);
+                           }
+                });
+       }, 100);
+   }
 
-    // Opciones de betún según tier
-    const BETUN_OPTIONS = {
-      small: [
-        { name: 'Orillas', price: 20 },
-        { name: 'Vintage', price: 50 },
-        { name: 'Peludito', price: 60 }
-      ],
-      large: [
-        { name: 'Orillas', price: 30 },
-        { name: 'Vintage', price: 80 },
-        { name: 'Peludito', price: 100 }
-      ],
-      fixed: [
-        { name: 'Cúpula', price: 60 },
-        { name: 'Dibujo sencillo', price: 60 },
-        { name: 'Dibujo elaborado', price: 100 },
-        { name: 'Dripp', price: 20 }
-      ]
-    };
+   /* ── 6) COTIZADOR WIZARD ───────────────────────────────── */
+   const BETUN_OPTIONS = {
+          small: [
+             { label: 'Chantilly', price: 0 },
+             { label: 'Buttercream', price: 0 },
+             { label: 'Crema Philadelphia', price: 0 },
+             { label: 'Betún americano', price: 0 },
+             { label: 'Fondant', price: 100 }
+                 ],
+          large: [
+             { label: 'Chantilly', price: 0 },
+             { label: 'Buttercream', price: 0 },
+             { label: 'Crema Philadelphia', price: 0 },
+             { label: 'Betún americano', price: 0 },
+             { label: 'Fondant (cobro extra)', price: 150 },
+             { label: 'Semi naked / naked', price: 0 },
+             { label: 'Texturado', price: 0 },
+             { label: 'Efecto espejo', price: 200 }
+                 ]
+   };
 
-    function init() {
-      bindStepNavigation();
-      bindLiveTotal();
-      renderBetunOptions('small');
-      bindSizeChange();
-      bindQuantityChips();
-      initDatepicker();
-      initTimepicker();
-      $('#btnSubmit').addEventListener('click', submitQuote);
-      updateProgress();
-    }
+   let currentStep = 1;
+     const TOTAL_STEPS = 5;
 
-    function bindStepNavigation() {
-      $('#btnNext').addEventListener('click', nextStep);
-      $('#btnPrev').addEventListener('click', prevStep);
-    }
+   // Estado del wizard
+   const state = {
+          size: null, tier: null, basePrice: 0, extras: []
+   };
 
-    function nextStep() {
-      if (!validateStep(currentStep)) return;
-      if (currentStep < totalSteps) {
-        currentStep++;
-        renderStep();
-      }
-    }
+   function calcTotal() {
+          let total = state.basePrice;
 
-    function prevStep() {
-      if (currentStep > 1) {
-        currentStep--;
-        renderStep();
-      }
-    }
+       // Rellenos crujientes
+       $$('[name="crujiente"]:checked').forEach(el => {
+                total += Number(el.dataset.price || 0);
+       });
+          // Relleno especial
+       $$('[name="especial"]:checked').forEach(el => {
+                total += Number(el.dataset.price || 0);
+       });
+          // Betún (radio → precio)
+       const betunChecked = $('[name="betun"]:checked');
+          if (betunChecked) total += Number(betunChecked.dataset.price || 0);
+          // Extras
+       $$('[name="extra"]:checked').forEach(el => {
+                const qty = el.dataset.quantity
+                  ? Number(el.closest('.chip').querySelector('.qty-input')?.value || 1)
+                           : 1;
+                total += Number(el.dataset.price || 0) * qty;
+       });
+          // Flor
+       const florChecked = $('[name="flor"]:checked');
+          if (florChecked) total += Number(florChecked.dataset.price || 0);
 
-    function renderStep() {
-      $$('.step').forEach((s) =>
-        s.classList.toggle('active', Number(s.dataset.step) === currentStep)
-      );
-      $$('.step-pill').forEach((p) => {
-        const n = Number(p.dataset.pill);
-        p.classList.toggle('active', n === currentStep);
-        p.classList.toggle('done', n < currentStep);
-      });
-      updateProgress();
-      updateControls();
-      // scroll suave a la parte alta del wizard
-      const wiz = $('.wizard');
-      if (wiz) {
-        const top = wiz.getBoundingClientRect().top + window.scrollY - 90;
-        window.scrollTo({ top, behavior: 'smooth' });
-      }
-    }
+       return total;
+   }
 
-    function updateProgress() {
-      const pct = (currentStep / totalSteps) * 100;
-      $('#progressFill').style.width = pct + '%';
-    }
+   function renderTotal() {
+          const el = $('#totalAmount');
+          if (el) el.textContent = formatMoney(calcTotal());
+   }
 
-    function updateControls() {
-      const prev = $('#btnPrev');
-      const next = $('#btnNext');
-      const submit = $('#btnSubmit');
-      prev.disabled = currentStep === 1;
-      if (currentStep === totalSteps) {
-        next.classList.add('hidden');
-        submit.classList.remove('hidden');
-      } else {
-        next.classList.remove('hidden');
-        submit.classList.add('hidden');
-      }
-    }
+   function renderBetunOptions(tier) {
+          const grid = $('#betunGrid');
+          const hint = $('#betunHint');
+          if (!grid) return;
+          const opts = BETUN_OPTIONS[tier] || BETUN_OPTIONS.small;
+          if (hint) hint.textContent = tier === 'large'
+            ? 'Para pasteles medianos o grandes puedes elegir varios acabados.'
+                   : 'Elige el estilo de betún.';
+          grid.innerHTML = opts.map((o, i) => `
+                <label class="chip">
+                        <input type="radio" name="betun" value="${o.label}" data-price="${o.price}" ${i === 0 ? 'checked' : ''}/>
+                                <span>${o.label}${o.price > 0 ? ` <small>(+$${o.price})</small>` : ''}</span>
+                                      </label>`).join('');
+          grid.querySelectorAll('input').forEach(inp =>
+                   inp.addEventListener('change', renderTotal)
+                                                     );
+   }
 
-    function validateStep(step) {
-      if (step === 1) {
-        const size = $('input[name="size"]:checked');
-        if (!size) {
-          alert('Por favor elige un tamaño para continuar.');
-          return false;
-        }
-      }
-      if (step === 5) {
-        // se valida al enviar
-      }
-      return true;
-    }
+   function setStep(n) {
+          $$('.step').forEach(s => s.classList.remove('active'));
+          const target = $(`.step[data-step="${n}"]`);
+          if (target) target.classList.add('active');
 
-    // ---------- BETÚN ----------
-    function renderBetunOptions(tier) {
-      const grid = $('#betunGrid');
-      const variable = BETUN_OPTIONS[tier];
-      const fixed = BETUN_OPTIONS.fixed;
-      grid.innerHTML = '';
+       $$('.step-pill').forEach(p => {
+                const num = Number(p.dataset.pill);
+                p.classList.toggle('active', num === n);
+                p.classList.toggle('done',   num < n);
+       });
 
-      const buildChip = (opt) => `
-        <label class="chip">
-          <input type="checkbox" name="betun" value="${opt.name}" data-price="${opt.price}" />
-          <span>${opt.name} <small>(+$${opt.price})</small></span>
-        </label>`;
+       const fill   = $('#progressFill');
+          if (fill) fill.style.width = `${((n - 1) / (TOTAL_STEPS - 1)) * 100}%`;
 
-      grid.innerHTML =
-        variable.map(buildChip).join('') + fixed.map(buildChip).join('');
+       const prev   = $('#btnPrev');
+          const next   = $('#btnNext');
+          const submit = $('#btnSubmit');
+          if (prev)   prev.disabled = n === 1;
+          if (next)   next.classList.toggle('hidden', n === TOTAL_STEPS);
+          if (submit) submit.classList.toggle('hidden', n !== TOTAL_STEPS);
 
-      $('#betunHint').textContent =
-        tier === 'large'
-          ? 'Para tamaños Mediano/Grande aplican precios ampliados.'
-          : 'Selecciona uno o varios acabados para tu pastel.';
+       if (n === 5) buildPickupOptions();
 
-      // bind nuevos chips al total
-      $$('input[name="betun"]', grid).forEach((i) =>
-        i.addEventListener('change', recalcTotal)
-      );
-    }
+       currentStep = n;
+          renderTotal();
+   }
 
-    function bindSizeChange() {
-      $$('input[name="size"]').forEach((r) => {
-        r.addEventListener('change', (e) => {
-          const tier = e.target.dataset.tier;
-          renderBetunOptions(tier);
-          recalcTotal();
-        });
-      });
-    }
+   function buildPickupOptions() {
+          const dateInput = $('#pickupDate');
+          const timeSelect = $('#pickupTime');
+          if (!dateInput || !timeSelect) return;
 
-    // ---------- CANTIDAD (Macarons) ----------
-    function bindQuantityChips() {
-      $$('.quantity-chip').forEach((chip) => {
-        const checkbox = $('input[type="checkbox"]', chip);
-        const qty = $('.qty-input', chip);
-        checkbox.addEventListener('change', () => {
-          chip.classList.toggle('active', checkbox.checked);
-          qty.disabled = !checkbox.checked;
-          if (checkbox.checked && !qty.value) qty.value = 1;
-          recalcTotal();
-        });
-        qty.addEventListener('input', () => {
-          // sanitizar
-          let v = parseInt(qty.value, 10);
-          if (isNaN(v) || v < 1) v = 1;
-          if (v > 50) v = 50;
-          qty.value = v;
-          recalcTotal();
-        });
-        qty.addEventListener('click', (e) => e.stopPropagation());
-      });
-    }
+       const now = new Date();
+          const minDate = new Date(now);
+          minDate.setDate(minDate.getDate() + MIN_DAYS_AHEAD);
+          dateInput.min = toLocalISO(minDate);
+          if (!dateInput.value) dateInput.value = toLocalISO(minDate);
 
-    // ---------- TOTAL EN VIVO ----------
-    function bindLiveTotal() {
-      // Cualquier cambio dentro del wizard recalcula
-      $('.wizard').addEventListener('change', recalcTotal);
-    }
+       // Generar horas según día
+       function buildTimes() {
+                const d    = dateInput.value ? new Date(dateInput.value + 'T12:00:00') : minDate;
+                const day  = d.getDay();
+                const sched = SCHEDULE[day];
+                timeSelect.innerHTML = '<option value="">Selecciona una hora</option>';
+                if (!sched) {
+                           timeSelect.innerHTML += '<option disabled>Cerrado ese día</option>';
+                           return;
+                }
+                for (let h = sched.open; h < sched.close; h++) {
+                           timeSelect.innerHTML += `<option value="${pad(h)}:00">${pad(h)}:00</option>`;
+                           if (h + 0.5 < sched.close)
+                                        timeSelect.innerHTML += `<option value="${pad(h)}:30">${pad(h)}:30</option>`;
+                }
+       }
 
-    function recalcTotal() {
-      let total = 0;
+       buildTimes();
+          dateInput.removeEventListener('change', buildTimes);
+          dateInput.addEventListener('change', buildTimes);
+   }
 
-      const size = $('input[name="size"]:checked');
-      if (size) total += Number(size.dataset.price);
+   function buildWhatsappMessage() {
+          const size   = $('[name="size"]:checked');
+          const pan    = $('#panSelect');
+          const crem   = $('[name="cremoso"]:checked');
+          const cruj   = $$('[name="crujiente"]:checked').map(e => e.value);
+          const esp    = $$('[name="especial"]:checked').map(e => e.value);
+          const betun  = $('[name="betun"]:checked');
+          const extras = $$('[name="extra"]:checked').map(e => {
+                   const qty = e.dataset.quantity
+                     ? Number(e.closest('.chip').querySelector('.qty-input')?.value || 1)
+                              : 1;
+                   return qty > 1 ? `${e.value} x${qty}` : e.value;
+          });
+          const flor   = $('[name="flor"]:checked');
+          const date   = $('#pickupDate')?.value || '(sin fecha)';
+          const time   = $('#pickupTime')?.value || '(sin hora)';
+          const name   = $('#customerName')?.value || 'Cliente';
+          const notes  = $('#customerNotes')?.value;
+          const total  = calcTotal();
 
-      // crujientes
-      $$('input[name="crujiente"]:checked').forEach(
-        (i) => (total += Number(i.dataset.price || 0))
-      );
-      // especial
-      $$('input[name="especial"]:checked').forEach(
-        (i) => (total += Number(i.dataset.price || 0))
-      );
-      // betún
-      $$('input[name="betun"]:checked').forEach(
-        (i) => (total += Number(i.dataset.price || 0))
-      );
-      // flor
-      const flor = $('input[name="flor"]:checked');
-      if (flor) total += Number(flor.dataset.price || 0);
+       let msg = `🎂 *Cotización Sweet Bakery*\n\n`;
+          msg += `👤 Nombre: ${name}\n`;
+          msg += `📏 Tamaño: ${size ? size.value : '—'} ($${size ? size.dataset.price : 0})\n`;
+          msg += `🍞 Pan: ${pan ? pan.value : '—'}\n`;
+          msg += `🍓 Relleno cremoso: ${crem ? crem.value : '—'}\n`;
+          if (cruj.length)  msg += `✨ Crujiente: ${cruj.join(', ')}\n`;
+          if (esp.length)   msg += `⭐ Especial: ${esp.join(', ')}\n`;
+          msg += `🎨 Betún: ${betun ? betun.value : '—'}\n`;
+          if (extras.length) msg += `🎀 Extras: ${extras.join(', ')}\n`;
+          if (flor && flor.value !== 'Sin flor') msg += `💐 Flor: ${flor.value}\n`;
+          msg += `\n📅 Fecha de recolección: ${date} a las ${time}\n`;
+          if (notes) msg += `📝 Notas: ${notes}\n`;
+          msg += `\n💰 *Total estimado: ${formatMoney(total)}*\n\n`;
+          msg += `_(Los precios son estimados. El total final se confirma al apartar con anticipo.)_`;
+          return msg;
+   }
 
-      // extras
-      $$('input[name="extra"]:checked').forEach((i) => {
-        const base = Number(i.dataset.price || 0);
-        if (i.dataset.quantity === 'true') {
-          const chip = i.closest('.quantity-chip');
-          const qty = chip ? Number($('.qty-input', chip).value || 1) : 1;
-          total += base * qty;
-        } else {
-          total += base;
-        }
-      });
+   function bindWizard() {
+          const wizard = $('.wizard');
+          if (!wizard) return;
 
-      const el = $('#totalAmount');
-      el.textContent = formatMoney(total);
-      el.classList.remove('bump');
-      // Trigger reflow para reiniciar animación
-      void el.offsetWidth;
-      el.classList.add('bump');
-    }
+       // Tamaño
+       $$('[name="size"]').forEach(radio => {
+                radio.addEventListener('change', () => {
+                           state.basePrice = Number(radio.dataset.price || 0);
+                           state.tier      = radio.dataset.tier || 'small';
+                           state.size      = radio.value;
+                           renderBetunOptions(state.tier);
+                           renderTotal();
+                });
+       });
 
-    // ---------- DATEPICKER ----------
-    function initDatepicker() {
-      const input = $('#pickupDate');
-      const help = $('#dateHelp');
+       // Todos los inputs de precio
+       wizard.addEventListener('change', (e) => {
+                const el = e.target;
+                if (['crujiente','especial','extra','flor','betun'].includes(el.name)) {
+                           renderTotal();
+                }
+                // Macarons cantidad
+                                     if (el.name === 'extra' && el.dataset.quantity) {
+                                                const qtyInput = el.closest('.chip').querySelector('.qty-input');
+                                                if (qtyInput) qtyInput.disabled = !el.checked;
+                                     }
+       });
 
-      const today = new Date();
-      const minDate = new Date(today);
-      minDate.setDate(today.getDate() + MIN_DAYS_AHEAD);
-      // Si la fecha mínima cae domingo, mover al lunes
-      while (minDate.getDay() === 0) {
-        minDate.setDate(minDate.getDate() + 1);
-      }
-      input.min = toLocalISO(minDate);
-      input.value = toLocalISO(minDate);
+       wizard.addEventListener('input', (e) => {
+                if (e.target.classList.contains('qty-input')) renderTotal();
+       });
 
-      input.addEventListener('change', () => {
-        const v = input.value;
-        if (!v) return;
-        const [y, m, d] = v.split('-').map(Number);
-        const picked = new Date(y, m - 1, d);
+       // Navegación
+       $('#btnNext')?.addEventListener('click', () => {
+                if (currentStep < TOTAL_STEPS) setStep(currentStep + 1);
+       });
+          $('#btnPrev')?.addEventListener('click', () => {
+                   if (currentStep > 1) setStep(currentStep - 1);
+          });
 
-        // Bloquear domingos
-        if (picked.getDay() === 0) {
-          alert('Los domingos permanecemos cerrados. Por favor elige otro día.');
-          input.value = input.min;
-          help.textContent = 'Los domingos no hay recolección. Selecciona otro día.';
-          help.style.color = 'var(--blush-dark)';
-          return;
-        }
+       // Enviar por WhatsApp
+       $('#btnSubmit')?.addEventListener('click', () => {
+                const name = $('#customerName')?.value.trim();
+                const date = $('#pickupDate')?.value;
+                const time = $('#pickupTime')?.value;
+                if (!name) { alert('Por favor ingresa tu nombre.'); return; }
+                if (!date) { alert('Por favor elige una fecha de recolección.'); return; }
+                if (!time) { alert('Por favor elige una hora de recolección.'); return; }
+                const msg = buildWhatsappMessage();
+                window.open(
+                           `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,
+                           '_blank', 'noopener'
+                         );
+       });
 
-        // Bloquear fechas antes del mínimo
-        if (picked < minDate) {
-          alert(`Necesitamos mínimo ${MIN_DAYS_AHEAD} días de anticipación.`);
-          input.value = input.min;
-          return;
-        }
+       // Inicializar
+       renderBetunOptions('small');
+          setStep(1);
+   }
 
-        help.textContent = `Recolección programada el ${formatPickupDate(picked)}.`;
-        help.style.color = 'var(--olive)';
-        refreshTimeOptions(picked.getDay());
-      });
+   /* ── 7) AÑO EN FOOTER ──────────────────────────────────── */
+   function setYear() {
+          const el = $('#year');
+          if (el) el.textContent = new Date().getFullYear();
+   }
 
-      // Inicial
-      refreshTimeOptions(minDate.getDay());
-    }
+   /* ── 8) SMOOTH SCROLL PARA ANCLAS ──────────────────────── */
+   function bindSmoothScroll() {
+          $$('a[href^="#"]').forEach(a => {
+                   a.addEventListener('click', e => {
+                              const target = document.querySelector(a.getAttribute('href'));
+                              if (!target) return;
+                              e.preventDefault();
+                              const offset = 80;
+                              const top = target.getBoundingClientRect().top + window.scrollY - offset;
+                              window.scrollTo({ top, behavior: 'smooth' });
+                   });
+          });
+   }
 
-    function formatPickupDate(date) {
-      return date.toLocaleDateString('es-MX', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-      });
-    }
+   /* ── 9) ACTIVE NAV LINK ON SCROLL ──────────────────────── */
+   function bindActiveNavLink() {
+          const sections = $$('section[id], footer[id]');
+          const navLinks = $$('.nav-links a');
+          if (!sections.length || !navLinks.length) return;
 
-    // ---------- TIMEPICKER ----------
-    function initTimepicker() {
-      // Se inicializa con la fecha mínima ya cargada en initDatepicker
-    }
+       const obs = new IntersectionObserver(
+                entries => {
+                           entries.forEach(entry => {
+                                        if (entry.isIntersecting) {
+                                                       navLinks.forEach(a => {
+                                                                        a.classList.toggle('active',
+                                                                                                           a.getAttribute('href') === '#' + entry.target.id);
+                                                       });
+                                        }
+                           });
+                },
+          { threshold: 0.35 }
+              );
+          sections.forEach(s => obs.observe(s));
+   }
 
-    function refreshTimeOptions(day) {
-      const select = $('#pickupTime');
-      const sched = SCHEDULE[day];
-      select.innerHTML = '<option value="">Selecciona una hora</option>';
-      if (!sched) {
-        select.innerHTML +=
-          '<option value="" disabled>Día cerrado</option>';
-        return;
-      }
-      // intervalos de 30 minutos hasta una hora antes del cierre
-      for (let h = sched.open; h < sched.close; h += 0.5) {
-        const hh = Math.floor(h);
-        const mm = h % 1 === 0 ? '00' : '30';
-        const label = `${pad(hh)}:${mm}`;
-        const opt = document.createElement('option');
-        opt.value = label;
-        opt.textContent = label + ' hrs';
-        select.appendChild(opt);
-      }
-    }
+   /* ── INIT ───────────────────────────────────────────────── */
+   document.addEventListener('DOMContentLoaded', () => {
+          updateStatusBadge();
+          updateVitrinaButton();
+          bindClasicoButtons();
+          bindNavbar();
+          bindRevealObserver();
+          bindWizard();
+          setYear();
+          bindSmoothScroll();
+          bindActiveNavLink();
 
-    // ---------- ENVÍO DE COTIZACIÓN ----------
-    function submitQuote() {
-      // Validaciones finales
-      const size = $('input[name="size"]:checked');
-      if (!size) {
-        alert('Falta seleccionar el tamaño.');
-        currentStep = 1; renderStep(); return;
-      }
-      const date = $('#pickupDate').value;
-      const time = $('#pickupTime').value;
-      if (!date || !time) {
-        alert('Por favor selecciona fecha y hora de recolección.');
-        currentStep = 5; renderStep(); return;
-      }
+                                 // Actualizar estado del local cada minuto
+                                 setInterval(() => {
+                                          updateStatusBadge();
+                                          updateVitrinaButton();
+                                 }, 60_000);
+   });
 
-      const pan = $('#panSelect').value;
-      const cremoso = $('input[name="cremoso"]:checked')?.value || '—';
-      const crujientes = $$('input[name="crujiente"]:checked').map((i) => i.value);
-      const especial = $$('input[name="especial"]:checked').map((i) => i.value);
-      const betun = $$('input[name="betun"]:checked').map(
-        (i) => `${i.value} (+$${i.dataset.price})`
-      );
-      const flor = $('input[name="flor"]:checked');
-      const florText = flor && flor.value !== 'Sin flor' ? flor.value : null;
-
-      const extras = $$('input[name="extra"]:checked').map((i) => {
-        if (i.dataset.quantity === 'true') {
-          const chip = i.closest('.quantity-chip');
-          const qty = chip ? Number($('.qty-input', chip).value || 1) : 1;
-          return `${i.value} x${qty}`;
-        }
-        return i.value;
-      });
-
-      const nombre = $('#customerName').value.trim() || 'Cliente Sweet Bakery';
-      const notas = $('#customerNotes').value.trim();
-      const total = $('#totalAmount').textContent;
-
-      const [y, m, d] = date.split('-').map(Number);
-      const dateObj = new Date(y, m - 1, d);
-      const fechaFormatted = formatPickupDate(dateObj);
-
-      // Construir mensaje estético
-      const lines = [];
-      lines.push('¡Hola Sweet Bakery! 🎂');
-      lines.push('Cotizo un pastel personalizado con estos detalles:');
-      lines.push('');
-      lines.push(`👤 *Nombre:* ${nombre}`);
-      lines.push('');
-      lines.push('🎂 *PASTEL*');
-      lines.push(`• Tamaño: ${size.value} ($${size.dataset.price})`);
-      lines.push(`• Pan: ${pan}`);
-      lines.push(`• Relleno cremoso: ${cremoso}`);
-      if (crujientes.length) lines.push(`• Relleno crujiente: ${crujientes.join(', ')}`);
-      if (especial.length) lines.push(`• Relleno especial: ${especial.join(', ')}`);
-      lines.push('');
-      if (betun.length) {
-        lines.push('🍥 *BETÚN*');
-        betun.forEach((b) => lines.push(`• ${b}`));
-        lines.push('');
-      }
-      if (extras.length || florText) {
-        lines.push('✨ *EXTRAS & DECORACIÓN*');
-        extras.forEach((e) => lines.push(`• ${e}`));
-        if (florText) lines.push(`• ${florText}`);
-        lines.push('');
-      }
-      lines.push('📅 *RECOLECCIÓN EN TIENDA*');
-      lines.push(`• Fecha: ${fechaFormatted}`);
-      lines.push(`• Hora: ${time} hrs`);
-      lines.push('• Sucursal: Calle 24 #2104, Chihuahua, Chih.');
-      lines.push('');
-      lines.push(`💰 *TOTAL ESTIMADO: ${total}*`);
-      if (notas) {
-        lines.push('');
-        lines.push(`📝 *Notas:* ${notas}`);
-      }
-      lines.push('');
-      lines.push('Quedo a la espera de la confirmación y el anticipo para apartar la fecha. ¡Gracias! 💕');
-
-      const message = lines.join('\n');
-      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-      window.open(url, '_blank', 'noopener');
-    }
-
-    return { init };
-  })();
-
-  // ====================================================
-  // 7) BOOT
-  // ====================================================
-  function boot() {
-    // Año del footer
-    const yearEl = $('#year');
-    if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-    updateStatusBadge();
-    updateVitrinaButton();
-    bindClasicoButtons();
-    bindNavbar();
-    bindRevealObserver();
-    Cotizador.init();
-
-    // Recheck cada minuto el estado del local
-    setInterval(() => {
-      updateStatusBadge();
-      updateVitrinaButton();
-    }, 60 * 1000);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot);
-  } else {
-    boot();
-  }
 })();
