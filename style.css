@@ -1280,3 +1280,233 @@ textarea { resize: vertical; min-height: 80px; }
    
   .reveal { opacity: 1; transform: none; filter: none; }
 }
+
+
+/* ============================================================
+   SWEET BAKERY · Identidad Visual (inspirada en marca real)
+   Paleta fiel al Instagram @sweetbakery.cuu
+   ============================================================ */
+
+/* ── PALETA ACTUALIZADA ── */
+:root {
+  /* Dorado/caramelo real de la marca (borde del logo real) */
+  --brand-gold: #C9956A;
+  --brand-gold-dark: #B8865A;
+  --brand-gold-light: #E8C4A0;
+  /* Crema premium */
+  --brand-cream: #FDF9F5;
+  --brand-cream-warm: #F5EDE3;
+  /* Rosa delicado (acento secundario) */
+  --brand-blush: #E8B4B8;
+  --brand-blush-soft: #F2D4D6;
+  /* Verde salvia elegante */
+  --brand-sage: #8A9A7E;
+  /* Marrón oscuro para textos de marca */
+  --brand-ink: #4A3728;
+  --brand-ink-soft: #7A6255;
+}
+
+/* ── LOGO (navbar): tamaño correcto ── */
+.logo svg {
+  width: 72px !important;
+  height: 72px !important;
+  transition: transform 0.3s ease;
+}
+.logo:hover svg {
+  transform: scale(1.05);
+}
+
+/* ── NAVBAR: borde inferior sutil en scroll ── */
+.navbar.scrolled {
+  border-bottom: 1px solid rgba(201,149,106,0.15);
+  box-shadow: 0 2px 20px rgba(201,149,106,0.08);
+}
+
+/* ── BOTÓN PRIMARIO: tonos dorado de la marca ── */
+.btn-primary {
+  background: linear-gradient(135deg, var(--brand-gold), var(--brand-gold-dark));
+  color: #fff !important;
+  border: none;
+  box-shadow: 0 4px 15px rgba(201,149,106,0.3);
+  transition: all 0.3s ease;
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--brand-gold-dark), #A87848);
+  box-shadow: 0 6px 20px rgba(201,149,106,0.45);
+  transform: translateY(-1px);
+}
+
+/* ── BOTÓN GHOST: borde dorado ── */
+.btn-ghost {
+  border: 1.5px solid var(--brand-gold);
+  color: var(--brand-gold-dark) !important;
+  background: transparent;
+}
+.btn-ghost:hover {
+  background: var(--brand-cream-warm);
+  border-color: var(--brand-gold-dark);
+}
+
+/* ── BOTÓN OUTLINE: acorde con la marca ── */
+.btn-outline {
+  border: 1.5px solid var(--brand-gold);
+  color: var(--brand-gold-dark) !important;
+  background: transparent;
+  transition: all 0.25s ease;
+}
+.btn-outline:hover {
+  background: var(--brand-gold);
+  color: #fff !important;
+}
+
+/* ── HERO TITLE: cursiva con color de marca ── */
+.hero-title em {
+  color: var(--brand-gold) !important;
+}
+
+/* ── EYEBROW: color de marca ── */
+.eyebrow {
+  color: var(--brand-gold-dark) !important;
+  font-style: italic;
+}
+
+/* ── SECTION TITLE: color de marca ── */
+.section-title {
+  color: var(--brand-ink) !important;
+}
+
+/* ── VITRINA CARDS: borde dorado en hover ── */
+.vitrina-card {
+  border: 1.5px solid transparent;
+  transition: all 0.3s ease;
+}
+.vitrina-card:hover {
+  border-color: var(--brand-gold-light);
+  box-shadow: 0 12px 35px rgba(201,149,106,0.18);
+  transform: translateY(-6px);
+}
+.vitrina-icon {
+  font-size: 2.4rem;
+  margin-bottom: 0.8rem;
+  display: block;
+}
+
+/* ── CLASICO CARDS: marco elegante ── */
+.clasico-card {
+  border: 1px solid rgba(201,149,106,0.15);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+.clasico-card:hover {
+  border-color: var(--brand-gold-light);
+  box-shadow: 0 16px 40px rgba(201,149,106,0.2);
+  transform: translateY(-4px);
+}
+.clasico-price {
+  color: var(--brand-gold-dark) !important;
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+/* ── CHIPS DEL COTIZADOR: seleccionados en dorado ── */
+.chip input[type="radio"]:checked + span,
+.chip input[type="checkbox"]:checked + span {
+  background: var(--brand-gold) !important;
+  color: #fff !important;
+  border-color: var(--brand-gold-dark) !important;
+}
+.chip:has(input:checked) {
+  background: var(--brand-cream-warm);
+}
+
+/* ── SIZE CARD SELECCIONADA ── */
+.size-card input:checked ~ .card-inner {
+  border-color: var(--brand-gold) !important;
+  background: var(--brand-cream-warm);
+}
+.size-card .card-inner:hover {
+  border-color: var(--brand-gold-light);
+}
+
+/* ── TOTAL AMOUNT: color dorado de marca ── */
+.total-amount {
+  color: var(--brand-gold-dark) !important;
+}
+
+/* ── PROGRESS BAR: gradiente dorado ── */
+.progress-fill {
+  background: linear-gradient(90deg, var(--brand-gold-light), var(--brand-gold)) !important;
+}
+.step-pill.active {
+  background: var(--brand-gold) !important;
+  border-color: var(--brand-gold) !important;
+}
+
+/* ── STATUS BADGE: colores correctos ── */
+.status-badge {
+  border: 1px solid rgba(201,149,106,0.3);
+  background: rgba(253,249,245,0.95);
+}
+
+/* ── INSTAGRAM BANNER ── */
+.instagram-banner {
+  background: linear-gradient(135deg, var(--brand-cream-warm), #FDF9F5);
+  border: 1px solid rgba(201,149,106,0.2);
+  border-radius: 20px;
+}
+
+/* ── FOOTER: fondo cálido ── */
+.footer {
+  background: var(--brand-ink) !important;
+}
+.footer-tagline,
+.footer address,
+.footer p,
+.footer a,
+.footer h4,
+.hours-list li span {
+  color: rgba(253,249,245,0.85) !important;
+}
+.footer h4 {
+  color: var(--brand-gold-light) !important;
+  font-family: var(--font-serif);
+  font-style: italic;
+  margin-bottom: 0.75rem;
+}
+.footer-col a:hover {
+  color: var(--brand-gold-light) !important;
+}
+.footer-bottom {
+  border-top: 1px solid rgba(201,149,106,0.2);
+  color: rgba(253,249,245,0.5) !important;
+}
+
+/* ── PICKUP WARNING ── */
+.pickup-warning {
+  background: rgba(201,149,106,0.08);
+  border-left: 3px solid var(--brand-gold);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* ── MOSAICO MOMENTOS ── */
+.mosaic-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  border-radius: 12px;
+}
+
+/* ── HERO VISUAL: sello "Desde 2017" ── */
+.hero-stamp {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--brand-gold) !important;
+  font-size: 0.85rem;
+  opacity: 0.8;
+  letter-spacing: 0.05em;
+}
