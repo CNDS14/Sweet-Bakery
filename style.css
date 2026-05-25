@@ -1088,5 +1088,195 @@ textarea { resize: vertical; min-height: 80px; }
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+
+
+   /* ==============================================
+      SWEET BAKERY · Parches v2 (correcciones)
+      ============================================== */
+
+   /* --- REVEAL: fix visibilidad inicial --- */
+   /* El hero siempre debe ser visible de inmediato */
+   .hero.reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+   }
+
+   /* Corrección: asegurarse que in-view funcione en todas secciones */
+   .reveal {
+        opacity: 0;
+        transform: translateY(32px);
+        filter: blur(3px);
+        transition:
+          opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+               transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+               filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+   }
+   .reveal.in-view {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+   }
+
+   /* --- NAVBAR: link activo destacado --- */
+   .nav-links a.active {
+        color: var(--blush-dark);
+        font-weight: 600;
+   }
+   .nav-links a {
+        position: relative;
+        transition: color var(--t-fast);
+   }
+   .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--blush);
+        transform: scaleX(0);
+        transition: transform var(--t-fast);
+        border-radius: 2px;
+   }
+   .nav-links a:hover::after,
+   .nav-links a.active::after {
+        transform: scaleX(1);
+   }
+
+   /* --- WIZARD: mejoras visuales --- */
+   .wizard-footer {
+        border-top: 1px solid var(--line);
+        padding-top: 1.5rem;
+        margin-top: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+}
+
+   .total-display {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+   }
+
+   .total-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: var(--olive);
+        font-weight: 500;
+   }
+
+   .total-amount {
+        font-family: var(--font-serif);
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--blush-dark);
+        line-height: 1;
+   }
+
+   .wizard-controls {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+   }
+
+   /* --- PROGRESS BAR --- */
+   .progress-bar {
+        height: 4px;
+        background: var(--line);
+        border-radius: 99px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+   }
+   .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--blush), var(--blush-dark));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+   }
+
+   .step-pill {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 99px;
+        border: 1px solid var(--line);
+        color: var(--ink-soft);
+        cursor: default;
+        transition: all var(--t-fast);
+   }
+   .step-pill.active {
+        background: var(--blush);
+        color: #fff;
+        border-color: var(--blush);
+        font-weight: 600;
+   }
+   .step-pill.done {
+        background: var(--cream-2);
+        color: var(--olive);
+        border-color: var(--olive);
+   }
+   .progress-steps {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+   }
+
+   /* --- VITRINA CARDS: mejoradas --- */
+   .vitrina-card {
+        transition: transform var(--t-med), box-shadow var(--t-med);
+   }
+   .vitrina-card:hover {
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: var(--shadow-lg);
+   }
+
+   /* --- CLASICO CARDS: hover mejora --- */
+   .clasico-card {
+        transition: transform var(--t-med), box-shadow var(--t-med);
+   }
+   .clasico-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+   }
+
+   /* --- BTN WHATSAPP: mejor visibilidad cuando disabled --- */
+   .btn-whatsapp.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background: #ccc !important;
+   }
+
+   /* --- STATUS BADGE: estilos abierto/cerrado --- */
+   .status-badge.open .status-dot {
+        background: #22c55e;
+        box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
+   }
+   .status-badge.closed .status-dot {
+        background: #ef4444;
+        box-shadow: 0 0 0 3px rgba(239,68,68,0.2);
+   }
+
+   /* --- FOOTER CONTACTO: links con hover --- */
+   .footer-col a:hover {
+        color: var(--blush);
+        text-decoration: underline;
+   }
+
+   /* --- HIDDEN HELPER --- */
+   .hidden { display: none !important; }
+
+   /* --- MEJORA ACCESIBILIDAD: focus visible --- */
+   :focus-visible {
+        outline: 2px solid var(--blush);
+        outline-offset: 3px;
+        border-radius: 4px;
+   }
+   
   .reveal { opacity: 1; transform: none; filter: none; }
 }
