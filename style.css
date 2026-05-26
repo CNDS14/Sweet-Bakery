@@ -1513,94 +1513,104 @@ textarea { resize: vertical; min-height: 80px; }
 
 /* ===================================================
  /* ===================================================
-   MACARON STEPPER — Sweet Bakery
+   MACARON CHIP — Sweet Bakery
+   Se integra visualmente igual que Sprinkles/Mariposas
    =================================================== */
-.macaron-stepper {
+
+/* El label wrapper — igual que otros .chip */
+.macaron-chip {
+  display: block;
+  cursor: default;
+}
+
+/* El span interno — replica exactamente el .chip span */
+.macaron-chip-inner {
   display: inline-flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 6px 10px;
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  vertical-align: middle;
-}
-.macaron-stepper-header {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.macaron-label {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--ink, #333333);
-  letter-spacing: 0.01em;
-}
-.macaron-label small {
-  font-weight: 400;
-  color: var(--blush-dark, #B88675);
-  font-size: 0.78rem;
-}
-.macaron-controls {
-  display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
+  background: var(--cream-2, #F7F1E8);
+  border: 0.8px solid transparent;
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 0.88rem;
+  color: var(--ink, #333333);
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
+
+.macaron-chip-label {
+  white-space: nowrap;
+}
+
+.macaron-chip-label small {
+  color: var(--blush-dark, #B88675);
+  font-size: 0.78em;
+  margin-left: 2px;
+}
+
+/* Controles +/- compactos dentro del chip */
+.macaron-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .macaron-btn {
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   border: 1.5px solid var(--blush-dark, #B88675);
   background: #fff;
   color: var(--blush-dark, #B88675);
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
   line-height: 1;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   transition: all 0.18s ease;
   user-select: none;
   flex-shrink: 0;
+  padding: 0;
 }
+
 .macaron-btn:hover:not(:disabled) {
   background: var(--blush, #D4A396);
   border-color: var(--blush, #D4A396);
   color: #fff;
-  transform: scale(1.08);
 }
+
 .macaron-btn:disabled {
   opacity: 0.3;
   cursor: not-allowed;
   border-color: #ccc;
   color: #ccc;
 }
+
 .macaron-count {
-  font-size: 1.2rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--ink, #333333);
-  min-width: 22px;
+  min-width: 16px;
   text-align: center;
+  display: inline-block;
 }
-.macaron-info {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  animation: macFadeIn 0.25s ease;
-}
+
 .macaron-price-tag {
   background: var(--blush, #D4A396);
   color: #fff;
-  padding: 2px 10px;
+  padding: 1px 9px;
   border-radius: 20px;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 700;
+  animation: macFadeIn 0.22s ease;
 }
+
 @keyframes macFadeIn {
-  from { opacity: 0; transform: translateY(-3px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
 }
 
 /* ===================================================
