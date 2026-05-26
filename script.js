@@ -336,6 +336,9 @@
     // Macarons stepper
     const _mQty = parseInt(document.getElementById('macaronQty')?.value) || 0;
     if (_mQty > 0) msg += '\n🎀 Macarons: ' + _mQty + ' pza ($' + (_mQty * 20) + ')';
+    // Topper detail (nombre o número)
+    const _topperDetail = (document.getElementById('topperDetailInput')?.value || '').trim();
+    if (_topperDetail) msg += ' (“' + _topperDetail + '”)';
     return msg;
   }
 
@@ -489,6 +492,61 @@
     calcTotal();
     renderTotal();
   };
+
+  // ---- Campo dinámico del Topper ----
+  function updateTopperDetail() {
+    const selected = document.querySelector('[name="topper"]:checked');
+    const detail   = document.getElementById('topperDetail');
+    const label    = document.getElementById('topperDetailLabel');
+    const input    = document.getElementById('topperDetailInput');
+    const hint     = document.getElementById('topperDetailHint');
+    if (!detail || !selected) return;
+
+    const val = selected.value;
+    // Opciones que requieren nombre (texto)
+    const needsName   = val.includes('Nombre');
+    // Opciones que requieren número
+    const needsNumber = val.includes('Número') || val.includes('Numero') || val.includes('Cruz');
+    // Sin topper o Cartoncillo no necesitan dato extra
+    const noDetail    = val === 'Sin topper' || val.includes('Cartoncillo');
+
+    if (noDetail) {
+      detail.classList.remove('visible');
+      input.value = '';
+      return;
+    }
+
+    detail.classList.add('visible');
+
+    if (needsName) {
+      label.textContent = '¿Qué nombre llevará el topper?';
+      input.type = 'text';
+      input.maxLength = 30;
+      input.placeholder = 'Ej. María, Carlos, Sofía…';
+      hint.textContent = 'Máx. 30 caracteres · Solo el primer nombre o apodo';
+    } else if (needsNumber) {
+      // Cruz no necesita número, pero MDF/Acrílico Número sí
+      if (val.includes('Número') || val.includes('Numero')) {
+        label.textContent = '¿Qué número llevará el topper?';
+        input.type = 'number';
+        input.min = '0';
+        input.max = '999';
+        input.placeholder = 'Ej. 15, 18, 50…';
+        hint.textContent = 'Número de años, fecha o cualquier cifra';
+      } else {
+        // Cruz — no necesita dato adicional
+        detail.classList.remove('visible');
+        input.value = '';
+      }
+    }
+  }
+
+  // Bind topper detail listener
+  document.querySelectorAll('[name="topper"]').forEach(function(radio) {
+    radio.addEventListener('change', updateTopperDetail);
+  });
+  // Run once on load
+  updateTopperDetail();
 });
 
 })();
