@@ -507,12 +507,12 @@
     const needsNumber = val.indexOf('N\u00famero') > -1 || val.indexOf('Numero') > -1;
 
     if (!needsName && !needsNumber) {
-      detail.classList.remove('visible');
+      detail.style.display = 'none';
       if (input) input.value = '';
       return;
     }
 
-    detail.classList.add('visible');
+    detail.style.display = 'block';
 
     if (needsName) {
       if (label) label.textContent = '\u00bfQu\u00e9 nombre llevar\u00e1 el topper?';
