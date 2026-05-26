@@ -340,11 +340,20 @@
               <div class="chip-grid">
                 <label class="chip"><input type="checkbox" name="extra" value="Sprinkles" data-price="10" /><span>Sprinkles <small>(+$10)</small></span></label>
                 <label class="chip"><input type="checkbox" name="extra" value="Mariposas Cartón" data-price="30" /><span>Mariposas cartón <small>(+$30)</small></span></label>
-                <label class="chip quantity-chip">
-                  <input type="checkbox" name="extra" value="Macarons" data-price="20" data-quantity="true" />
-                  <span>Macarons <small>(+$20 pza · máx 6)</small></span>
-                  <input type="number" min="1" max="6" value="1" class="qty-input" disabled />
-                </label>
+                <div class="macaron-stepper" id="macaronStepper">
+                  <div class="macaron-stepper-header">
+                    <span class="macaron-label">🎀 Macarons <small>(+$20 pza · máx 6)</small></span>
+                  </div>
+                  <div class="macaron-controls">
+                    <button type="button" class="macaron-btn macaron-minus" id="macaronMinus" onclick="changeMacarons(-1)" disabled>−</button>
+                    <span class="macaron-count" id="macaronCount">0</span>
+                    <button type="button" class="macaron-btn macaron-plus" id="macaronPlus" onclick="changeMacarons(1)">+</button>
+                  </div>
+                  <div class="macaron-info" id="macaronInfo" style="display:none">
+                    <span class="macaron-price-tag" id="macaronPriceTag">$0</span>
+                  </div>
+                  <input type="hidden" name="macaronQty" id="macaronQty" value="0" data-price="20" />
+                </div>
                 <label class="chip"><input type="checkbox" name="extra" value="Letras Chocolate" data-price="20" /><span>Letras chocolate <small>(+$20)</small></span></label>
                 <label class="chip"><input type="checkbox" name="extra" value="Bolas acrílico" data-price="150" /><span>Bolas acrílico <small>(+$150)</small></span></label>
                 <label class="chip"><input type="checkbox" name="extra" value="Isomalt" data-price="150" /><span>Isomalt <small>(+$150)</small></span></label>
