@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#FDFBF7"/>
+  <!-- Decorative gradient left -->
+  <rect x="0" y="0" width="400" height="630" fill="url(#grad1)"/>
+  <defs>
+    <linearGradient id="grad1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#F7F1E8" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#FDFBF7" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <!-- SB logo circle -->
+  <circle cx="220" cy="315" r="110" fill="none" stroke="#C9956A" stroke-width="6"/>
+  <text x="220" y="295" font-family="Georgia,serif" font-size="62" font-weight="bold" fill="#C9956A" text-anchor="middle" dominant-baseline="middle">S</text>
+  <text x="220" y="355" font-family="Georgia,serif" font-size="48" font-weight="bold" fill="#C9956A" text-anchor="middle" dominant-baseline="middle">B</text>
+  <!-- Divider line -->
+  <line x1="380" y1="180" x2="380" y2="450" stroke="#E8D4C4" stroke-width="2"/>
+  <!-- Text right side -->
+  <text x="460" y="255" font-family="Georgia,serif" font-size="64" font-weight="bold" fill="#3D2B1F" dominant-baseline="middle">Sweet Bakery</text>
+  <text x="460" y="330" font-family="Inter,Arial,sans-serif" font-size="28" fill="#C9956A" dominant-baseline="middle">Reposteria Artesanal</text>
+  <text x="460" y="375" font-family="Inter,Arial,sans-serif" font-size="24" fill="#5a5a5a" dominant-baseline="middle">Chihuahua, Mexico</text>
+  <!-- Bottom accent -->
+  <rect x="460" y="420" width="280" height="4" rx="2" fill="#C9956A"/>
+</svg>
