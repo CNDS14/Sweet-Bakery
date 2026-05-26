@@ -208,6 +208,10 @@
     const velaChecked = $('[name="vela"]:checked');
     if (velaChecked) total += Number(velaChecked.dataset.price || 0);
 
+    // Macarons stepper
+    const macaronQtyEl = document.getElementById('macaronQty');
+    const macaronQty = macaronQtyEl ? parseInt(macaronQtyEl.value) || 0 : 0;
+    total += macaronQty * 20;
     return total;
   }
 
@@ -329,6 +333,9 @@
     msg += '\n\ud83d\udcc5 Fecha de recolecci\u00f3n: ' + date + ' a las ' + time + '\n';
     msg += '\n\ud83d\udcb0 *Total estimado: ' + formatMoney(total) + '*\n\n';
     msg += '_(Los precios son estimados. El total final se confirma al apartar con anticipo.)_';
+    // Macarons stepper
+    const _mQty = parseInt(document.getElementById('macaronQty')?.value) || 0;
+    if (_mQty > 0) msg += '\n🎀 Macarons: ' + _mQty + ' pza ($' + (_mQty * 20) + ')';
     return msg;
   }
 
@@ -453,6 +460,35 @@
       updateStatusBadge();
       updateVitrinaButton();
     }, 60000);
-  });
+  
+  // Stepper de Macarons: llamado desde onclick en index.html
+  window.changeMacarons = function changeMacarons(delta) {
+    const countEl = document.getElementById('macaronCount');
+    const qtyInput = document.getElementById('macaronQty');
+    const minusBtn = document.getElementById('macaronMinus');
+    const plusBtn  = document.getElementById('macaronPlus');
+    const infoEl   = document.getElementById('macaronInfo');
+    const priceTag = document.getElementById('macaronPriceTag');
+    if (!countEl || !qtyInput) return;
+    let current = parseInt(countEl.textContent) || 0;
+    current = Math.min(6, Math.max(0, current + delta));
+    countEl.textContent = current;
+    qtyInput.value = current;
+    // Botones
+    minusBtn.disabled = current === 0;
+    plusBtn.disabled  = current === 6;
+    // Info de precio
+    if (current > 0) {
+      infoEl.style.display = 'block';
+      priceTag.textContent = '$' + (current * 20);
+    } else {
+      infoEl.style.display = 'none';
+      priceTag.textContent = '$0';
+    }
+    // Recalcular total
+    calcTotal();
+    renderTotal();
+  };
+});
 
 })();
