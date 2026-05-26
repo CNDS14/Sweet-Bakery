@@ -379,7 +379,11 @@
 
     // Navegaci\u00f3n
     $('#btnNext')?.addEventListener('click', () => {
-      if (currentStep < TOTAL_STEPS) setStep(currentStep + 1);
+      if (currentStep < TOTAL_STEPS) {
+        if (!validateStep(currentStep)) return;
+        markStepCompleted(currentStep);
+        setStep(currentStep + 1);
+      }
     });
     $('#btnPrev')?.addEventListener('click', () => {
       if (currentStep > 1) setStep(currentStep - 1);
@@ -390,16 +394,11 @@
       const name = $('#customerName')?.value.trim();
       const date = $('#pickupDate')?.value;
       const time = $('#pickupTime')?.value;
-      if (!name) { alert('Por favor ingresa tu nombre.'); return; }
-      if (!date) { alert('Por favor elige una fecha de recolecci\u00f3n.'); return; }
-      if (!time) { alert('Por favor elige una hora de recolecci\u00f3n.'); return; }
-      const msg = buildWhatsappMessage();
-      window.open(
-        'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg),
-        '_blank', 'noopener'
-      );
+      if (!name) { showToast('Por favor ingresa tu nombre.'); return; }
+      if (!date) { showToast('Por favor elige una fecha de recolección.'); return; }
+      if (!time) { showToast('Por favor elige una hora de recolección.'); return; }
+      showQuoteModal();
     });
-
     // Inicializar
     renderBetunOptions('small');
     setStep(1);
@@ -532,5 +531,100 @@
   // Run once on load
   updateTopperDetail();
 });
+
+
+
+  /* ===== TOAST NOTIFICATION ===== */
+  function showToast(msg, type) {
+    var toast = document.getElementById('validationToast');
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.className = 'validation-toast visible' + (type === 'success' ? ' toast-success' : '');
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(function() { toast.className = 'validation-toast'; }, 3200);
+  }
+
+  /* ===== STEP VALIDATION ===== */
+  function validateStep(step) {
+    if (step === 1) {
+      var sized = document.querySelector('input[name="size"]:checked');
+      if (!sized) { showToast('Por favor elige un tamaño para tu pastel.'); return false; }
+    }
+    if (step === 2) {
+      var pan = document.getElementById('panSelect');
+      if (!pan || !pan.value) { showToast('Por favor selecciona el tipo de pan.'); return false; }
+      var relleno = document.querySelector('input[name="filling"]:checked');
+      if (!relleno) { showToast('Por favor elige un relleno cremoso.'); return false; }
+    }
+    if (step === 3) {
+      var betun = document.querySelector('input[name="betun"]:checked');
+      if (!betun) { showToast('Por favor elige un estilo de betún.'); return false; }
+    }
+    return true;
+  }
+
+  /* ===== PROGRESS STEP MARKS ===== */
+  var _completedSteps = new Set();
+  function markStepCompleted(step) {
+    _completedSteps.add(step);
+    var pills = document.querySelectorAll('.progress-pill');
+    if (pills[step - 1]) pills[step - 1].setAttribute('data-done', 'true');
+  }
+
+  /* ===== QUOTE SUMMARY MODAL ===== */
+  function showQuoteModal() {
+    var modal = document.getElementById('quoteModal');
+    var body = document.getElementById('quoteModalBody');
+    var totalEl = document.getElementById('quoteModalTotal');
+    if (!modal || !body) return;
+
+    // Build summary rows
+    var size = document.querySelector('input[name="size"]:checked');
+    var pan = document.getElementById('panSelect');
+    var filling = document.querySelector('input[name="filling"]:checked');
+    var betun = document.querySelector('input[name="betun"]:checked');
+    var date = document.getElementById('pickupDate')?.value || '';
+    var time = document.getElementById('pickupTime')?.value || '';
+    var name = document.getElementById('customerName')?.value.trim() || '';
+    var total = calcTotal();
+
+    var rows = [];
+    if (size) rows.push(['Tamaño', size.closest('label')?.querySelector('h3,h4,strong')?.textContent?.trim() || size.value]);
+    if (pan) rows.push(['Pan', pan.options[pan.selectedIndex]?.text || '']);
+    if (filling) rows.push(['Relleno', filling.value]);
+    if (betun) rows.push(['Betún', betun.value]);
+    if (date) rows.push(['Fecha', date]);
+    if (time) rows.push(['Hora', time]);
+    if (name) rows.push(['Nombre', name]);
+
+    body.innerHTML = rows.map(function(r) {
+      return '<div class="quote-row"><span class="quote-row-label">' + r[0] + '</span><span class="quote-row-value">' + r[1] + '</span></div>';
+    }).join('');
+
+    if (totalEl) totalEl.textContent = '$' + total.toLocaleString();
+
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+
+    // Bind confirm button
+    var confirmBtn = document.getElementById('quoteModalConfirm');
+    var cancelBtn = document.getElementById('quoteModalCancel');
+    var closeBtn = document.getElementById('quoteModalClose');
+
+    function closeModal() {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    if (closeBtn) closeBtn.onclick = closeModal;
+    if (cancelBtn) cancelBtn.onclick = closeModal;
+    if (confirmBtn) confirmBtn.onclick = function() {
+      closeModal();
+      var url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(buildWhatsappMessage());
+      window.open(url, '_blank');
+    };
+
+    modal.onclick = function(e) { if (e.target === modal) closeModal(); };
+  }
 
 })();
