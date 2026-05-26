@@ -466,11 +466,10 @@
   
   // Stepper de Macarons: llamado desde onclick en index.html
   window.changeMacarons = function changeMacarons(delta) {
-    const countEl = document.getElementById('macaronCount');
+    const countEl  = document.getElementById('macaronCount');
     const qtyInput = document.getElementById('macaronQty');
     const minusBtn = document.getElementById('macaronMinus');
     const plusBtn  = document.getElementById('macaronPlus');
-    const infoEl   = document.getElementById('macaronInfo');
     const priceTag = document.getElementById('macaronPriceTag');
     if (!countEl || !qtyInput) return;
     let current = parseInt(countEl.textContent) || 0;
@@ -480,15 +479,16 @@
     // Botones
     minusBtn.disabled = current === 0;
     plusBtn.disabled  = current === 6;
-    // Info de precio
-    if (current > 0) {
-      infoEl.style.display = 'block';
-      priceTag.textContent = '$' + (current * 20);
-    } else {
-      infoEl.style.display = 'none';
-      priceTag.textContent = '$0';
+    // Precio inline
+    if (priceTag) {
+      if (current > 0) {
+        priceTag.textContent = '$' + (current * 20);
+        priceTag.style.display = '';
+      } else {
+        priceTag.style.display = 'none';
+      }
     }
-    // Recalcular total
+    // Recalcular
     calcTotal();
     renderTotal();
   };
