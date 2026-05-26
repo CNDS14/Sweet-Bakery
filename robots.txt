@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cnds14.github.io/Sweet-Bakery/sitemap.xml
