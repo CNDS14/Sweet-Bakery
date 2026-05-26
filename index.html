@@ -24,7 +24,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="style.css" />
-</head>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="favicon.svg">
+  <!-- Open Graph Image -->
+  <meta property="og:image" content="https://cnds14.github.io/Sweet-Bakery/og-image.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sweet Bakery · Repostería Artesanal en Chihuahua">
+  <meta name="twitter:description" content="Pasteles personalizados, mostachones, cheesecakes y galletas gourmet. Cotiza tu pastel en línea.">
+  <meta name="twitter:image" content="https://cnds14.github.io/Sweet-Bakery/og-image.svg">
+  <!-- JSON-LD Local Business -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Bakery","name":"Sweet Bakery","url":"https://cnds14.github.io/Sweet-Bakery/","logo":"https://cnds14.github.io/Sweet-Bakery/favicon.svg","image":"https://cnds14.github.io/Sweet-Bakery/og-image.svg","description":"Repostería artesanal de autor en Chihuahua. Pasteles personalizados, mostachones, cheesecakes y galletas gourmet.","address":{"@type":"PostalAddress","streetAddress":"Calle 24 #2104","addressLocality":"Chihuahua","addressRegion":"Chihuahua","postalCode":"31205","addressCountry":"MX"},"telephone":"+526142868000","priceRange":"$$","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"10:00","closes":"19:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday"],"opens":"10:00","closes":"16:00"}],"sameAs":["https://www.instagram.com/sweetbakery.cuu/"]}</script></head>
 <body>
 
   <!-- ============== NAVBAR ============== -->
@@ -74,7 +88,7 @@
       <div class="hero-copy">
         <span class="eyebrow">Pastelería · Chihuahua, Chih.</span>
         <h1 class="hero-title">
-          Creamos <em>historias dulces</em><br/>para tus días más especiales.
+          Creamos <em>historias dulces</em><br/> para tus días más especiales.
         </h1>
         <p class="hero-subtitle">
           Repostería artesanal sobre diseño y postres listos para llevar en Chihuahua.
@@ -572,5 +586,27 @@
   </footer>
 
   <script src="script.js"></script>
+
+
+  <!-- Modal resumen cotización -->
+  <div id="quoteModal" class="quote-modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="quoteModalTitle">
+    <div class="quote-modal">
+      <button class="quote-modal-close" id="quoteModalClose" aria-label="Cerrar resumen">&times;</button>
+      <h3 id="quoteModalTitle" class="quote-modal-title">Resumen de tu pedido</h3>
+      <div id="quoteModalBody" class="quote-modal-body"></div>
+      <div class="quote-modal-total">
+        <span>TOTAL ESTIMADO</span>
+        <strong id="quoteModalTotal"></strong>
+      </div>
+      <p class="quote-modal-note">Al presionar confirmar abriremos WhatsApp con tu cotización lista para enviar.</p>
+      <div class="quote-modal-actions">
+        <button class="quote-modal-btn-cancel" id="quoteModalCancel">Editar pedido</button>
+        <button class="quote-modal-btn-confirm" id="quoteModalConfirm">Confirmar y enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notificación -->
+  <div id="validationToast" class="validation-toast" role="alert" aria-live="assertive"></div>
 </body>
 </html>
