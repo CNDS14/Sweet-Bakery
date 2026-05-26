@@ -503,41 +503,25 @@
     if (!detail || !selected) return;
 
     const val = selected.value;
-    // Opciones que requieren nombre (texto)
-    const needsName   = val.includes('Nombre');
-    // Opciones que requieren número
-    const needsNumber = val.includes('Número') || val.includes('Numero') || val.includes('Cruz');
-    // Sin topper o Cartoncillo no necesitan dato extra
-    const noDetail    = val === 'Sin topper' || val.includes('Cartoncillo');
+    const needsName   = val.indexOf('Nombre') > -1;
+    const needsNumber = val.indexOf('N\u00famero') > -1 || val.indexOf('Numero') > -1;
 
-    if (noDetail) {
+    if (!needsName && !needsNumber) {
       detail.classList.remove('visible');
-      input.value = '';
+      if (input) input.value = '';
       return;
     }
 
     detail.classList.add('visible');
 
     if (needsName) {
-      label.textContent = '¿Qué nombre llevará el topper?';
-      input.type = 'text';
-      input.maxLength = 30;
-      input.placeholder = 'Ej. María, Carlos, Sofía…';
-      hint.textContent = 'Máx. 30 caracteres · Solo el primer nombre o apodo';
-    } else if (needsNumber) {
-      // Cruz no necesita número, pero MDF/Acrílico Número sí
-      if (val.includes('Número') || val.includes('Numero')) {
-        label.textContent = '¿Qué número llevará el topper?';
-        input.type = 'number';
-        input.min = '0';
-        input.max = '999';
-        input.placeholder = 'Ej. 15, 18, 50…';
-        hint.textContent = 'Número de años, fecha o cualquier cifra';
-      } else {
-        // Cruz — no necesita dato adicional
-        detail.classList.remove('visible');
-        input.value = '';
-      }
+      if (label) label.textContent = '\u00bfQu\u00e9 nombre llevar\u00e1 el topper?';
+      if (input) { input.type = 'text'; input.maxLength = 30; input.placeholder = 'Ej. Mar\u00eda, Carlos, Sof\u00eda\u2026'; }
+      if (hint)  hint.textContent = 'M\u00e1x. 30 caracteres \u00b7 Solo el primer nombre o apodo';
+    } else {
+      if (label) label.textContent = '\u00bfQu\u00e9 n\u00famero llevar\u00e1 el topper?';
+      if (input) { input.type = 'number'; input.min = '0'; input.max = '999'; input.placeholder = 'Ej. 15, 18, 50\u2026'; }
+      if (hint)  hint.textContent = 'N\u00famero de a\u00f1os, fecha o cualquier cifra';
     }
   }
 
