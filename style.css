@@ -1662,3 +1662,7 @@ textarea { resize: vertical; min-height: 80px; }
   opacity: 0.8;
 }
 }
+
+/* Force: topper-detail oculto por defecto */
+.topper-detail { display: none !important; }
+.topper-detail.visible { display: block !important; }
