@@ -285,44 +285,43 @@
             <h3 class="step-title">Sabor y rellenos</h3>
             <p class="step-hint">Diseña el corazón de tu pastel.</p>
 
-            <div class="field">
+            <!-- PAN -->
+            <div class="field-group">
               <label class="field-label">Pan</label>
-              <select name="pan" id="panSelect">
+              <select id="panSelect" name="pan" class="select-field">
                 <option value="Vainilla">Vainilla</option>
                 <option value="Chocolate">Chocolate</option>
                 <option value="Zanahoria">Zanahoria</option>
               </select>
             </div>
 
-            <div class="field">
-              <label class="field-label">Relleno cremoso</label>
+            <!-- RELLENO ÚNICO -->
+            <div class="field-group">
+              <label class="field-label">Relleno <small>(elige 1)</small></label>
+
+              <p class="relleno-cat-label">Cremosos</p>
               <div class="chip-grid">
-                <label class="chip"><input type="radio" name="cremoso" value="Mermelada de frutos rojos" checked /><span>Mermelada frutos rojos</span></label>
-                <label class="chip"><input type="radio" name="cremoso" value="Nutella" /><span>Nutella</span></label>
-                <label class="chip"><input type="radio" name="cremoso" value="Queso crema" /><span>Queso crema</span></label>
-                <label class="chip"><input type="radio" name="cremoso" value="Dulce de leche" /><span>Dulce de leche</span></label>
+                <label class="chip"><input type="radio" name="relleno" value="Mermelada de frutos rojos" data-price="0"><span>Mermelada frutos rojos</span></label>
+                <label class="chip"><input type="radio" name="relleno" value="Nutella" data-price="0"><span>Nutella</span></label>
+                <label class="chip"><input type="radio" name="relleno" value="Queso crema" data-price="0"><span>Queso crema</span></label>
+                <label class="chip"><input type="radio" name="relleno" value="Dulce de leche" data-price="0"><span>Dulce de leche</span></label>
+              </div>
+
+              <p class="relleno-cat-label">Crujientes <small>(+$30)</small></p>
+              <div class="chip-grid">
+                <label class="chip"><input type="radio" name="relleno" value="Nuez" data-price="30"><span>Nuez</span></label>
+                <label class="chip"><input type="radio" name="relleno" value="Chispas de chocolate" data-price="30"><span>Chispas de chocolate</span></label>
+                <label class="chip"><input type="radio" name="relleno" value="Oreo" data-price="30"><span>Oreo</span></label>
+              </div>
+
+              <p class="relleno-cat-label">Especial <small>(+$80)</small></p>
+              <div class="chip-grid">
+                <label class="chip"><input type="radio" name="relleno" value="Especial del Mes" data-price="80"><span>Especial del Mes</span></label>
               </div>
             </div>
 
-            <div class="field">
-              <label class="field-label">Relleno crujiente <small>(+$30 c/u)</small></label>
-              <div class="chip-grid">
-                <label class="chip"><input type="checkbox" name="crujiente" value="Nuez" data-price="30" /><span>Nuez</span></label>
-                <label class="chip"><input type="checkbox" name="crujiente" value="Chispas de chocolate" data-price="30" /><span>Chispas de chocolate</span></label>
-                <label class="chip"><input type="checkbox" name="crujiente" value="Oreo" data-price="30" /><span>Oreo</span></label>
-              </div>
-            </div>
-
-            <div class="field">
-              <label class="field-label">Relleno especial</label>
-              <div class="chip-grid">
-                <label class="chip"><input type="checkbox" name="especial" value="Relleno Especial del Mes" data-price="80" /><span>Especial del Mes <small>(+$80)</small></span></label>
-              </div>
-            </div>
           </div>
-
-          <!-- PASO 3 -->
-          <div class="step" data-step="3">
+          data-step="3">
             <h3 class="step-title">Estilo de betún</h3>
             <p class="step-hint" id="betunHint">Selecciona uno o varios acabados.</p>
             <div class="chip-grid" id="betunGrid">
@@ -585,7 +584,7 @@
     </div>
   </footer>
 
-  <script src="script.js?v=5"></script>
+  <script src="script.js?v=6"></script>
 
 
   <!-- Modal resumen cotización -->
