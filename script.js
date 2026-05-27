@@ -1,5 +1,5 @@
 /* ==========================================================
-   SWEET BAKERY · script.js  (v5 — toppers/velas fix)
+   SWEET BAKERY · script.js  (v6 — toppers/velas fix)
    ========================================================== */
 
 (function () {
@@ -180,14 +180,9 @@
   function calcTotal() {
     let total = state.basePrice;
 
-    // Rellenos crujientes
-    $$('[name="crujiente"]:checked').forEach(el => {
-      total += Number(el.dataset.price || 0);
-    });
-    // Relleno especial
-    $$('[name="especial"]:checked').forEach(el => {
-      total += Number(el.dataset.price || 0);
-    });
+        // Relleno (radio único)
+    const rellenoSel = $$('input[name="relleno"]:checked');
+    if (rellenoSel) total += Number(rellenoSel.dataset.price || 0);
     // Bet\u00fan (radio)
     const betunChecked = $('[name="betun"]:checked');
     if (betunChecked) total += Number(betunChecked.dataset.price || 0);
@@ -300,9 +295,10 @@
   function buildWhatsappMessage() {
     const size   = $('[name="size"]:checked');
     const pan    = $('#panSelect');
-    const crem   = $('[name="cremoso"]:checked');
-    const cruj   = $$('[name="crujiente"]:checked').map(e => e.value);
-    const esp    = $$('[name="especial"]:checked').map(e => e.value);
+
+    const relleno  = $('[name="relleno"]:checked');
+
+
     const betun  = $('[name="betun"]:checked');
     const topper = $('[name="topper"]:checked');
     const extras = $$('[name="extra"]:checked').map(e => {
@@ -322,9 +318,8 @@
     msg += '\ud83d\udc64 Nombre: ' + name + '\n';
     msg += '\ud83d\udccf Tama\u00f1o: ' + (size ? size.value : '\u2014') + ' ($' + (size ? size.dataset.price : 0) + ')\n';
     msg += '\ud83c\udf5e Pan: ' + (pan ? pan.value : '\u2014') + '\n';
-    msg += '\ud83c\udf53 Relleno cremoso: ' + (crem ? crem.value : '\u2014') + '\n';
-    if (cruj.length)  msg += '\u2728 Crujiente: ' + cruj.join(', ') + '\n';
-    if (esp.length)   msg += '\u2b50 Especial: ' + esp.join(', ') + '\n';
+        msg += '🍓 Relleno: ' + (relleno ? relleno.value : '—') + '
+';
     msg += '\ud83c\udfa8 Bet\u00fan: ' + (betun ? betun.value : '\u2014') + '\n';
     if (topper && topper.value !== 'Sin topper') msg += '\ud83c\udf80 Topper: ' + topper.value + '\n';
     if (extras.length) msg += '\u2728 Extras: ' + extras.join(', ') + '\n';
@@ -360,7 +355,7 @@
     // Todos los inputs de precio
     wizard.addEventListener('change', (e) => {
       const el = e.target;
-      if (['crujiente','especial','extra','flor','betun','topper','vela'].includes(el.name)) {
+      if (['relleno','extra','flor','betun','topper','vela'].includes(el.name)) {
         renderTotal();
       }
       // Macarons cantidad (m\u00e1x 6)
@@ -553,8 +548,8 @@
     if (step === 2) {
       var pan = document.getElementById('panSelect');
       if (!pan || !pan.value) { showToast('Por favor selecciona el tipo de pan.'); return false; }
-      var relleno = document.querySelector('input[name="cremoso"]:checked');
-      if (!relleno) { showToast('Por favor elige un relleno cremoso.'); return false; }
+      var relleno = document.querySelector('input[name="relleno"]:checked');
+      if (!relleno) { showToast('Por favor elige un relleno.'); return false; }
     }
     if (step === 3) {
       var betun = document.querySelector('input[name="betun"]:checked');
@@ -581,7 +576,7 @@
     // Build summary rows
     var size = document.querySelector('input[name="size"]:checked');
     var pan = document.getElementById('panSelect');
-    var cremoso = document.querySelector('input[name="cremoso"]:checked');
+    var relleno = document.querySelector('input[name="relleno"]:checked');
     var betun = document.querySelector('input[name="betun"]:checked');
     var date = document.getElementById('pickupDate')?.value || '';
     var time = document.getElementById('pickupTime')?.value || '';
@@ -591,7 +586,7 @@
     var rows = [];
     if (size) rows.push(['Tamaño', size.closest('label')?.querySelector('h3,h4,strong')?.textContent?.trim() || size.value]);
     if (pan) rows.push(['Pan', pan.options[pan.selectedIndex]?.text || '']);
-    if (cremoso) rows.push(['Relleno', cremoso.value]);
+    if (relleno) rows.push(['Relleno', relleno.value]);
     if (betun) rows.push(['Betún', betun.value]);
     if (date) rows.push(['Fecha', date]);
     if (time) rows.push(['Hora', time]);
