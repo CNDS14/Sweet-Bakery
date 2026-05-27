@@ -553,7 +553,7 @@
     if (step === 2) {
       var pan = document.getElementById('panSelect');
       if (!pan || !pan.value) { showToast('Por favor selecciona el tipo de pan.'); return false; }
-      var relleno = document.querySelector('input[name="filling"]:checked');
+      var relleno = document.querySelector('input[name="cremoso"]:checked');
       if (!relleno) { showToast('Por favor elige un relleno cremoso.'); return false; }
     }
     if (step === 3) {
