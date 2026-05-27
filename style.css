@@ -2049,3 +2049,24 @@ select,
 textarea {
   font-size: max(16px, 1rem);
 }
+
+
+/* — Relleno category labels (Step 2) — */
+.relleno-cat-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blush-dark, #B88675);
+  margin: 16px 0 6px;
+}
+.relleno-cat-label:first-of-type {
+  margin-top: 4px;
+}
+.relleno-cat-label small {
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink-soft, #5a5a5a);
+}
