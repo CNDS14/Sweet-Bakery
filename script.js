@@ -318,7 +318,7 @@
     msg += '\ud83d\udc64 Nombre: ' + name + '\n';
     msg += '\ud83d\udccf Tama\u00f1o: ' + (size ? size.value : '\u2014') + ' ($' + (size ? size.dataset.price : 0) + ')\n';
     msg += '\ud83c\udf5e Pan: ' + (pan ? pan.value : '\u2014') + '\n';
-        msg += '🍓 Relleno: ' + (relleno ? relleno.value : '—') + \n;
+                msg += '\uD83C\uDF53 Relleno: ' + (relleno ? relleno.value : '\u2014') + '\n';
     msg += '\ud83c\udfa8 Bet\u00fan: ' + (betun ? betun.value : '\u2014') + '\n';
     if (topper && topper.value !== 'Sin topper') msg += '\ud83c\udf80 Topper: ' + topper.value + '\n';
     if (extras.length) msg += '\u2728 Extras: ' + extras.join(', ') + '\n';
