@@ -1,5 +1,5 @@
 /* ==========================================================
-   SWEET BAKERY · script.js  (v3 — toppers/velas fix)
+   SWEET BAKERY · script.js  (v5 — toppers/velas fix)
    ========================================================== */
 
 (function () {
@@ -581,7 +581,7 @@
     // Build summary rows
     var size = document.querySelector('input[name="size"]:checked');
     var pan = document.getElementById('panSelect');
-    var filling = document.querySelector('input[name="filling"]:checked');
+    var cremoso = document.querySelector('input[name="cremoso"]:checked');
     var betun = document.querySelector('input[name="betun"]:checked');
     var date = document.getElementById('pickupDate')?.value || '';
     var time = document.getElementById('pickupTime')?.value || '';
@@ -591,7 +591,7 @@
     var rows = [];
     if (size) rows.push(['Tamaño', size.closest('label')?.querySelector('h3,h4,strong')?.textContent?.trim() || size.value]);
     if (pan) rows.push(['Pan', pan.options[pan.selectedIndex]?.text || '']);
-    if (filling) rows.push(['Relleno', filling.value]);
+    if (cremoso) rows.push(['Relleno', cremoso.value]);
     if (betun) rows.push(['Betún', betun.value]);
     if (date) rows.push(['Fecha', date]);
     if (time) rows.push(['Hora', time]);
