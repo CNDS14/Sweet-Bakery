@@ -2070,3 +2070,697 @@ textarea {
   text-transform: none;
   color: var(--ink-soft, #5a5a5a);
 }
+
+
+/* ============================================
+   CLOUDINARY PLACEHOLDER (foto pendiente)
+   ============================================ */
+.cloudinary-placeholder {
+  position: relative;
+  background: linear-gradient(135deg, var(--cream-2), #EDE3D8);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img-placeholder-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 1.5rem;
+  color: var(--blush-dark);
+  text-align: center;
+}
+
+.img-placeholder-inner p {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--blush-dark);
+  opacity: 0.7;
+  margin: 0;
+}
+
+/* ============================================
+   SABOR DEL MES
+   ============================================ */
+.sabor-mes {
+  background: linear-gradient(135deg, var(--cream) 0%, var(--cream-2) 100%);
+  overflow: hidden;
+}
+
+.sabor-mes-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.sabor-mes-eyebrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--blush-dark);
+  font-weight: 600;
+  background: var(--blush-light);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+
+.sabor-mes-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 600;
+  font-style: italic;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.sabor-mes-name {
+  font-family: var(--font-script);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--blush-dark);
+  margin-bottom: 1rem;
+}
+
+.sabor-mes-desc {
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.sabor-mes-stock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.stock-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--blush-dark);
+  line-height: 1;
+}
+
+.stock-unit {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+.sabor-mes-img-wrap {
+  position: relative;
+}
+
+.sabor-mes-img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+
+.sabor-mes-ribbon {
+  position: absolute;
+  top: 20px;
+  right: -10px;
+  background: var(--blush-dark);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  padding: 6px 16px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(184,134,117,0.4);
+}
+
+.sabor-mes-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .sabor-mes-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .sabor-mes-img-wrap { order: -1; }
+}
+
+
+/* ============================================
+   CLOUDINARY PLACEHOLDER
+   ============================================ */
+.cloudinary-placeholder {
+  background: linear-gradient(135deg, var(--cream-2), #EDE3D8);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.img-placeholder-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 1.5rem;
+  text-align: center;
+}
+.img-placeholder-inner p {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--blush-dark);
+  opacity: 0.7;
+  margin: 0;
+}
+
+/* ============================================
+   SABOR DEL MES
+   ============================================ */
+.sabor-mes {
+  background: linear-gradient(135deg, var(--cream) 0%, var(--cream-2) 100%);
+}
+.sabor-mes-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.sabor-mes-eyebrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: white;
+  font-weight: 600;
+  background: var(--blush-dark);
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+.sabor-mes-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+  font-weight: 600;
+  font-style: italic;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+.sabor-mes-name {
+  font-family: var(--font-script);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  color: var(--blush-dark);
+  margin-bottom: 0.75rem;
+  line-height: 1.1;
+}
+.sabor-mes-desc {
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+.sabor-mes-stock {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 18px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+.stock-number {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--blush-dark);
+  line-height: 1;
+}
+.sabor-mes-img-wrap { position: relative; }
+.sabor-mes-img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+.sabor-mes-ribbon {
+  position: absolute;
+  top: 20px;
+  right: -8px;
+  background: var(--blush-dark);
+  color: white;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  padding: 6px 14px;
+  border-radius: 20px;
+  box-shadow: 0 4px 14px rgba(184,134,117,0.4);
+}
+@media (max-width: 768px) {
+  .sabor-mes-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .sabor-mes-img-wrap { order: -1; }
+}
+
+
+/* CLOUDINARY PLACEHOLDER */
+.cloudinary-placeholder {
+  background: linear-gradient(135deg, var(--cream-2), #EDE3D8);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.img-placeholder-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 1.5rem;
+  text-align: center;
+}
+.img-placeholder-inner p {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--blush-dark);
+  opacity: 0.7;
+  margin: 0;
+}
+
+
+/* SABOR DEL MES */
+.sabor-mes {
+  background: linear-gradient(135deg, var(--cream) 0%, var(--cream-2) 100%);
+}
+.sabor-mes-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.sabor-mes-eyebrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: white;
+  font-weight: 600;
+  background: var(--blush-dark);
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+.sabor-mes-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 600;
+  font-style: italic;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+}
+.sabor-mes-name {
+  font-family: var(--font-script);
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  color: var(--blush-dark);
+  margin-bottom: 0.75rem;
+  line-height: 1.1;
+}
+.sabor-mes-desc {
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+.sabor-mes-stock {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 18px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+.stock-number {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--blush-dark);
+  line-height: 1;
+}
+.sabor-mes-img-wrap { position: relative; }
+.sabor-mes-img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  min-height: 300px;
+}
+.sabor-mes-ribbon {
+  position: absolute;
+  top: 20px;
+  right: -8px;
+  background: var(--blush-dark);
+  color: white;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  padding: 6px 14px;
+  border-radius: 20px;
+  box-shadow: 0 4px 14px rgba(184,134,117,0.4);
+}
+@media (max-width: 768px) {
+  .sabor-mes-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .sabor-mes-img-wrap { order: -1; }
+}
+
+
+/* GALERIA */
+.galeria { background: var(--cream); }
+.galeria-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+.filter-btn {
+  padding: 8px 20px;
+  border-radius: 30px;
+  border: 1.5px solid var(--line);
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--t-fast);
+  font-family: var(--font-sans);
+}
+.filter-btn:hover {
+  border-color: var(--blush);
+  color: var(--blush-dark);
+}
+.filter-btn.active {
+  background: var(--blush-dark);
+  border-color: var(--blush-dark);
+  color: white;
+}
+.galeria-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 2.5rem;
+}
+.galeria-item {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: white;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--t-fast);
+}
+.galeria-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.galeria-item.hidden { display: none; }
+.galeria-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  min-height: 200px;
+}
+.galeria-info {
+  padding: 12px 14px;
+}
+.galeria-cat-tag {
+  display: inline-block;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blush-dark);
+  background: var(--cream-2);
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-bottom: 4px;
+}
+.galeria-info p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 0;
+}
+.galeria-footer-cta {
+  text-align: center;
+  padding-top: 1rem;
+}
+.galeria-footer-cta p {
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+
+/* HISTORIA */
+.historia { background: var(--cream-2); }
+.historia-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 5rem;
+  align-items: center;
+}
+.historia-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  min-height: 300px;
+}
+.historia-placeholder {
+  min-height: 300px;
+}
+.historia-img-col { position: relative; }
+.historia-badge-ano {
+  position: absolute;
+  bottom: -16px;
+  right: -16px;
+  background: var(--blush-dark);
+  color: white;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  padding: 12px 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(184,134,117,0.4);
+}
+.historia-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  color: var(--ink);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+.historia-title em {
+  color: var(--blush-dark);
+  font-style: italic;
+}
+.historia-text-col p {
+  color: var(--ink-soft);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+.historia-valores {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.valor-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.valor-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.valor-item strong {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.valor-item p {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  margin: 0 !important;
+  line-height: 1.5;
+}
+@media (max-width: 768px) {
+  .historia-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .historia-badge-ano { bottom: 12px; right: 12px; }
+}
+
+
+/* POLITICA DE APARTADO */
+.politica { background: var(--cream); }
+.politica-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+.politica-card {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  border: 1.5px solid var(--line);
+  transition: all var(--t-fast);
+}
+.politica-card:hover {
+  border-color: var(--blush);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+.politica-icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+.politica-card h3 {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+.politica-card p {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.65;
+  margin: 0;
+}
+
+
+/* FAQ */
+.faq { background: var(--cream-2); }
+.faq-list {
+  max-width: 780px;
+  margin: 0 auto 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.faq-item {
+  background: white;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--line);
+  overflow: hidden;
+  transition: border-color var(--t-fast);
+}
+.faq-item[open] {
+  border-color: var(--blush);
+}
+.faq-q {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ink);
+  padding: 1.1rem 1.5rem;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  user-select: none;
+}
+.faq-q::-webkit-details-marker { display: none; }
+.faq-q::after {
+  content: '+';
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--blush-dark);
+  flex-shrink: 0;
+  transition: transform var(--t-fast);
+}
+.faq-item[open] .faq-q::after {
+  transform: rotate(45deg);
+}
+.faq-a {
+  padding: 0 1.5rem 1.1rem;
+  border-top: 1px solid var(--line);
+}
+.faq-a p {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 0.75rem 0 0;
+}
+.faq-footer-cta {
+  text-align: center;
+  padding-top: 0.5rem;
+}
+.faq-footer-cta p {
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+.faq-wa-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* COTIZADOR - vista previa resumen */
+.wizard-preview {
+  background: linear-gradient(135deg, var(--cream-2), white);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  min-height: 60px;
+  display: none;
+}
+.wizard-preview.visible { display: block; }
+.wizard-preview-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--blush-dark);
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+.wizard-preview strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* NAV LINKS EXTRA (Galeria, Nosotros, FAQ) */
+.nav-links a[href="#galeria"],
+.nav-links a[href="#historia"],
+.nav-links a[href="#faq"] {
+  /* inherit all nav-link styles */
+}
