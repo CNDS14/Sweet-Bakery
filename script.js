@@ -620,4 +620,83 @@
     modal.onclick = function(e) { if (e.target === modal) closeModal(); };
   }
 
+
+
+  /* ── GALERIA FILTRABLE ──────────────────────── */
+  function bindGaleriaFilter() {
+    var filterBtns = document.querySelectorAll('.filter-btn');
+    var galeriaItems = document.querySelectorAll('.galeria-item');
+    if (!filterBtns.length || !galeriaItems.length) return;
+    filterBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var filter = btn.getAttribute('data-filter');
+        filterBtns.forEach(function(b) {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        galeriaItems.forEach(function(item) {
+          var cat = item.getAttribute('data-cat');
+          if (filter === 'all' || cat === filter) {
+            item.classList.remove('hidden');
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+      });
+    });
+  }
+
+  /* ── COTIZADOR VISTA PREVIA ─────────────────── */
+  function updateWizardPreview() {
+    var preview = document.getElementById('wizardPreview');
+    if (!preview) return;
+    var size = document.querySelector('input[name="size"]:checked');
+    var pan = document.getElementById('panSelect');
+    var relleno = document.querySelector('input[name="relleno"]:checked');
+    if (!size) { preview.classList.remove('visible'); return; }
+    preview.classList.add('visible');
+    var text = 'Pastel ' + size.value;
+    if (pan && pan.value) text += ' de ' + pan.value;
+    if (relleno) text += ' con ' + relleno.value;
+    var content = preview.querySelector('.wizard-preview-content');
+    if (content) content.innerHTML = '<strong>' + text + '</strong>';
+  }
+
+  function bindWizardPreview() {
+    var previewDiv = document.getElementById('wizardPreview');
+    if (!previewDiv) return;
+    document.querySelectorAll('input[name="size"]').forEach(function(inp) {
+      inp.addEventListener('change', updateWizardPreview);
+    });
+    var panSel = document.getElementById('panSelect');
+    if (panSel) panSel.addEventListener('change', updateWizardPreview);
+    document.querySelectorAll('input[name="relleno"]').forEach(function(inp) {
+      inp.addEventListener('change', updateWizardPreview);
+    });
+  }
+
+  /* ── SABOR DEL MES CONFIG ─────────────────── */
+  var SABOR_MES = {
+    nombre: 'Fresas con Crema',
+    stock: 8,
+    mes: 'Mayo 2025'
+  };
+
+  function initSaborMes() {
+    var nombreEl = document.getElementById('saborMesNombre');
+    var stockEl = document.getElementById('saborMesStock');
+    if (nombreEl) nombreEl.textContent = SABOR_MES.nombre;
+    if (stockEl) stockEl.textContent = SABOR_MES.stock;
+  }
+
+  /* ── INIT EXTENDIDO ───────────────────────── */
+  document.addEventListener('DOMContentLoaded', function() {
+    bindGaleriaFilter();
+    bindWizardPreview();
+    initSaborMes();
+  });
+
 })();
+
