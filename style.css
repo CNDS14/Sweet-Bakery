@@ -918,7 +918,7 @@ textarea { resize: vertical; min-height: 80px; }
 .mosaic-item.m-7 { grid-column: span 2; }
 
 .instagram-banner {
-  background: linear-gradient(135deg, var(--blush-light) 0%, var(--blush) 100%);
+  background: linear-gradient(135deg, #5a3e2b 0%, #7a4f3a 60%, var(--blush-dark) 100%);
   border-radius: var(--radius-xl);
   padding: 36px 44px;
   display: flex;
@@ -927,7 +927,7 @@ textarea { resize: vertical; min-height: 80px; }
   gap: 30px;
   flex-wrap: wrap;
   color: white;
-  box-shadow: var(--shadow-md);
+     box-shadow: var(--shadow-md);
 }
 .ig-content h3 {
   font-family: var(--font-serif);
@@ -937,7 +937,7 @@ textarea { resize: vertical; min-height: 80px; }
   margin-bottom: 6px;
 }
 .ig-content p { font-size: 0.95rem; opacity: 0.95; max-width: 480px; }
-.instagram-banner .btn-primary { background: white; color: var(--blush-dark); }
+.instagram-banner .btn-primary { background: white; color: #5a3e2b; font-weight: 600; }
 .instagram-banner .btn-primary:hover { background: var(--cream); }
 
 /* ============================================
