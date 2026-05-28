@@ -1452,9 +1452,9 @@ textarea { resize: vertical; min-height: 80px; }
 
 /* ── INSTAGRAM BANNER ── */
 .instagram-banner {
-  background: linear-gradient(135deg, var(--brand-cream-warm), #FDF9F5);
-  border: 1px solid rgba(201,149,106,0.2);
-  border-radius: 20px;
+  background: linear-gradient(135deg, #5a3e2b 0%, #7a4f3a 60%, var(--blush-dark) 100%);
+  color: white;
+  box-shadow: 0 8px 32px rgba(90,62,43,0.35);
 }
 
 /* ── FOOTER: fondo cálido ── */
@@ -1601,7 +1601,7 @@ textarea { resize: vertical; min-height: 80px; }
   background: var(--blush, #D4A396);
   color: #fff;
   padding: 1px 9px;
-  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(90,62,43,0.35);
   font-size: 0.78rem;
   font-weight: 700;
   animation: macFadeIn 0.22s ease;
@@ -1722,7 +1722,7 @@ textarea { resize: vertical; min-height: 80px; }
 }
 .quote-modal {
   background: var(--cream, #FDFBF7);
-  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(90,62,43,0.35);
   padding: 36px 32px 28px;
   max-width: 480px;
   width: 100%;
