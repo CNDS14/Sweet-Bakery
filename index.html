@@ -65,7 +65,7 @@
         <a href="#cotizador">Cotizador</a>
         <a href="#clasicos">Clásicos</a>
         <a href="#momentos">Momentos</a>
-        <a href="#contacto">Contacto</a>
+        <a href="#galeria">Galeria</a>      <a href="#historia">Nosotros</a>
       </nav>
 
       <div class="status-badge" id="statusBadge" role="status" aria-live="polite">
@@ -535,6 +535,658 @@
       </div>
     </div>
   </section>
+
+<!-- ============== SABOR DEL MES ============== -->
+<section class="section sabor-mes reveal" id="sabor-mes">
+  <div class="container">
+    <div class="sabor-mes-inner">
+      <div class="sabor-mes-badge">
+        <span class="sabor-mes-eyebrow">Edicion limitada</span>
+        <h2 class="sabor-mes-title">Sabor del Mes</h2>
+        <p class="sabor-mes-name" id="saborMesNombre">Fresas con Crema</p>
+        <p class="sabor-mes-desc">Pan de vainilla, relleno de crema chantilly con fresas frescas, cobertura de betun de mantequilla suiza decorado con flores naturales y fresas en abanico.</p>
+        <div class="sabor-mes-stock">
+          <span class="stock-icon">&#x1F382;</span>
+          <span class="stock-label">Disponibilidad este mes:</span>
+          <span class="stock-number" id="saborMesStock">8</span>
+          <span class="stock-unit">pasteles</span>
+        </div>
+        <a href="#cotizador" class="btn btn-primary sabor-mes-cta">Quiero este sabor</a>
+      </div>
+      <div class="sabor-mes-img-wrap">
+        <div class="sabor-mes-img cloudinary-placeholder" data-cloudinary-id="sabor-mes-mayo-2025">
+          <div class="img-placeholder-inner">
+            <svg viewBox="0 0 120 120" width="60" height="60" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="120" rx="16" fill="#F5E9DF"/><path d="M40 80 Q60 50 80 80" stroke="#C9956A" stroke-width="3" fill="none"/><circle cx="60" cy="45" r="14" fill="#D4A396"/></svg>
+            <p>Foto Mayo 2025</p>
+          </div>
+        </div>
+        <div class="sabor-mes-ribbon">MAYO 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== GALERIA INSPIRACION ============== -->
+<section class="section galeria reveal" id="galeria">
+  <div class="container">
+    <span class="eyebrow center">Encuentra tu estilo</span>
+    <h2 class="section-title">Galeria de Inspiracion</h2>
+    <p class="section-lead">Filtra por categoria y descubre los estilos que mas hacemos. Cada pastel es unico -- estos son ejemplos reales de Sweet Bakery.</p>
+    <div class="galeria-filters" role="tablist" aria-label="Filtros de galeria">
+      <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">Todos</button>
+      <button class="filter-btn" data-filter="clasicos" role="tab" aria-selected="false">Clasicos</button>
+      <button class="filter-btn" data-filter="2pisos" role="tab" aria-selected="false">2 Pisos</button>
+      <button class="filter-btn" data-filter="tematicos" role="tab" aria-selected="false">Tematicos</button>
+      <button class="filter-btn" data-filter="lunchbox" role="tab" aria-selected="false">Lunchbox</button>
+      <button class="filter-btn" data-filter="flores" role="tab" aria-selected="false">Flores</button>
+      <button class="filter-btn" data-filter="korean" role="tab" aria-selected="false">Korean</button>
+    </div>
+    <div class="galeria-grid" id="galeriaGrid">
+      <div class="galeria-item" data-cat="clasicos">
+        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-clasico-01">
+          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><path d="M20 55 L60 55 L55 30 L25 30 Z" fill="#D4A396" opacity="0.6"/></svg><p>Pronto</p></div>
+        </div>
+        <div class="galeria-info"><span class="galeria-cat-tag">Clasico</span><p>Buttercream Liso</p></div>
+      </div>
+      <div class="galeria-item" data-cat="clasicos">
+        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-clasico-02">
+          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><path d="M20 55 L60 55 L55 30 L25 30 Z" fill="#C9956A" opacity="0.5"/></svg><p>Pronto</p></div>
+        </div>
+        <div class="galeria-info"><span class="galeria-cat-tag">Clasico</span><p>Naked Cake</p></div>
+      </div>
+      <div class="galeria-item" data-cat="2pisos">
+        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-2p-01">
+          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><rect x="22" y="42" width="36" height="16" rx="3" fill="#D4A396" opacity="0.7"/><rect x="28" y="28" width="24" height="16" rx="3" fill="#E5C5B5"/></svg><p>Pronto</p></div>
+        </div>
+        <div class="galeria-info"><span class="galeria-cat-tag">2 Pisos</span><p>Clasico Elegante</p></div>
+      </div>
+      <div class="galeria-item" data-cat="2pisos">
+        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-2p-02">
+          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><rect x="22" y="42" width="36" height="16" rx="3" fill="#8A9A86" opacity="0.6"/><rect x="28" y="28" width="24" height="16" rx="3" fill="#D4A396" opacity="0.6"/></svg><p>Pronto</p></div>
+        </div>
+        <div class="galeria-info"><span class="galeria-cat-tag">2 Pisos</span><p>Con Flores</p></div>
+      </div>
+      <div class="galeria-item" data-cat="tematicos">
+        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-tematico-01">
+          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><path d="M40 15 L55 55 L25 55 Z" fill="#C9956A" opacity="0.5"/></svg><p>Pronto</p></div>
+        </div>
+        <div class="galeria-info"><span class="galeria-cat-tag">Tematico</span><p>Personalizado</p></div>
+      </div>
+      <div class="galeria-item" data-cat="lunchbox">
+        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-lunchbox-01">
+          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><rect x="20" y="28" width="40" height="30" rx="4" fill="#D4A396" opacity="0.6"/></svg><p>Pronto</p></div>
+        </div>
+        <div class="galeria-info"><span class="galeria-cat-tag">Lunchbox</span><p>2 porciones</p></div>
+      </div>
+      <div class="galeria-item" data-cat="lunchbox">
+        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-lunchbox-02">
+          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><rect x="24" y="30" width="32" height="26" rx="4" fill="#8A9A86" opacity="0.4"/></svg><p>Pronto</p></div>
+        </div>
+        <div class="galeria-info"><span class="galeria-cat-tag">Lunchbox</span><p>Decorado</p></div>
+      </div>
+      <div class="galeria-item" data-cat="flores">
+        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-flores-01">
+          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><circle cx="40" cy="30" r="14" fill="#D4A396" opacity="0.5"/><circle cx="30" cy="42" r="10" fill="#8A9A86" opacity="0.4"/><circle cx="50" cy="42" r="10" fill="#E5C5B5"/></svg><p>Pronto</p></div>
+        </div>
+        <div class="galeria-info"><span class="galeria-cat-tag">Flores</span><p>Bouquet Natural</p></div>
+      </div>
+      <div class="galeria-item" data-cat="flores">
+        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-flores-02">
+          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><circle cx="40" cy="36" r="18" fill="#E5C5B5" opacity="0.6"/><circle cx="40" cy="36" r="10" fill="#D4A396"/></svg><p>Pronto</p></div>
+        </div>
+        <div class="galeria-info"><span class="galeria-cat-tag">Flores</span><p>Floral Korean</p></div>
+      </div>
+      <div class="galeria-item" data-cat="korean">
+        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-korean-01">
+          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><rect x="22" y="30" width="36" height="26" rx="4" fill="#FAF0E6"/></svg><p>Pronto</p></div>
+        </div>
+        <div class="galeria-info"><span class="galeria-cat-tag">Korean</span><p>Minimalista</p></div>
+      </div>
+      <div class="galeria-item" data-cat="tematicos">
+        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-tematico-02">
+          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><path d="M25 55 L40 15 L55 55 Z" fill="#D4A396" opacity="0.4"/></svg><p>Pronto</p></div>
+        </div>
+        <div class="galeria-info"><span class="galeria-cat-tag">Tematico</span><p>XV Anios</p></div>
+      </div>
+      <div class="galeria-item" data-cat="clasicos">
+        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-clasico-03">
+          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><path d="M20 55 L60 55 L55 30 L25 30 Z" fill="#8A9A86" opacity="0.5"/></svg><p>Pronto</p></div>
+        </div>
+        <div class="galeria-info"><span class="galeria-cat-tag">Clasico</span><p>Ombre</p></div>
+      </div>
+    </div>
+    <div class="galeria-footer-cta">
+      <p>No encontraste lo que buscas? Tenemos mas de 756 disenos en Instagram.</p>
+      <a href="https://www.instagram.com/sweetbakery.cuu/" target="_blank" rel="noopener" class="btn btn-ghost">Ver mas en Instagram</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== HISTORIA ============== -->
+<section class="section historia reveal" id="historia">
+  <div class="container">
+    <div class="historia-inner">
+      <div class="historia-img-col">
+        <div class="historia-img cloudinary-placeholder" data-cloudinary-id="historia-equipo">
+          <div class="img-placeholder-inner historia-placeholder">
+            <svg viewBox="0 0 160 160" width="80" height="80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="160" height="160" rx="20" fill="#F5E9DF"/><circle cx="80" cy="60" r="28" fill="#D4A396" opacity="0.6"/><path d="M35 130 Q80 100 125 130" fill="#E5C5B5" opacity="0.5"/></svg>
+            <p>Foto del equipo proximamente</p>
+          </div>
+        </div>
+        <div class="historia-badge-ano">Desde 2017</div>
+      </div>
+      <div class="historia-text-col">
+        <span class="eyebrow">Nuestra historia</span>
+        <h2 class="historia-title">Mas que un pastel,<br/><em>un momento</em></h2>
+        <p>Sweet Bakery nacio en Chihuahua en 2017 con una mision clara: llevar reposteria artesanal de alta calidad a cada celebracion. Lo que comenzo como un sueno se convirtio en una pasteleria de autor reconocida en la ciudad.</p>
+        <p>Cada pastel que creamos es unico. Usamos ingredientes frescos, tecnicas modernas y mucho carino. Desde pasteles personalizados para bodas y quinceanieras hasta los mas simples y deliciosos pasteles de cumpleanos.</p>
+        <div class="historia-valores">
+          <div class="valor-item">
+            <span class="valor-icon">&#x1F33F;</span>
+            <div><strong>100% Artesanal</strong><p>Sin conservadores, hecho de cero cada dia.</p></div>
+          </div>
+          <div class="valor-item">
+            <span class="valor-icon">&#x2728;</span>
+            <div><strong>Diseno unico</strong><p>Cada pastel es creado especialmente para ti.</p></div>
+          </div>
+          <div class="valor-item">
+            <span class="valor-icon">&#x1F49B;</span>
+            <div><strong>Con carino</strong><p>7 anos endulzando momentos en Chihuahua.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== POLITICA DE APARTADO ============== -->
+<section class="section politica reveal" id="politica">
+  <div class="container">
+    <span class="eyebrow center">Transparencia total</span>
+    <h2 class="section-title">Politica de Apartado</h2>
+    <p class="section-lead">Queremos que tu experiencia sea perfecta desde el primer mensaje. Aqui encontraras todo lo que necesitas saber sobre tu pedido.</p>
+    <div class="politica-grid">
+      <div class="politica-card">
+        <div class="politica-icon">&#x1F4C5;</div>
+        <h3>Anticipacion minima</h3>
+        <p>Requerimos <strong>4 dias habiles</strong> de anticipacion para pasteles personalizados. Para disenos muy elaborados o pasteles de mas de 2 pisos, recomendamos 7-10 dias.</p>
+      </div>
+      <div class="politica-card">
+        <div class="politica-icon">&#x1F4B3;</div>
+        <h3>Forma de pago</h3>
+        <p>Se requiere un <strong>anticipo del 50%</strong> para confirmar tu pedido. El resto se paga al momento de la recoleccion. Aceptamos transferencia bancaria y efectivo.</p>
+      </div>
+      <div class="politica-card">
+        <div class="politica-icon">&#x274C;</div>
+        <h3>Cancelaciones</h3>
+        <p>Cancelaciones con mas de <strong>48 horas de anticipacion</strong>: reembolso del 80% del anticipo. Cancelaciones con menos de 48 horas: no hay reembolso ya que los insumos han sido adquiridos.</p>
+      </div>
+      <div class="politica-card">
+        <div class="politica-icon">&#x1F697;</div>
+        <h3>Recoleccion en tienda</h3>
+        <p>Todos los pedidos son <strong>exclusivamente para recoleccion</strong> en nuestra tienda en Calle 24 #2104. No realizamos envios a domicilio para garantizar la integridad del pastel.</p>
+      </div>
+      <div class="politica-card">
+        <div class="politica-icon">&#x1F504;</div>
+        <h3>Cambios al pedido</h3>
+        <p>Cambios menores (texto, color de betun) se aceptan hasta <strong>3 dias antes</strong>. Cambios de diseno o tamano deben solicitarse con al menos 5 dias de anticipacion.</p>
+      </div>
+      <div class="politica-card">
+        <div class="politica-icon">&#x1F4E6;</div>
+        <h3>Cuidado del pastel</h3>
+        <p>Al recoger tu pastel recomendamos transportarlo en <strong>superficie plana</strong> y con aire acondicionado. Los pasteles con flores naturales son especialmente sensibles al calor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FAQ ============== -->
+<section class="section faq reveal" id="faq">
+  <div class="container">
+    <span class="eyebrow center">Preguntas frecuentes</span>
+    <h2 class="section-title">Tienes dudas?</h2>
+    <p class="section-lead">Estas son las preguntas que mas nos hacen. Si no encuentras tu respuesta, escribenos por WhatsApp.</p>
+    <div class="faq-list" id="faqList">
+      <details class="faq-item">
+        <summary class="faq-q">Con cuanto tiempo de anticipacion debo hacer mi pedido?</summary>
+        <div class="faq-a"><p>Para pasteles personalizados requerimos minimo <strong>4 dias habiles</strong> de anticipacion. Para disenos elaborados (2 pisos, flores naturales, figuras de fondant) recomendamos 7-10 dias. Los productos de vitrina no requieren anticipacion.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Hacen entregas a domicilio?</summary>
+        <div class="faq-a"><p>No realizamos entregas a domicilio. Todos los pedidos se <strong>recolectan en nuestra tienda</strong> en Calle 24 #2104, Chihuahua. Esto es para garantizar que tu pastel llegue en perfectas condiciones.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Que formas de pago aceptan?</summary>
+        <div class="faq-a"><p>Aceptamos <strong>transferencia bancaria y efectivo</strong>. Se requiere un anticipo del 50% para apartar tu pedido y el resto al recogerlo.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Puedo ver el pastel antes de recogerlo?</summary>
+        <div class="faq-a"><p>Compartimos <strong>fotos del proceso y resultado final</strong> por WhatsApp antes de que pases a recogerlo, para que puedas confirmar que todo esta a tu gusto.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Los ingredientes son frescos?</summary>
+        <div class="faq-a"><p>Si, trabajamos con ingredientes frescos y de calidad. No usamos conservadores artificiales. Recomendamos consumir el pastel dentro de los <strong>2-3 dias</strong> siguientes a la recoleccion y mantenerlo refrigerado.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Hacen pasteles para personas con alergias?</summary>
+        <div class="faq-a"><p>Podemos adaptar algunas recetas, pero nuestra cocina <strong>no es libre de alerge nos</strong>. Si tienes alergias severas, escribenos para evaluar tu caso particular antes de ordenar.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">El cotizador en linea es el precio final?</summary>
+        <div class="faq-a"><p>El cotizador te da un <strong>precio estimado</strong> muy cercano al real. El precio final puede variar ligeramente dependiendo de la complejidad del diseno personalizado. Te confirmaremos el precio exacto al validar tu pedido por WhatsApp.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Como funciona el Sabor del Mes?</summary>
+        <div class="faq-a"><p>Cada mes seleccionamos un <strong>sabor especial de edicion limitada</strong> con ingredientes de temporada. Es una combinacion unica que solo esta disponible ese mes y en cantidades limitadas. Puedes pedirlo directamente desde el cotizador.</p></div>
+      </details>
+    </div>
+    <div class="faq-footer-cta">
+      <p>Tienes otra pregunta?</p>
+      <a href="https://wa.me/5216142868000" target="_blank" rel="noopener" class="btn btn-whatsapp faq-wa-btn">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11 11 0 0 0 3.6 17.3L2 22l4.8-1.6A11 11 0 0 0 20.5 3.5zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-2.9 1 1-2.8-.2-.3a9 9 0 1 1 7 3.6zm5-6.7c-.3-.1-1.6-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1a7.4 7.4 0 0 1-3.6-3.1c-.3-.5.3-.4.8-1.4 0-.2 0-.4-.1-.5l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4a3 3 0 0 0-1 2.3c0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.2 1.7.7 2.4.8 3.2.6.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3z"/></svg>
+        Escribenos por WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== SABOR DEL MES ============== -->
+<section class="section sabor-mes reveal" id="sabor-mes">
+  <div class="container">
+    <div class="sabor-mes-inner">
+      <div class="sabor-mes-badge">
+        <span class="sabor-mes-eyebrow">Edicion limitada</span>
+        <h2 class="sabor-mes-title">Sabor del Mes</h2>
+        <p class="sabor-mes-name" id="saborMesNombre">Fresas con Crema</p>
+        <p class="sabor-mes-desc">Pan de vainilla, relleno de crema chantilly con fresas frescas, cobertura de betun de mantequilla suiza decorado con flores naturales y fresas en abanico.</p>
+        <div class="sabor-mes-stock">
+          <span class="stock-icon">&#x1F382;</span>
+          <span class="stock-label">Disponibilidad este mes:</span>
+          <span class="stock-number" id="saborMesStock">8</span>
+          <span class="stock-unit">pasteles</span>
+        </div>
+        <a href="#cotizador" class="btn btn-primary sabor-mes-cta">Quiero este sabor</a>
+      </div>
+      <div class="sabor-mes-img-wrap">
+        <div class="sabor-mes-img cloudinary-placeholder" data-cloudinary-id="sabor-mes-mayo-2025">
+          <div class="img-placeholder-inner">
+            <svg viewBox="0 0 120 120" width="60" height="60" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="120" rx="16" fill="#F5E9DF"/><path d="M40 80 Q60 50 80 80" stroke="#C9956A" stroke-width="3" fill="none"/><circle cx="60" cy="45" r="14" fill="#D4A396"/></svg>
+            <p>Foto Mayo 2025</p>
+          </div>
+        </div>
+        <div class="sabor-mes-ribbon">MAYO 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== GALERIA INSPIRACION ============== -->
+<section class="section galeria reveal" id="galeria">
+  <div class="container">
+    <span class="eyebrow center">Encuentra tu estilo</span>
+    <h2 class="section-title">Galeria de Inspiracion</h2>
+    <p class="section-lead">Filtra por categoria y descubre los estilos que mas hacemos. Cada pastel es unico.</p>
+    <div class="galeria-filters" role="tablist">
+      <button class="filter-btn active" data-filter="all">Todos</button>
+      <button class="filter-btn" data-filter="clasicos">Clasicos</button>
+      <button class="filter-btn" data-filter="2pisos">2 Pisos</button>
+      <button class="filter-btn" data-filter="tematicos">Tematicos</button>
+      <button class="filter-btn" data-filter="lunchbox">Lunchbox</button>
+      <button class="filter-btn" data-filter="flores">Flores</button>
+      <button class="filter-btn" data-filter="korean">Korean</button>
+    </div>
+    <div class="galeria-grid" id="galeriaGrid">
+      <div class="galeria-item" data-cat="clasicos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-clasico-01"><div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><path d="M20 55 L60 55 L55 30 L25 30 Z" fill="#D4A396" opacity="0.6"/></svg><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Clasico</span><p>Buttercream Liso</p></div></div>
+      <div class="galeria-item" data-cat="clasicos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-clasico-02"><div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><path d="M20 55 L60 55 L55 30 L25 30 Z" fill="#C9956A" opacity="0.5"/></svg><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Clasico</span><p>Naked Cake</p></div></div>
+      <div class="galeria-item" data-cat="2pisos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-2p-01"><div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><rect x="22" y="42" width="36" height="16" rx="3" fill="#D4A396" opacity="0.7"/><rect x="28" y="28" width="24" height="16" rx="3" fill="#E5C5B5"/></svg><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">2 Pisos</span><p>Clasico Elegante</p></div></div>
+      <div class="galeria-item" data-cat="2pisos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-2p-02"><div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><rect x="22" y="42" width="36" height="16" rx="3" fill="#8A9A86" opacity="0.6"/><rect x="28" y="28" width="24" height="16" rx="3" fill="#D4A396" opacity="0.6"/></svg><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">2 Pisos</span><p>Con Flores</p></div></div>
+      <div class="galeria-item" data-cat="tematicos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-tematico-01"><div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><path d="M40 15 L55 55 L25 55 Z" fill="#C9956A" opacity="0.5"/></svg><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Tematico</span><p>Personalizado</p></div></div>
+      <div class="galeria-item" data-cat="lunchbox"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-lunchbox-01"><div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><rect x="20" y="28" width="40" height="30" rx="4" fill="#D4A396" opacity="0.6"/></svg><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Lunchbox</span><p>2 porciones</p></div></div>
+      <div class="galeria-item" data-cat="lunchbox"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-lunchbox-02"><div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><rect x="24" y="30" width="32" height="26" rx="4" fill="#8A9A86" opacity="0.4"/></svg><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Lunchbox</span><p>Decorado</p></div></div>
+      <div class="galeria-item" data-cat="flores"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-flores-01"><div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><circle cx="40" cy="30" r="14" fill="#D4A396" opacity="0.5"/><circle cx="50" cy="42" r="10" fill="#E5C5B5"/></svg><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Flores</span><p>Bouquet Natural</p></div></div>
+      <div class="galeria-item" data-cat="flores"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-flores-02"><div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><circle cx="40" cy="36" r="18" fill="#E5C5B5" opacity="0.6"/><circle cx="40" cy="36" r="10" fill="#D4A396"/></svg><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Flores</span><p>Floral Korean</p></div></div>
+      <div class="galeria-item" data-cat="korean"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-korean-01"><div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><rect x="22" y="30" width="36" height="26" rx="4" fill="#FAF0E6"/></svg><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Korean</span><p>Minimalista</p></div></div>
+      <div class="galeria-item" data-cat="tematicos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-tematico-02"><div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><path d="M25 55 L40 15 L55 55 Z" fill="#D4A396" opacity="0.4"/></svg><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Tematico</span><p>XV Anos</p></div></div>
+      <div class="galeria-item" data-cat="clasicos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-clasico-03"><div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><path d="M20 55 L60 55 L55 30 L25 30 Z" fill="#8A9A86" opacity="0.5"/></svg><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Clasico</span><p>Ombre</p></div></div>
+    </div>
+    <div class="galeria-footer-cta">
+      <p>No encontraste lo que buscas? Tenemos mas de 756 disenos en Instagram.</p>
+      <a href="https://www.instagram.com/sweetbakery.cuu/" target="_blank" rel="noopener" class="btn btn-ghost">Ver mas en Instagram</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== HISTORIA ============== -->
+<section class="section historia reveal" id="historia">
+  <div class="container">
+    <div class="historia-inner">
+      <div class="historia-img-col">
+        <div class="historia-img cloudinary-placeholder" data-cloudinary-id="historia-equipo">
+          <div class="img-placeholder-inner historia-placeholder">
+            <svg viewBox="0 0 160 160" width="80" height="80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="160" height="160" rx="20" fill="#F5E9DF"/><circle cx="80" cy="60" r="28" fill="#D4A396" opacity="0.6"/><path d="M35 130 Q80 100 125 130" fill="#E5C5B5" opacity="0.5"/></svg>
+            <p>Foto del equipo proximamente</p>
+          </div>
+        </div>
+        <div class="historia-badge-ano">Desde 2017</div>
+      </div>
+      <div class="historia-text-col">
+        <span class="eyebrow">Nuestra historia</span>
+        <h2 class="historia-title">Mas que un pastel,<br/><em>un momento</em></h2>
+        <p>Sweet Bakery nacio en Chihuahua en 2017 con una mision clara: llevar reposteria artesanal de alta calidad a cada celebracion. Lo que comenzo como un sueno se convirtio en una pasteleria de autor reconocida en la ciudad.</p>
+        <p>Cada pastel que creamos es unico. Usamos ingredientes frescos, tecnicas modernas y mucho carino. Desde pasteles personalizados para bodas y quinceanieras hasta los mas simples y deliciosos pasteles de cumpleanos.</p>
+        <div class="historia-valores">
+          <div class="valor-item"><span class="valor-icon">&#x1F33F;</span><div><strong>100% Artesanal</strong><p>Sin conservadores, hecho de cero cada dia.</p></div></div>
+          <div class="valor-item"><span class="valor-icon">&#x2728;</span><div><strong>Diseno unico</strong><p>Cada pastel es creado especialmente para ti.</p></div></div>
+          <div class="valor-item"><span class="valor-icon">&#x1F49B;</span><div><strong>Con carino</strong><p>7 anos endulzando momentos en Chihuahua.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== POLITICA DE APARTADO ============== -->
+<section class="section politica reveal" id="politica">
+  <div class="container">
+    <span class="eyebrow center">Transparencia total</span>
+    <h2 class="section-title">Politica de Apartado</h2>
+    <p class="section-lead">Queremos que tu experiencia sea perfecta desde el primer mensaje.</p>
+    <div class="politica-grid">
+      <div class="politica-card"><div class="politica-icon">&#x1F4C5;</div><h3>Anticipacion minima</h3><p>Requerimos <strong>4 dias habiles</strong> de anticipacion. Para disenos elaborados recomendamos 7-10 dias.</p></div>
+      <div class="politica-card"><div class="politica-icon">&#x1F4B3;</div><h3>Forma de pago</h3><p>Se requiere un <strong>anticipo del 50%</strong> para confirmar. El resto al recoger. Aceptamos transferencia y efectivo.</p></div>
+      <div class="politica-card"><div class="politica-icon">&#x274C;</div><h3>Cancelaciones</h3><p>Con mas de 48h: reembolso del 80%. Con menos de 48h: sin reembolso ya que los insumos fueron adquiridos.</p></div>
+      <div class="politica-card"><div class="politica-icon">&#x1F697;</div><h3>Recoleccion en tienda</h3><p>Todos los pedidos son <strong>exclusivamente para recoleccion</strong> en Calle 24 #2104. No hacemos envios a domicilio.</p></div>
+      <div class="politica-card"><div class="politica-icon">&#x1F504;</div><h3>Cambios al pedido</h3><p>Cambios menores aceptados hasta <strong>3 dias antes</strong>. Cambios de diseno o tamano con al menos 5 dias.</p></div>
+      <div class="politica-card"><div class="politica-icon">&#x1F4E6;</div><h3>Cuidado del pastel</h3><p>Transportar en <strong>superficie plana</strong> con aire acondicionado. Los pasteles con flores son sensibles al calor.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FAQ ============== -->
+<section class="section faq reveal" id="faq">
+  <div class="container">
+    <span class="eyebrow center">Preguntas frecuentes</span>
+    <h2 class="section-title">Tienes dudas?</h2>
+    <p class="section-lead">Estas son las preguntas que mas nos hacen. Si no encuentras tu respuesta, escribenos por WhatsApp.</p>
+    <div class="faq-list" id="faqList">
+      <details class="faq-item"><summary class="faq-q">Con cuanto tiempo de anticipacion debo hacer mi pedido?</summary><div class="faq-a"><p>Para pasteles personalizados requerimos minimo <strong>4 dias habiles</strong>. Para disenos elaborados recomendamos 7-10 dias. Los productos de vitrina no requieren anticipacion.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">Hacen entregas a domicilio?</summary><div class="faq-a"><p>No. Todos los pedidos se <strong>recolectan en tienda</strong> en Calle 24 #2104. Esto garantiza que tu pastel llegue en perfectas condiciones.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">Que formas de pago aceptan?</summary><div class="faq-a"><p>Aceptamos <strong>transferencia bancaria y efectivo</strong>. Se requiere anticipo del 50% para apartar tu pedido.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">Puedo ver el pastel antes de recogerlo?</summary><div class="faq-a"><p>Si, compartimos <strong>fotos del proceso y resultado final</strong> por WhatsApp antes de que pases a recogerlo.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">Los ingredientes son frescos?</summary><div class="faq-a"><p>Si, usamos ingredientes frescos y de calidad sin conservadores artificiales. Recomendamos consumir en <strong>2-3 dias</strong> y mantener refrigerado.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">Hacen pasteles para personas con alergias?</summary><div class="faq-a"><p>Podemos adaptar algunas recetas pero nuestra cocina <strong>no es libre de alergenos</strong>. Escribenos para evaluar tu caso antes de ordenar.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">El cotizador en linea es el precio final?</summary><div class="faq-a"><p>El cotizador da un <strong>precio estimado</strong> muy cercano al real. El precio final se confirma al validar tu pedido por WhatsApp.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">Como funciona el Sabor del Mes?</summary><div class="faq-a"><p>Cada mes tenemos un <strong>sabor especial de edicion limitada</strong> con ingredientes de temporada. Solo disponible ese mes y en cantidades limitadas.</p></div></details>
+    </div>
+    <div class="faq-footer-cta">
+      <p>Tienes otra pregunta?</p>
+      <a href="https://wa.me/5216142868000" target="_blank" rel="noopener" class="btn btn-whatsapp faq-wa-btn">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11 11 0 0 0 3.6 17.3L2 22l4.8-1.6A11 11 0 0 0 20.5 3.5zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-2.9 1 1-2.8-.2-.3a9 9 0 1 1 7 3.6zm5-6.7c-.3-.1-1.6-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1a7.4 7.4 0 0 1-3.6-3.1c-.3-.5.3-.4.8-1.4 0-.2 0-.4-.1-.5l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4a3 3 0 0 0-1 2.3c0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.2 1.7.7 2.4.8 3.2.6.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3z"/></svg>
+        Escribenos por WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== SABOR DEL MES ============== -->
+<section class="section sabor-mes reveal" id="sabor-mes">
+  <div class="container">
+    <div class="sabor-mes-inner">
+      <div class="sabor-mes-badge">
+        <span class="sabor-mes-eyebrow">Edicion limitada</span>
+        <h2 class="sabor-mes-title">Sabor del Mes</h2>
+        <p class="sabor-mes-name" id="saborMesNombre">Fresas con Crema</p>
+        <p class="sabor-mes-desc">Pan de vainilla, relleno de crema chantilly con fresas frescas, cobertura de betun de mantequilla suiza decorado con flores naturales y fresas en abanico.</p>
+        <div class="sabor-mes-stock">
+          <span class="stock-label">Disponibilidad este mes:</span>
+          <span class="stock-number" id="saborMesStock">8</span>
+          <span class="stock-unit">pasteles</span>
+        </div>
+        <a href="#cotizador" class="btn btn-primary sabor-mes-cta">Quiero este sabor</a>
+      </div>
+      <div class="sabor-mes-img-wrap">
+        <div class="sabor-mes-img cloudinary-placeholder" data-cloudinary-id="sabor-mes-mayo-2025">
+          <div class="img-placeholder-inner">
+            <svg viewBox="0 0 120 120" width="60" height="60" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="120" rx="16" fill="#F5E9DF"/><path d="M40 80 Q60 50 80 80" stroke="#C9956A" stroke-width="3" fill="none"/><circle cx="60" cy="45" r="14" fill="#D4A396"/></svg>
+            <p>Foto Mayo 2025</p>
+          </div>
+        </div>
+        <div class="sabor-mes-ribbon">MAYO 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== GALERIA INSPIRACION ============== -->
+<section class="section galeria reveal" id="galeria">
+  <div class="container">
+    <span class="eyebrow center">Encuentra tu estilo</span>
+    <h2 class="section-title">Galeria de Inspiracion</h2>
+    <p class="section-lead">Filtra por categoria y descubre los estilos que mas hacemos. Cada pastel es unico.</p>
+    <div class="galeria-filters" role="tablist">
+      <button class="filter-btn active" data-filter="all">Todos</button>
+      <button class="filter-btn" data-filter="clasicos">Clasicos</button>
+      <button class="filter-btn" data-filter="2pisos">2 Pisos</button>
+      <button class="filter-btn" data-filter="tematicos">Tematicos</button>
+      <button class="filter-btn" data-filter="lunchbox">Lunchbox</button>
+      <button class="filter-btn" data-filter="flores">Flores</button>
+      <button class="filter-btn" data-filter="korean">Korean</button>
+    </div>
+    <div class="galeria-grid" id="galeriaGrid">
+      <div class="galeria-item" data-cat="clasicos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-clasico-01"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Clasico</span><p>Buttercream Liso</p></div></div>
+      <div class="galeria-item" data-cat="clasicos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-clasico-02"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Clasico</span><p>Naked Cake</p></div></div>
+      <div class="galeria-item" data-cat="2pisos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-2p-01"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">2 Pisos</span><p>Clasico Elegante</p></div></div>
+      <div class="galeria-item" data-cat="2pisos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-2p-02"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">2 Pisos</span><p>Con Flores</p></div></div>
+      <div class="galeria-item" data-cat="tematicos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-tematico-01"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Tematico</span><p>Personalizado</p></div></div>
+      <div class="galeria-item" data-cat="lunchbox"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-lunchbox-01"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Lunchbox</span><p>2 porciones</p></div></div>
+      <div class="galeria-item" data-cat="lunchbox"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-lunchbox-02"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Lunchbox</span><p>Decorado</p></div></div>
+      <div class="galeria-item" data-cat="flores"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-flores-01"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Flores</span><p>Bouquet Natural</p></div></div>
+      <div class="galeria-item" data-cat="flores"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-flores-02"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Flores</span><p>Floral Korean</p></div></div>
+      <div class="galeria-item" data-cat="korean"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-korean-01"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Korean</span><p>Minimalista</p></div></div>
+      <div class="galeria-item" data-cat="tematicos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-tematico-02"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Tematico</span><p>XV Anos</p></div></div>
+      <div class="galeria-item" data-cat="clasicos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-clasico-03"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Clasico</span><p>Ombre</p></div></div>
+    </div>
+    <div class="galeria-footer-cta">
+      <p>No encontraste lo que buscas? Tenemos mas de 756 disenos en Instagram.</p>
+      <a href="https://www.instagram.com/sweetbakery.cuu/" target="_blank" rel="noopener" class="btn btn-ghost">Ver mas en Instagram</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== HISTORIA ============== -->
+<section class="section historia reveal" id="historia">
+  <div class="container">
+    <div class="historia-inner">
+      <div class="historia-img-col">
+        <div class="historia-img cloudinary-placeholder" data-cloudinary-id="historia-equipo">
+          <div class="img-placeholder-inner historia-placeholder">
+            <p>Foto del equipo proximamente</p>
+          </div>
+        </div>
+        <div class="historia-badge-ano">Desde 2017</div>
+      </div>
+      <div class="historia-text-col">
+        <span class="eyebrow">Nuestra historia</span>
+        <h2 class="historia-title">Mas que un pastel,<br/><em>un momento</em></h2>
+        <p>Sweet Bakery nacio en Chihuahua en 2017 con una mision clara: llevar reposteria artesanal de alta calidad a cada celebracion. Lo que comenzo como un sueno se convirtio en una pasteleria de autor reconocida en la ciudad.</p>
+        <p>Cada pastel que creamos es unico. Usamos ingredientes frescos, tecnicas modernas y mucho carino. Desde pasteles personalizados para bodas y quinceanieras hasta los mas simples y deliciosos pasteles de cumpleanos.</p>
+        <div class="historia-valores">
+          <div class="valor-item"><span class="valor-icon">🌿</span><div><strong>100% Artesanal</strong><p>Sin conservadores, hecho de cero cada dia.</p></div></div>
+          <div class="valor-item"><span class="valor-icon">✨</span><div><strong>Diseno unico</strong><p>Cada pastel es creado especialmente para ti.</p></div></div>
+          <div class="valor-item"><span class="valor-icon">💛</span><div><strong>Con carino</strong><p>7 anos endulzando momentos en Chihuahua.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== POLITICA DE APARTADO ============== -->
+<section class="section politica reveal" id="politica">
+  <div class="container">
+    <span class="eyebrow center">Transparencia total</span>
+    <h2 class="section-title">Politica de Apartado</h2>
+    <p class="section-lead">Queremos que tu experiencia sea perfecta desde el primer mensaje.</p>
+    <div class="politica-grid">
+      <div class="politica-card"><div class="politica-icon">📅</div><h3>Anticipacion minima</h3><p>Requerimos <strong>4 dias habiles</strong> de anticipacion. Para disenos elaborados recomendamos 7-10 dias.</p></div>
+      <div class="politica-card"><div class="politica-icon">💳</div><h3>Forma de pago</h3><p>Se requiere un <strong>anticipo del 50%</strong> para confirmar. El resto al recoger. Transferencia y efectivo.</p></div>
+      <div class="politica-card"><div class="politica-icon">❌</div><h3>Cancelaciones</h3><p>Con mas de 48h: reembolso del 80%. Con menos de 48h: sin reembolso ya que los insumos fueron adquiridos.</p></div>
+      <div class="politica-card"><div class="politica-icon">🚗</div><h3>Recoleccion en tienda</h3><p>Todos los pedidos son <strong>exclusivamente para recoleccion</strong> en Calle 24 #2104. Sin envios a domicilio.</p></div>
+      <div class="politica-card"><div class="politica-icon">🔄</div><h3>Cambios al pedido</h3><p>Cambios menores hasta <strong>3 dias antes</strong>. Cambios de diseno o tamano con al menos 5 dias.</p></div>
+      <div class="politica-card"><div class="politica-icon">📦</div><h3>Cuidado del pastel</h3><p>Transportar en <strong>superficie plana</strong> con aire acondicionado. Los pasteles con flores son sensibles al calor.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FAQ ============== -->
+<section class="section faq reveal" id="faq">
+  <div class="container">
+    <span class="eyebrow center">Preguntas frecuentes</span>
+    <h2 class="section-title">Tienes dudas?</h2>
+    <p class="section-lead">Estas son las preguntas que mas nos hacen. Si no encuentras tu respuesta, escribenos por WhatsApp.</p>
+    <div class="faq-list" id="faqList">
+      <details class="faq-item"><summary class="faq-q">Con cuanto tiempo de anticipacion debo hacer mi pedido?</summary><div class="faq-a"><p>Para pasteles personalizados requerimos minimo <strong>4 dias habiles</strong>. Para disenos elaborados recomendamos 7-10 dias.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">Hacen entregas a domicilio?</summary><div class="faq-a"><p>No. Todos los pedidos se <strong>recolectan en tienda</strong> en Calle 24 #2104.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">Que formas de pago aceptan?</summary><div class="faq-a"><p>Aceptamos <strong>transferencia bancaria y efectivo</strong>. Anticipo del 50% para apartar tu pedido.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">Puedo ver el pastel antes de recogerlo?</summary><div class="faq-a"><p>Si, compartimos <strong>fotos del proceso y resultado final</strong> por WhatsApp antes de que pases a recogerlo.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">Los ingredientes son frescos?</summary><div class="faq-a"><p>Si, sin conservadores artificiales. Recomendamos consumir en <strong>2-3 dias</strong> y mantener refrigerado.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">Hacen pasteles para personas con alergias?</summary><div class="faq-a"><p>Podemos adaptar algunas recetas pero nuestra cocina <strong>no es libre de alergenos</strong>. Escribenos antes de ordenar.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">El cotizador en linea es el precio final?</summary><div class="faq-a"><p>El cotizador da un <strong>precio estimado</strong> muy cercano al real. El precio final se confirma por WhatsApp.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">Como funciona el Sabor del Mes?</summary><div class="faq-a"><p>Cada mes tenemos un <strong>sabor especial de edicion limitada</strong> con ingredientes de temporada. Solo disponible ese mes.</p></div></details>
+    </div>
+    <div class="faq-footer-cta">
+      <p>Tienes otra pregunta?</p>
+      <a href="https://wa.me/5216142868000" target="_blank" rel="noopener" class="btn btn-whatsapp faq-wa-btn">Escribenos por WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== SABOR DEL MES ============== -->
+<section class="section sabor-mes reveal" id="sabor-mes">
+  <div class="container">
+    <div class="sabor-mes-inner">
+      <div class="sabor-mes-badge">
+        <span class="sabor-mes-eyebrow">Edicion limitada</span>
+        <h2 class="sabor-mes-title">Sabor del Mes</h2>
+        <p class="sabor-mes-name" id="saborMesNombre">Fresas con Crema</p>
+        <p class="sabor-mes-desc">Pan de vainilla, relleno de crema chantilly con fresas frescas, cobertura de betun de mantequilla suiza decorado con flores naturales y fresas en abanico.</p>
+        <div class="sabor-mes-stock">
+          <span class="stock-label">Disponibilidad este mes:</span>
+          <span class="stock-number" id="saborMesStock">8</span>
+          <span class="stock-unit">pasteles</span>
+        </div>
+        <a href="#cotizador" class="btn btn-primary sabor-mes-cta">Quiero este sabor</a>
+      </div>
+      <div class="sabor-mes-img-wrap">
+        <div class="sabor-mes-img cloudinary-placeholder" data-cloudinary-id="sabor-mes-mayo-2025">
+          <div class="img-placeholder-inner"><p>Foto Mayo 2025</p></div>
+        </div>
+        <div class="sabor-mes-ribbon">MAYO 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== GALERIA INSPIRACION ============== -->
+<section class="section galeria reveal" id="galeria">
+  <div class="container">
+    <span class="eyebrow center">Encuentra tu estilo</span>
+    <h2 class="section-title">Galeria de Inspiracion</h2>
+    <p class="section-lead">Filtra por categoria y descubre los estilos que mas hacemos. Cada pastel es unico.</p>
+    <div class="galeria-filters" role="tablist">
+      <button class="filter-btn active" data-filter="all">Todos</button>
+      <button class="filter-btn" data-filter="clasicos">Clasicos</button>
+      <button class="filter-btn" data-filter="2pisos">2 Pisos</button>
+      <button class="filter-btn" data-filter="tematicos">Tematicos</button>
+      <button class="filter-btn" data-filter="lunchbox">Lunchbox</button>
+      <button class="filter-btn" data-filter="flores">Flores</button>
+      <button class="filter-btn" data-filter="korean">Korean</button>
+    </div>
+    <div class="galeria-grid" id="galeriaGrid">
+      <div class="galeria-item" data-cat="clasicos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-clasico-01"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Clasico</span><p>Buttercream Liso</p></div></div>
+      <div class="galeria-item" data-cat="clasicos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-clasico-02"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Clasico</span><p>Naked Cake</p></div></div>
+      <div class="galeria-item" data-cat="2pisos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-2p-01"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">2 Pisos</span><p>Clasico Elegante</p></div></div>
+      <div class="galeria-item" data-cat="2pisos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-2p-02"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">2 Pisos</span><p>Con Flores</p></div></div>
+      <div class="galeria-item" data-cat="tematicos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-tematico-01"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Tematico</span><p>Personalizado</p></div></div>
+      <div class="galeria-item" data-cat="lunchbox"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-lunchbox-01"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Lunchbox</span><p>2 porciones</p></div></div>
+      <div class="galeria-item" data-cat="lunchbox"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-lunchbox-02"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Lunchbox</span><p>Decorado</p></div></div>
+      <div class="galeria-item" data-cat="flores"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-flores-01"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Flores</span><p>Bouquet Natural</p></div></div>
+      <div class="galeria-item" data-cat="flores"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-flores-02"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Flores</span><p>Floral Korean</p></div></div>
+      <div class="galeria-item" data-cat="korean"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-korean-01"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Korean</span><p>Minimalista</p></div></div>
+      <div class="galeria-item" data-cat="tematicos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-tematico-02"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Tematico</span><p>XV Anos</p></div></div>
+      <div class="galeria-item" data-cat="clasicos"><div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-clasico-03"><div class="img-placeholder-inner"><p>Pronto</p></div></div><div class="galeria-info"><span class="galeria-cat-tag">Clasico</span><p>Ombre</p></div></div>
+    </div>
+    <div class="galeria-footer-cta">
+      <p>No encontraste lo que buscas? Tenemos mas de 756 disenos en Instagram.</p>
+      <a href="https://www.instagram.com/sweetbakery.cuu/" target="_blank" rel="noopener" class="btn btn-ghost">Ver mas en Instagram</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== HISTORIA ============== -->
+<section class="section historia reveal" id="historia">
+  <div class="container">
+    <div class="historia-inner">
+      <div class="historia-img-col">
+        <div class="historia-img cloudinary-placeholder" data-cloudinary-id="historia-equipo">
+          <div class="img-placeholder-inner historia-placeholder">
+            <p>Foto del equipo proximamente</p>
+          </div>
+        </div>
+        <div class="historia-badge-ano">Desde 2017</div>
+      </div>
+      <div class="historia-text-col">
+        <span class="eyebrow">Nuestra historia</span>
+        <h2 class="historia-title">Mas que un pastel,<br/><em>un momento</em></h2>
+        <p>Sweet Bakery nacio en Chihuahua en 2017 con una mision clara: llevar reposteria artesanal de alta calidad a cada celebracion. Lo que comenzo como un sueno se convirtio en una pasteleria de autor reconocida en la ciudad.</p>
+        <p>Cada pastel que creamos es unico. Usamos ingredientes frescos, tecnicas modernas y mucho carino. Desde pasteles personalizados para bodas y quinceanieras hasta los mas simples y deliciosos pasteles de cumpleanos.</p>
+        <div class="historia-valores">
+          <div class="valor-item"><span class="valor-icon">&#x1F33F;</span><div><strong>100% Artesanal</strong><p>Sin conservadores, hecho de cero cada dia.</p></div></div>
+          <div class="valor-item"><span class="valor-icon">&#x2728;</span><div><strong>Diseno unico</strong><p>Cada pastel es creado especialmente para ti.</p></div></div>
+          <div class="valor-item"><span class="valor-icon">&#x1F49B;</span><div><strong>Con carino</strong><p>7 anos endulzando momentos en Chihuahua.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== POLITICA DE APARTADO ============== -->
+<section class="section politica reveal" id="politica">
+  <div class="container">
+    <span class="eyebrow center">Transparencia total</span>
+    <h2 class="section-title">Politica de Apartado</h2>
+    <p class="section-lead">Queremos que tu experiencia sea perfecta desde el primer mensaje.</p>
+    <div class="politica-grid">
+      <div class="politica-card"><div class="politica-icon">&#x1F4C5;</div><h3>Anticipacion minima</h3><p>Requerimos <strong>4 dias habiles</strong> de anticipacion. Para disenos elaborados recomendamos 7-10 dias.</p></div>
+      <div class="politica-card"><div class="politica-icon">&#x1F4B3;</div><h3>Forma de pago</h3><p>Se requiere un <strong>anticipo del 50%</strong> para confirmar. El resto al recoger. Transferencia y efectivo.</p></div>
+      <div class="politica-card"><div class="politica-icon">&#x274C;</div><h3>Cancelaciones</h3><p>Con mas de 48h: reembolso del 80%. Con menos de 48h: sin reembolso ya que los insumos fueron adquiridos.</p></div>
+      <div class="politica-card"><div class="politica-icon">&#x1F697;</div><h3>Recoleccion en tienda</h3><p>Todos los pedidos son <strong>exclusivamente para recoleccion</strong> en Calle 24 #2104. Sin envios a domicilio.</p></div>
+      <div class="politica-card"><div class="politica-icon">&#x1F504;</div><h3>Cambios al pedido</h3><p>Cambios menores hasta <strong>3 dias antes</strong>. Cambios de diseno o tamano con al menos 5 dias.</p></div>
+      <div class="politica-card"><div class="politica-icon">&#x1F4E6;</div><h3>Cuidado del pastel</h3><p>Transportar en <strong>superficie plana</strong> con aire acondicionado. Los pasteles con flores son sensibles al calor.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FAQ ============== -->
+<section class="section faq reveal" id="faq">
+  <div class="container">
+    <span class="eyebrow center">Preguntas frecuentes</span>
+    <h2 class="section-title">Tienes dudas?</h2>
+    <p class="section-lead">Estas son las preguntas que mas nos hacen. Si no encuentras tu respuesta, escribenos por WhatsApp.</p>
+    <div class="faq-list" id="faqList">
+      <details class="faq-item"><summary class="faq-q">Con cuanto tiempo de anticipacion debo hacer mi pedido?</summary><div class="faq-a"><p>Para pasteles personalizados requerimos minimo <strong>4 dias habiles</strong>. Para disenos elaborados recomendamos 7-10 dias.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">Hacen entregas a domicilio?</summary><div class="faq-a"><p>No. Todos los pedidos se <strong>recolectan en tienda</strong> en Calle 24 #2104.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">Que formas de pago aceptan?</summary><div class="faq-a"><p>Aceptamos <strong>transferencia bancaria y efectivo</strong>. Anticipo del 50% para apartar tu pedido.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">Puedo ver el pastel antes de recogerlo?</summary><div class="faq-a"><p>Si, compartimos <strong>fotos del proceso y resultado final</strong> por WhatsApp antes de que pases a recogerlo.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">Los ingredientes son frescos?</summary><div class="faq-a"><p>Si, sin conservadores artificiales. Recomendamos consumir en <strong>2-3 dias</strong> y mantener refrigerado.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">Hacen pasteles para personas con alergias?</summary><div class="faq-a"><p>Podemos adaptar algunas recetas pero nuestra cocina <strong>no es libre de alergenos</strong>. Escribenos antes de ordenar.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">El cotizador en linea es el precio final?</summary><div class="faq-a"><p>El cotizador da un <strong>precio estimado</strong> muy cercano al real. El precio final se confirma por WhatsApp.</p></div></details>
+      <details class="faq-item"><summary class="faq-q">Como funciona el Sabor del Mes?</summary><div class="faq-a"><p>Cada mes tenemos un <strong>sabor especial de edicion limitada</strong> con ingredientes de temporada.</p></div></details>
+    </div>
+    <div class="faq-footer-cta">
+      <p>Tienes otra pregunta?</p>
+      <a href="https://wa.me/5216142868000" target="_blank" rel="noopener" class="btn btn-whatsapp faq-wa-btn">Escribenos por WhatsApp</a>
+    </div>
+  </div>
+</section>
 
   <!-- ============== FOOTER / CONTACTO ============== -->
   <footer class="footer reveal" id="contacto">
