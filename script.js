@@ -320,20 +320,19 @@
     msg += '\ud83c\udf5e Pan: ' + (pan ? pan.value : '\u2014') + '\n';
                 msg += '\uD83C\uDF53 Relleno: ' + (relleno ? relleno.value : '\u2014') + '\n';
     msg += '\ud83c\udfa8 Bet\u00fan: ' + (betun ? betun.value : '\u2014') + '\n';
-    if (topper && topper.value !== 'Sin topper') msg += '\ud83c\udf80 Topper: ' + topper.value + '\n';
+        if (topper && topper.value !== 'Sin topper') {
+                 var _tDetail = (document.getElementById('topperDetailInput')?.value || '').trim();
+                 msg += '\ud83c\udf80 Topper: ' + topper.value + (_tDetail ? ' \u2014 ' + _tDetail : '') + '\n';
+        }
     if (extras.length) msg += '\u2728 Extras: ' + extras.join(', ') + '\n';
     if (flor && flor.value !== 'Sin flor') msg += '\ud83d\udc90 Flor: ' + flor.value + '\n';
     if (vela && vela.value !== 'Sin vela') msg += '\ud83d\udd6f Vela: ' + vela.value + '\n';
+         var _mQty = parseInt(document.getElementById('macaronQty')?.value) || 0;
+         if (_mQty > 0) msg += '\ud83c\udf70 Macarons: ' + _mQty + ' pza (+' + formatMoney(_mQty * 20) + ')\n';
     msg += '\n\ud83d\udcc5 Fecha de recolecci\u00f3n: ' + date + ' a las ' + time + '\n';
     msg += '\n\ud83d\udcb0 *Total estimado: ' + formatMoney(total) + '*\n\n';
     msg += '_(Los precios son estimados. El total final se confirma al apartar con anticipo.)_';
-    // Macarons stepper
-    const _mQty = parseInt(document.getElementById('macaronQty')?.value) || 0;
-    if (_mQty > 0) msg += '\n🎀 Macarons: ' + _mQty + ' pza ($' + (_mQty * 20) + ')';
-    // Topper detail (nombre o número)
-    const _topperDetail = (document.getElementById('topperDetailInput')?.value || '').trim();
-    if (_topperDetail) msg += ' (“' + _topperDetail + '”)';
-    return msg;
+        return msg;
   }
 
   function bindWizard() {
