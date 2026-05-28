@@ -59,14 +59,14 @@
     const now  = new Date();
     const day  = now.getDay();
     const h    = now.getHours() + now.getMinutes() / 60;
-    const cerrado = day === 0 || (day === 6 && h >= 16);
+    const cerrado = !isStoreOpenNow();
 
     if (cerrado) {
       btn.classList.add('disabled');
       btn.setAttribute('aria-disabled', 'true');
       btn.removeAttribute('href');
-      txt.textContent = 'Vitrina cerrada \u2014 Volvemos el lunes a las 10:00 AM';
-      if (note) note.textContent = '\u00a1Te esperamos el lunes desde temprano!';
+      txt.textContent = 'Vitrina cerrada \u2014 Visita en horario: Lun\u2013Vie 10\u201319h \u00b7 S\u00e1b 10\u201316h';
+      if (note) note.textContent = '\u00a1Te esperamos en nuestro pr\u00f3ximo horario!';
     } else {
       btn.classList.remove('disabled');
       btn.removeAttribute('aria-disabled');
