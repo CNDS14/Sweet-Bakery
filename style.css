@@ -937,7 +937,7 @@ textarea { resize: vertical; min-height: 80px; }
   margin-bottom: 6px;
 }
 .ig-content p { font-size: 0.95rem; opacity: 0.95; max-width: 480px; }
-.instagram-banner .btn-primary { background: white; color: #5a3e2b; font-weight: 600; }
+.instagram-banner .btn-primary { background: white !important; color: #5a3e2b !important; font-weight: 600; }
 .instagram-banner .btn-primary:hover { background: var(--cream); }
 
 /* ============================================
