@@ -692,9 +692,27 @@
   }
 
   /* ── INIT EXTENDIDO ───────────────────────── */
-  document.addEventListener('DOMContentLoaded', function() {
+  
+  /* ── DEDUPLICATION - eliminar secciones duplicadas ─ */
+  function removeDuplicateSections() {
+    var ids = ['sabor-mes', 'galeria', 'historia', 'politica', 'faq'];
+    ids.forEach(function(id) {
+      var sections = document.querySelectorAll('#' + id);
+      for (var i = 1; i < sections.length; i++) {
+        sections[i].parentNode.removeChild(sections[i]);
+      }
+    });
+    // Also deduplicate galeria-grid
+    var grids = document.querySelectorAll('.galeria-grid');
+    for (var i = 1; i < grids.length; i++) {
+      grids[i].parentNode.removeChild(grids[i]);
+    }
+  }
+
+document.addEventListener('DOMContentLoaded', function() {
     bindGaleriaFilter();
     bindWizardPreview();
+    removeDuplicateSections();
     initSaborMes();
   });
 
