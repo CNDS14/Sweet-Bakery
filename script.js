@@ -181,7 +181,7 @@
     let total = state.basePrice;
 
         // Relleno (radio único)
-    const rellenoSel = $$('input[name="relleno"]:checked');
+    const rellenoSel = $('input[name="relleno"]:checked');
     if (rellenoSel) total += Number(rellenoSel.dataset.price || 0);
     // Bet\u00fan (radio)
     const betunChecked = $('[name="betun"]:checked');
