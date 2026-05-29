@@ -2854,3 +2854,8 @@ section[id], .section[id], #hero, #vitrina, #cotizador, #clasicos,
 
 /* 5) Aislar repintados de secciones para scroll mas fluido */
 /* (content-visibility removido: causaba saltos de scroll) */
+
+
+/* 7) Scroll nativo/instantaneo: scroll-behavior smooth global hacia
+      que la rueda del mouse se sintiera lenta/trabada. Lo dejamos auto. */
+html { scroll-behavior: auto !important; }
