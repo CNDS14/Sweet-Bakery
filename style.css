@@ -2818,3 +2818,39 @@ img, svg, video { max-width: 100%; height: auto; }
   .galeria-grid { grid-template-columns: 1fr; }
   .section-title { font-size: clamp(1.7rem, 7vw, 2.2rem); }
 }
+
+
+/* ============================================================
+   PERFORMANCE & FIX: scroll fluido, sin blur pesado, anti-solape
+   ============================================================ */
+
+/* 1) Reveal SIEMPRE visible y sin filtro blur.
+      El blur(8px) sobre secciones de pantalla completa trababa el
+      scroll, y el observer no marcaba .in-view en las secciones
+      nuevas (quedaban invisibles). Forzamos visibilidad total. */
+.reveal,
+.reveal.in-view,
+.reveal:not(.in-view) {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  transition: none !important;
+}
+
+/* 2) Navbar: aligerar backdrop-filter (blur fuerte fijo = lag en scroll) */
+.navbar {
+  backdrop-filter: saturate(140%) blur(6px) !important;
+  -webkit-backdrop-filter: saturate(140%) blur(6px) !important;
+}
+
+/* 3) Reducir blur de las formas decorativas del hero (60px es muy caro) */
+.hero-bg-shape { filter: blur(40px) !important; }
+
+/* 4) Anti-solape: que el navbar fijo no se coma los titulos al navegar */
+section[id], .section[id], #hero, #vitrina, #cotizador, #clasicos,
+#momentos, #sabor-mes, #galeria, #historia, #politica, #faq {
+  scroll-margin-top: 110px;
+}
+
+/* 5) Aislar repintados de secciones para scroll mas fluido */
+section, .section { content-visibility: auto; contain-intrinsic-size: auto 600px; }
