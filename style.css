@@ -3448,3 +3448,35 @@ html { scroll-behavior: auto !important; }
   .temporada-body { padding: 16px 18px 20px; }
   .temporada-card h3 { font-size: 1.2rem; }
 }
+
+/* Temporadas con foto: cabecera real + par de miniaturas */
+.temporada-img { aspect-ratio: 4 / 3; background: var(--cream-2); }
+.temporada-card:hover .temporada-img img { transform: scale(1.04); }
+.temporada-img img { transition: transform var(--t-slow); }
+
+.temporada-mini {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 8px;
+  margin: 0 0 18px;
+}
+.temporada-mini img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+  border-radius: var(--radius-sm);
+}
+
+.temporada-lista small {
+  display: block;
+  font-size: 0.76rem;
+  opacity: 0.75;
+  margin-top: 2px;
+}
+.temporada-lista strong { color: var(--ink); font-weight: 600; }
+
+@media (prefers-reduced-motion: reduce) {
+  .temporada-card:hover .temporada-img img { transform: none; }
+}
