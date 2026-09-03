@@ -3169,3 +3169,13 @@ html { scroll-behavior: auto !important; }
     margin-top: 10px;
   }
 }
+
+/* En móvil el sello baja completo debajo del pastel (el padre es flex) */
+@media (max-width: 720px) {
+  .hero-visual { flex-wrap: wrap; }
+  .hero-stamp {
+    flex: 0 0 100%;
+    width: 100%;
+    margin-top: 4px;
+  }
+}
