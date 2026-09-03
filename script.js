@@ -224,10 +224,14 @@
   function bindRevealObserver() {
     var items = $$('.reveal');
     if (!items.length) return;
-    if (!('IntersectionObserver' in window)) {
-      items.forEach(function (el) { el.classList.add('in-view'); });
-      return;
-    }
+
+    // Sin IntersectionObserver no escondemos nada: más vale una página sin
+    // animación que una página en blanco.
+    if (!('IntersectionObserver' in window)) return;
+
+    // El estado oculto solo existe si de verdad vamos a poder revelarlo.
+    document.documentElement.classList.add('anim');
+
     var obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
@@ -235,9 +239,18 @@
           obs.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+
     items.forEach(function (el) { obs.observe(el); });
+
+    // Red de seguridad: si por lo que sea el observador no reporta nada
+    // (pestaña en segundo plano, navegador que estrangula rAF), a los 2.5 s
+    // mostramos todo. Nunca debe quedarse contenido invisible.
+    setTimeout(function () {
+      items.forEach(function (el) { el.classList.add('in-view'); });
+    }, 2500);
   }
+
 
   /* ── 6) COTIZADOR ───────────────────────────────────────── */
 
@@ -1061,9 +1074,49 @@
     if (el) el.textContent = ahora;
     var anos = $('#anosActivos');
     if (anos) anos.textContent = ahora - ANO_FUNDACION;
+    var anos2 = $('#confianzaAnos');
+    if (anos2) anos2.textContent = ahora - ANO_FUNDACION;
   }
 
   /* ── ARRANQUE ───────────────────────────────────────────── */
+
+  /* ── 15b) ENTRADA ESCALONADA ─────────────────────────────
+     Numera los hijos de cada rejilla para que el CSS los haga
+     aparecer uno tras otro en vez de todos de golpe.
+     ------------------------------------------------------- */
+
+  function initEscalonado() {
+    var rejillas = ['.segmentos-grid', '.temporadas-grid', '.clasicos-grid',
+                    '.vitrina-grid', '.politica-grid'];
+    rejillas.forEach(function (sel) {
+      $$(sel + ' > *').forEach(function (el, i) {
+        el.style.setProperty('--i', Math.min(i, 8));
+      });
+    });
+  }
+
+  /* ── 15c) BARRA DE ACCIÓN FIJA (móvil) ───────────────────
+     Aparece una vez que el hero quedó atrás y se esconde al
+     llegar al pie, para no tapar los datos de contacto.
+     ------------------------------------------------------- */
+
+  function initBarraAccion() {
+    var barra = $('#barraAccion');
+    var pie = $('#contacto');
+    if (!barra) return;
+
+    // La barra ya se ve por CSS. Lo único que hace el JS es quitarla de
+    // en medio cuando el usuario llega al pie, donde están los contactos.
+    barra.setAttribute('aria-hidden', 'false');
+    if (!pie || !('IntersectionObserver' in window)) return;
+
+    new IntersectionObserver(function (entradas) {
+      var enPie = entradas[0].isIntersecting;
+      barra.classList.toggle('oculta', enPie);
+      barra.setAttribute('aria-hidden', String(enPie));
+    }, { rootMargin: '0px 0px -25% 0px' }).observe(pie);
+  }
+
 
   function init() {
     updateStatusBadge();
@@ -1079,6 +1132,8 @@
     bindSmoothScroll();
     setYear();
     updateTopperDetail();
+    initEscalonado();
+    initBarraAccion();
 
     // Revisamos el estado del local cada minuto
     setInterval(function () {

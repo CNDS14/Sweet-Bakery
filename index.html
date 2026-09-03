@@ -37,7 +37,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="style.css?v=18" />
+  <link rel="stylesheet" href="style.css?v=26" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
@@ -56,15 +56,13 @@
       </a>
 
       <nav class="nav-links" aria-label="Navegación principal">
-        <a href="#vitrina">Vitrina</a>
         <a href="#cotizador">Cotizador</a>
-        <a href="#clasicos">Clásicos</a>
-        <a href="#momentos">Momentos</a>
         <a href="#galeria">Galería</a>
+        <a href="#clasicos">Clásicos</a>
+        <a href="#vitrina">Vitrina</a>
         <a href="#temporadas">Temporadas</a>
         <a href="#historia">Nosotros</a>
         <a href="#faq">FAQ</a>
-        <a href="#contacto">Contacto</a>
       </nav>
 
       <div class="status-badge" id="statusBadge" role="status" aria-live="polite">
@@ -160,45 +158,61 @@
     </div>
   </section>
 
-  <!-- ============== VITRINA DEL DÍA ============== -->
-  <section class="section vitrina reveal" id="vitrina">
-    <div class="section-decor decor-top" aria-hidden="true"></div>
+
+  <!-- ============== CONFIANZA ============== -->
+  <div class="confianza reveal">
     <div class="container">
-      <span class="eyebrow center">Sin esperas</span>
-      <h2 class="section-title">¡Lo quiero ya! — Vitrina del Día</h2>
-      <p class="section-lead">
-        Cada mañana horneamos opciones frescas listas para llevar: <em>Tres Leches</em>, pays, gelatinas artesanales, mini cheesecakes y nuestros clásicos del día. Pasa por tu antojo sin agendar.
-      </p>
+      <ul class="confianza-lista">
+        <li><strong>7,400+</strong><span>nos siguen en Instagram</span></li>
+        <li><strong id="confianzaAnos">9</strong><span>años horneando en Chihuahua</span></li>
+        <li><strong>4 días</strong><span>de anticipación mínima</span></li>
+        <li><strong>100%</strong><span>artesanal, hecho a mano</span></li>
+      </ul>
+    </div>
+  </div>
 
-      <div class="vitrina-grid">
-        <div class="vitrina-card">
-          <div class="vitrina-icon">🍰</div>
-          <h3>Tres Leches</h3>
-          <p>Esponjoso, bañado al momento.</p>
-        </div>
-        <div class="vitrina-card">
-          <div class="vitrina-icon">🥧</div>
-          <h3>Pays del día</h3>
-          <p>Limón, queso, manzana de temporada.</p>
-        </div>
-        <div class="vitrina-card">
-          <div class="vitrina-icon">🍮</div>
-          <h3>Gelatinas</h3>
-          <p>Mosaico, rompope, frutos rojos.</p>
-        </div>
-        <div class="vitrina-card">
-          <div class="vitrina-icon">🧁</div>
-          <h3>Mini postres</h3>
-          <p>Cupcakes, brownies, alfajores.</p>
-        </div>
-      </div>
+  <!-- ============== SEGMENTOS ============== -->
+  <section class="section segmentos reveal" id="segmentos">
+    <div class="container">
+      <span class="eyebrow center">Empieza por aquí</span>
+      <h2 class="section-title">¿Qué necesitas hoy?</h2>
+      <p class="section-lead">Tres caminos según la prisa que traigas.</p>
 
-      <div class="vitrina-cta-wrap">
-        <a href="#" class="btn btn-whatsapp" id="vitrinaWhatsapp" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11 11 0 0 0 3.6 17.3L2 22l4.8-1.6A11 11 0 0 0 20.5 3.5zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-2.9 1 1-2.8-.2-.3a9 9 0 1 1 7 3.6zm5-6.7c-.3-.1-1.6-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1a7.4 7.4 0 0 1-3.6-3.1c-.3-.5.3-.4.8-1.4 0-.2 0-.4-.1-.5l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4a3 3 0 0 0-1 2.3c0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.2 1.7.7 2.4.8 3.2.6.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3z"/></svg>
-          <span id="vitrinaWhatsappText">Pregunta por la vitrina de hoy</span>
+      <div class="segmentos-grid">
+
+        <a class="segmento segmento-destacado" href="#cotizador">
+          <span class="segmento-num">01</span>
+          <h3>Un pastel para una fecha</h3>
+          <p>Diséñalo tú: tamaño, sabor, betún y decoración. Te damos el precio al instante.</p>
+          <ul class="segmento-datos">
+            <li>Desde $249</li>
+            <li>Mínimo 4 días antes</li>
+          </ul>
+          <span class="segmento-cta">Abrir el cotizador <span aria-hidden="true">→</span></span>
         </a>
-        <small class="vitrina-note" id="vitrinaNote">Horario: Lun–Vie 10–19h · Sáb 10–16h · Dom cerrado</small>
+
+        <a class="segmento" href="#vitrina">
+          <span class="segmento-num">02</span>
+          <h3>Algo dulce para hoy</h3>
+          <p>Lo que salió del horno esta mañana, listo para llevar sin agendar nada.</p>
+          <ul class="segmento-datos">
+            <li>Sin anticipación</li>
+            <li>Pasas y te lo llevas</li>
+          </ul>
+          <span class="segmento-cta">Ver la vitrina <span aria-hidden="true">→</span></span>
+        </a>
+
+        <a class="segmento" href="#clasicos">
+          <span class="segmento-num">03</span>
+          <h3>Un clásico de la casa</h3>
+          <p>Mostachones, cheesecake vasco y las galletas gourmet. Precio fijo, siempre disponibles.</p>
+          <ul class="segmento-datos">
+            <li>Carta fija</li>
+            <li>Desde $38</li>
+          </ul>
+          <span class="segmento-cta">Ver los clásicos <span aria-hidden="true">→</span></span>
+        </a>
+
       </div>
     </div>
   </section>
@@ -508,7 +522,177 @@
     </div>
   </section>
 
-  <!-- ============== CLÁSICOS DE LÍNEA ============== -->
+  <!-- ============== GALERIA INSPIRACION ============== -->
+<section class="section galeria reveal" id="galeria">
+  <div class="container">
+    <span class="eyebrow center">Encuentra tu estilo</span>
+    <h2 class="section-title">Galería de Inspiración</h2>
+    <p class="section-lead">Pasteles reales que han salido de nuestro taller. Filtra por estilo para encontrar el tuyo — y recuerda que cada diseño se hace contigo, así que puedes pedir el que quieras en otros colores.</p>
+      <figure class="galeria-destacada">
+        <img src="img/galeria/coleccion-minimalistas.jpg" width="1100" height="1245" loading="lazy" decoding="async"
+             alt="Mesa con varios pasteles de Sweet Bakery: azul marino con perlas, verde salvia, rosa, menta, blanco con mariposas amarillas y durazno con confeti" />
+        <figcaption>Una tanda cualquiera saliendo del taller.</figcaption>
+      </figure>
+
+    <div class="galeria-filters" role="tablist" aria-label="Filtros de galería">
+      <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">Todos</button>
+      <button class="filter-btn" data-filter="clasicos" role="tab" aria-selected="false">Clásicos</button>
+      <button class="filter-btn" data-filter="minimalistas" role="tab" aria-selected="false">Minimalistas</button>
+      <button class="filter-btn" data-filter="flores" role="tab" aria-selected="false">Con flores</button>
+      <button class="filter-btn" data-filter="2pisos" role="tab" aria-selected="false">2 Pisos</button>
+      <button class="filter-btn" data-filter="tematicos" role="tab" aria-selected="false">Temáticos</button>
+    </div>
+
+    <div class="galeria-grid" id="galeriaGrid">
+
+      <figure class="galeria-item" data-cat="flores">
+        <div class="galeria-img"><img src="img/galeria/anturios-elaborado.jpg" width="700" height="793" loading="lazy" decoding="async"
+          alt="Pastel blanco con betún texturizado en ondas, anturios rojos, margaritas y espigas secas" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Con flores</span><p>Anturios y espigas</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="flores">
+        <div class="galeria-img"><img src="img/galeria/flores-prensadas.jpg" width="700" height="933" loading="lazy" decoding="async"
+          alt="Pastel amarillo pálido decorado con flores silvestres naturales en rosa, morado y blanco" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Con flores</span><p>Flores silvestres</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="flores">
+        <div class="galeria-img"><img src="img/galeria/plisado-rosas.jpg" width="700" height="933" loading="lazy" decoding="async"
+          alt="Pastel blanco con betún plisado vertical y rosas naturales en durazno, blanco y fucsia" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Con flores</span><p>Plisado con rosas</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="flores">
+        <div class="galeria-img"><img src="img/galeria/verde-texturizado-flores.jpg" width="360" height="640" loading="lazy" decoding="async"
+          alt="Pastel verde salvia con betún texturizado en ondas, coronado con flores naturales en tonos rosa, fucsia y amarillo" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Con flores</span><p>Verde texturizado</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="flores">
+        <div class="galeria-img"><img src="img/galeria/blanco-orquideas-perlas.jpg" width="361" height="640" loading="lazy" decoding="async"
+          alt="Pastel blanco con betún en ondas, orquídeas naturales moradas y blancas y perlas doradas" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Con flores</span><p>Orquídeas y perlas</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="minimalistas">
+        <div class="galeria-img"><img src="img/galeria/borgona-liston.jpg" width="700" height="784" loading="lazy" decoding="async"
+          alt="Pastel color borgoña con orilla de betún rizado y listón de satín del mismo tono" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Minimalista</span><p>Borgoña con listón</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="minimalistas">
+        <div class="galeria-img"><img src="img/galeria/hello30-monos.jpg" width="700" height="933" loading="lazy" decoding="async"
+          alt="Pastel color crema con corazones y moños de listón café y la leyenda hello 30 escrita a mano" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Minimalista</span><p>Moños y corazones</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="minimalistas">
+        <div class="galeria-img"><img src="img/galeria/azul-marino-plisado.jpg" width="700" height="700" loading="lazy" decoding="async"
+          alt="Pastel azul marino con betún rizado en capas, perlas blancas y letras escritas a mano" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Minimalista</span><p>Azul marino y perlas</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="minimalistas">
+        <div class="galeria-img"><img src="img/galeria/blanco-puntos-negros.jpg" width="480" height="640" loading="lazy" decoding="async"
+          alt="Pastel blanco minimalista con puntos negros y orilla superior en forma de festón" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Minimalista</span><p>Puntos y festón</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="2pisos">
+        <div class="galeria-img"><img src="img/galeria/dospisos-naranjas.jpg" width="700" height="933" loading="lazy" decoding="async"
+          alt="Pastel de dos pisos en blanco con textura de ondas, naranjas deshidratadas, anturios blancos y flores verdes" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">2 Pisos</span><p>Naranjas y anturios</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="2pisos">
+        <div class="galeria-img"><img src="img/galeria/dospisos-bautizo.jpg" width="700" height="809" loading="lazy" decoding="async"
+          alt="Pastel de bautizo de dos pisos en blanco con follaje pintado a mano en azul y una cruz dorada" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">2 Pisos</span><p>Bautizo</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="2pisos">
+        <div class="galeria-img"><img src="img/galeria/dospisos-flores-85.jpg" width="700" height="933" loading="lazy" decoding="async"
+          alt="Pastel de dos pisos en blanco con flores rosas pintadas a mano y el número 85 en acrílico dorado" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">2 Pisos</span><p>Flores pintadas a mano</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="2pisos">
+        <div class="galeria-img"><img src="img/galeria/dos-pisos-monos-azules.jpg" width="480" height="640" loading="lazy" decoding="async"
+          alt="Pastel blanco de dos pisos decorado con moños de listón azul cielo y cerezas rojas en la parte superior" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">2 Pisos</span><p>Moños y cerezas</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="clasicos">
+        <div class="galeria-img"><img src="img/galeria/frambuesas.jpg" width="700" height="874" loading="lazy" decoding="async"
+          alt="Pastel blanco cubierto por completo de frambuesas frescas, con orilla de betún rizado" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Clásico</span><p>Frambuesas naturales</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="clasicos">
+        <div class="galeria-img"><img src="img/galeria/cheesecake-caramelo.jpg" width="700" height="875" loading="lazy" decoding="async"
+          alt="Cheesecake horneado con nuez caramelizada y líneas de chocolate y cajeta encima" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Clásico</span><p>Cheesecake de caramelo</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="clasicos">
+        <div class="galeria-img"><img src="img/galeria/mostachon-fresas-orquideas.jpg" width="360" height="640" loading="lazy" decoding="async"
+          alt="Mostachón redondo cubierto de fresas frescas y orquídeas blancas, con listón rosa" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Clásico</span><p>Mostachón de fresas</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="clasicos">
+        <div class="galeria-img"><img src="img/galeria/mostachon-mango-fresa.jpg" width="480" height="640" loading="lazy" decoding="async"
+          alt="Mostachón con mango y fresa en trozos, decorado con flores comestibles de colores" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Clásico</span><p>Mostachón de mango</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="clasicos">
+        <div class="galeria-img"><img src="img/galeria/limon-zarzamora.jpg" width="480" height="640" loading="lazy" decoding="async"
+          alt="Pastel rectangular con betún blanco, rodajas de limón, zarzamoras y hojas de menta" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Clásico</span><p>Limón y zarzamora</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="tematicos">
+        <div class="galeria-img"><img src="img/galeria/corazon-dorado.jpg" width="700" height="815" loading="lazy" decoding="async"
+          alt="Pastel en forma de corazón cubierto de betún dorado brillante con orilla de perlas grandes" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Temático</span><p>Corazón dorado</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="tematicos">
+        <div class="galeria-img"><img src="img/galeria/verde-matcha.jpg" width="700" height="700" loading="lazy" decoding="async"
+          alt="Pastel en forma de corazón en verde matcha con orilla de betún rizado, perlas doradas y una aceituna encima" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Temático</span><p>Corazón verde</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="tematicos">
+        <div class="galeria-img"><img src="img/galeria/stitch-infantil.jpg" width="700" height="700" loading="lazy" decoding="async"
+          alt="Pastel infantil en rosa y azul con la figura de Stitch pintada a mano y orillas de betún rizado" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Temático</span><p>Infantil</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="tematicos">
+        <div class="galeria-img"><img src="img/galeria/blanco-dibujos-borgona.jpg" width="360" height="640" loading="lazy" decoding="async"
+          alt="Pastel blanco con dibujos pintados a mano en color borgoña — moños y esferas — y orilla de perlas" /></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Temático</span><p>Pintado a mano</p></figcaption>
+      </figure>
+
+    </div>
+    <p class="galeria-empty hidden" id="galeriaEmpty">Aún no tenemos ejemplos de esta categoría aquí. Escríbenos y te mandamos fotos por WhatsApp.</p>
+    <div class="instagram-banner">
+      <div class="ig-content">
+        <h3>Comparte tu momento dulce</h3>
+        <p>Publicamos cada pastel que sale del taller. Etiquétanos como <strong>@sweetbakery.cuu</strong> y sal en nuestro muro.</p>
+      </div>
+      <a href="https://www.instagram.com/sweetbakery.cuu/" target="_blank" rel="noopener" class="btn btn-primary">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2 0 1.8.2 2.2.4.6.2 1 .5 1.4 1 .5.4.8.8 1 1.4.2.4.4 1 .4 2.2.1 1.2.1 1.6.1 4.8s0 3.6-.1 4.8c0 1.2-.2 1.8-.4 2.2-.2.6-.5 1-1 1.4-.4.5-.8.8-1.4 1-.4.2-1 .4-2.2.4-1.2.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2 0-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-1-.5-.4-.8-.8-1-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c0-1.2.2-1.8.4-2.2.2-.6.5-1 1-1.4.4-.5.8-.8 1.4-1 .4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1 0-1.7.2-2.1.3-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.1.4-.3 1-.3 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c0 1.1.2 1.7.3 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.1 1 .3 2.1.3 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1 0 1.7-.2 2.1-.3.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.1-.4.3-1 .3-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c0-1.1-.2-1.7-.3-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.1-1-.3-2.1-.3-1.2-.1-1.6-.1-4.7-.1zm0 3.1a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4zm5.2-2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/></svg>
+        Síguenos en Instagram
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CLÁSICOS DE LÍNEA ============== -->
   <section class="section clasicos reveal" id="clasicos">
     <div class="section-decor decor-side" aria-hidden="true"></div>
     <div class="container">
@@ -570,39 +754,50 @@
     </div>
   </section>
 
-  <!-- ============== MOMENTOS ============== -->
-  <section class="section momentos reveal" id="momentos">
+  <!-- ============== VITRINA DEL DÍA ============== -->
+  <section class="section vitrina reveal" id="vitrina">
+    <div class="section-decor decor-top" aria-hidden="true"></div>
     <div class="container">
-      <span class="eyebrow center">Nuestra comunidad</span>
-      <h2 class="section-title">Tus Momentos</h2>
-      <p class="section-lead">Más de 7,400 personas nos siguen en Instagram, donde publicamos cada pastel que sale del taller.</p>
+      <span class="eyebrow center">Sin esperas</span>
+      <h2 class="section-title">¡Lo quiero ya! — Vitrina del Día</h2>
+      <p class="section-lead">
+        Cada mañana horneamos opciones frescas listas para llevar: <em>Tres Leches</em>, pays, gelatinas artesanales, mini cheesecakes y nuestros clásicos del día. Pasa por tu antojo sin agendar.
+      </p>
 
-      <div class="social-proof-row">
-        <div class="social-proof-item"><strong>7,400+</strong><span>seguidores en Instagram</span></div>
-        <div class="social-proof-item"><strong>4 días</strong><span>de anticipación mínima</span></div>
-        <div class="social-proof-item"><strong>100%</strong><span>artesanal, hecho a mano</span></div>
+      <div class="vitrina-grid">
+        <div class="vitrina-card">
+          <div class="vitrina-icon">🍰</div>
+          <h3>Tres Leches</h3>
+          <p>Esponjoso, bañado al momento.</p>
+        </div>
+        <div class="vitrina-card">
+          <div class="vitrina-icon">🥧</div>
+          <h3>Pays del día</h3>
+          <p>Limón, queso, manzana de temporada.</p>
+        </div>
+        <div class="vitrina-card">
+          <div class="vitrina-icon">🍮</div>
+          <h3>Gelatinas</h3>
+          <p>Mosaico, rompope, frutos rojos.</p>
+        </div>
+        <div class="vitrina-card">
+          <div class="vitrina-icon">🧁</div>
+          <h3>Mini postres</h3>
+          <p>Cupcakes, brownies, alfajores.</p>
+        </div>
       </div>
 
-      <figure class="momentos-featured">
-        <img src="img/galeria/coleccion-minimalistas.jpg" width="1100" height="1245" loading="lazy" decoding="async"
-             alt="Mesa con varios pasteles de Sweet Bakery: azul marino con perlas, verde salvia, rosa, menta, blanco con mariposas amarillas y durazno con confeti" />
-        <figcaption>Una tanda cualquiera saliendo del taller.</figcaption>
-      </figure>
-
-      <div class="instagram-banner">
-        <div class="ig-content">
-          <h3>Comparte tu momento dulce</h3>
-          <p>Sube tu foto a Instagram celebrando con nosotros, menciónanos como <strong>@sweetbakery.cuu</strong> y forma parte de nuestro muro de recuerdos.</p>
-        </div>
-        <a href="https://www.instagram.com/sweetbakery.cuu/" target="_blank" rel="noopener" class="btn btn-primary">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2 0 1.8.2 2.2.4.6.2 1 .5 1.4 1 .5.4.8.8 1 1.4.2.4.4 1 .4 2.2.1 1.2.1 1.6.1 4.8s0 3.6-.1 4.8c0 1.2-.2 1.8-.4 2.2-.2.6-.5 1-1 1.4-.4.5-.8.8-1.4 1-.4.2-1 .4-2.2.4-1.2.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2 0-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-1-.5-.4-.8-.8-1-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c0-1.2.2-1.8.4-2.2.2-.6.5-1 1-1.4.4-.5.8-.8 1.4-1 .4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1 0-1.7.2-2.1.3-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.1.4-.3 1-.3 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c0 1.1.2 1.7.3 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.1 1 .3 2.1.3 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1 0 1.7-.2 2.1-.3.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.1-.4.3-1 .3-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c0-1.1-.2-1.7-.3-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.1-1-.3-2.1-.3-1.2-.1-1.6-.1-4.7-.1zm0 3.1a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4zm5.2-2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/></svg>
-          Síguenos en Instagram
+      <div class="vitrina-cta-wrap">
+        <a href="#" class="btn btn-whatsapp" id="vitrinaWhatsapp" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11 11 0 0 0 3.6 17.3L2 22l4.8-1.6A11 11 0 0 0 20.5 3.5zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-2.9 1 1-2.8-.2-.3a9 9 0 1 1 7 3.6zm5-6.7c-.3-.1-1.6-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1a7.4 7.4 0 0 1-3.6-3.1c-.3-.5.3-.4.8-1.4 0-.2 0-.4-.1-.5l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4a3 3 0 0 0-1 2.3c0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.2 1.7.7 2.4.8 3.2.6.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3z"/></svg>
+          <span id="vitrinaWhatsappText">Pregunta por la vitrina de hoy</span>
         </a>
+        <small class="vitrina-note" id="vitrinaNote">Horario: Lun–Vie 10–19h · Sáb 10–16h · Dom cerrado</small>
       </div>
     </div>
   </section>
 
-<!-- ============== SABOR DEL MES ============== -->
+  <!-- ============== SABOR DEL MES ============== -->
 <section class="section sabor-mes reveal" id="sabor-mes">
   <div class="container">
     <div class="sabor-mes-inner">
@@ -786,164 +981,6 @@
   </div>
 </section>
 
-<!-- ============== GALERIA INSPIRACION ============== -->
-<section class="section galeria reveal" id="galeria">
-  <div class="container">
-    <span class="eyebrow center">Encuentra tu estilo</span>
-    <h2 class="section-title">Galería de Inspiración</h2>
-    <p class="section-lead">Pasteles reales que han salido de nuestro taller. Filtra por estilo para encontrar el tuyo — y recuerda que cada diseño se hace contigo, así que puedes pedir el que quieras en otros colores.</p>
-    <div class="galeria-filters" role="tablist" aria-label="Filtros de galería">
-      <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">Todos</button>
-      <button class="filter-btn" data-filter="clasicos" role="tab" aria-selected="false">Clásicos</button>
-      <button class="filter-btn" data-filter="minimalistas" role="tab" aria-selected="false">Minimalistas</button>
-      <button class="filter-btn" data-filter="flores" role="tab" aria-selected="false">Con flores</button>
-      <button class="filter-btn" data-filter="2pisos" role="tab" aria-selected="false">2 Pisos</button>
-      <button class="filter-btn" data-filter="tematicos" role="tab" aria-selected="false">Temáticos</button>
-    </div>
-
-    <div class="galeria-grid" id="galeriaGrid">
-
-      <figure class="galeria-item" data-cat="flores">
-        <div class="galeria-img"><img src="img/galeria/anturios-elaborado.jpg" width="700" height="793" loading="lazy" decoding="async"
-          alt="Pastel blanco con betún texturizado en ondas, anturios rojos, margaritas y espigas secas" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">Con flores</span><p>Anturios y espigas</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="flores">
-        <div class="galeria-img"><img src="img/galeria/flores-prensadas.jpg" width="700" height="933" loading="lazy" decoding="async"
-          alt="Pastel amarillo pálido decorado con flores silvestres naturales en rosa, morado y blanco" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">Con flores</span><p>Flores silvestres</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="flores">
-        <div class="galeria-img"><img src="img/galeria/plisado-rosas.jpg" width="700" height="933" loading="lazy" decoding="async"
-          alt="Pastel blanco con betún plisado vertical y rosas naturales en durazno, blanco y fucsia" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">Con flores</span><p>Plisado con rosas</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="flores">
-        <div class="galeria-img"><img src="img/galeria/verde-texturizado-flores.jpg" width="360" height="640" loading="lazy" decoding="async"
-          alt="Pastel verde salvia con betún texturizado en ondas, coronado con flores naturales en tonos rosa, fucsia y amarillo" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">Con flores</span><p>Verde texturizado</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="flores">
-        <div class="galeria-img"><img src="img/galeria/blanco-orquideas-perlas.jpg" width="361" height="640" loading="lazy" decoding="async"
-          alt="Pastel blanco con betún en ondas, orquídeas naturales moradas y blancas y perlas doradas" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">Con flores</span><p>Orquídeas y perlas</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="minimalistas">
-        <div class="galeria-img"><img src="img/galeria/borgona-liston.jpg" width="700" height="784" loading="lazy" decoding="async"
-          alt="Pastel color borgoña con orilla de betún rizado y listón de satín del mismo tono" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">Minimalista</span><p>Borgoña con listón</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="minimalistas">
-        <div class="galeria-img"><img src="img/galeria/hello30-monos.jpg" width="700" height="933" loading="lazy" decoding="async"
-          alt="Pastel color crema con corazones y moños de listón café y la leyenda hello 30 escrita a mano" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">Minimalista</span><p>Moños y corazones</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="minimalistas">
-        <div class="galeria-img"><img src="img/galeria/azul-marino-plisado.jpg" width="700" height="700" loading="lazy" decoding="async"
-          alt="Pastel azul marino con betún rizado en capas, perlas blancas y letras escritas a mano" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">Minimalista</span><p>Azul marino y perlas</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="minimalistas">
-        <div class="galeria-img"><img src="img/galeria/blanco-puntos-negros.jpg" width="480" height="640" loading="lazy" decoding="async"
-          alt="Pastel blanco minimalista con puntos negros y orilla superior en forma de festón" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">Minimalista</span><p>Puntos y festón</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="2pisos">
-        <div class="galeria-img"><img src="img/galeria/dospisos-naranjas.jpg" width="700" height="933" loading="lazy" decoding="async"
-          alt="Pastel de dos pisos en blanco con textura de ondas, naranjas deshidratadas, anturios blancos y flores verdes" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">2 Pisos</span><p>Naranjas y anturios</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="2pisos">
-        <div class="galeria-img"><img src="img/galeria/dospisos-bautizo.jpg" width="700" height="809" loading="lazy" decoding="async"
-          alt="Pastel de bautizo de dos pisos en blanco con follaje pintado a mano en azul y una cruz dorada" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">2 Pisos</span><p>Bautizo</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="2pisos">
-        <div class="galeria-img"><img src="img/galeria/dospisos-flores-85.jpg" width="700" height="933" loading="lazy" decoding="async"
-          alt="Pastel de dos pisos en blanco con flores rosas pintadas a mano y el número 85 en acrílico dorado" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">2 Pisos</span><p>Flores pintadas a mano</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="2pisos">
-        <div class="galeria-img"><img src="img/galeria/dos-pisos-monos-azules.jpg" width="480" height="640" loading="lazy" decoding="async"
-          alt="Pastel blanco de dos pisos decorado con moños de listón azul cielo y cerezas rojas en la parte superior" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">2 Pisos</span><p>Moños y cerezas</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="clasicos">
-        <div class="galeria-img"><img src="img/galeria/frambuesas.jpg" width="700" height="874" loading="lazy" decoding="async"
-          alt="Pastel blanco cubierto por completo de frambuesas frescas, con orilla de betún rizado" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">Clásico</span><p>Frambuesas naturales</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="clasicos">
-        <div class="galeria-img"><img src="img/galeria/cheesecake-caramelo.jpg" width="700" height="875" loading="lazy" decoding="async"
-          alt="Cheesecake horneado con nuez caramelizada y líneas de chocolate y cajeta encima" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">Clásico</span><p>Cheesecake de caramelo</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="clasicos">
-        <div class="galeria-img"><img src="img/galeria/mostachon-fresas-orquideas.jpg" width="360" height="640" loading="lazy" decoding="async"
-          alt="Mostachón redondo cubierto de fresas frescas y orquídeas blancas, con listón rosa" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">Clásico</span><p>Mostachón de fresas</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="clasicos">
-        <div class="galeria-img"><img src="img/galeria/mostachon-mango-fresa.jpg" width="480" height="640" loading="lazy" decoding="async"
-          alt="Mostachón con mango y fresa en trozos, decorado con flores comestibles de colores" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">Clásico</span><p>Mostachón de mango</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="clasicos">
-        <div class="galeria-img"><img src="img/galeria/limon-zarzamora.jpg" width="480" height="640" loading="lazy" decoding="async"
-          alt="Pastel rectangular con betún blanco, rodajas de limón, zarzamoras y hojas de menta" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">Clásico</span><p>Limón y zarzamora</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="tematicos">
-        <div class="galeria-img"><img src="img/galeria/corazon-dorado.jpg" width="700" height="815" loading="lazy" decoding="async"
-          alt="Pastel en forma de corazón cubierto de betún dorado brillante con orilla de perlas grandes" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">Temático</span><p>Corazón dorado</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="tematicos">
-        <div class="galeria-img"><img src="img/galeria/verde-matcha.jpg" width="700" height="700" loading="lazy" decoding="async"
-          alt="Pastel en forma de corazón en verde matcha con orilla de betún rizado, perlas doradas y una aceituna encima" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">Temático</span><p>Corazón verde</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="tematicos">
-        <div class="galeria-img"><img src="img/galeria/stitch-infantil.jpg" width="700" height="700" loading="lazy" decoding="async"
-          alt="Pastel infantil en rosa y azul con la figura de Stitch pintada a mano y orillas de betún rizado" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">Temático</span><p>Infantil</p></figcaption>
-      </figure>
-
-      <figure class="galeria-item" data-cat="tematicos">
-        <div class="galeria-img"><img src="img/galeria/blanco-dibujos-borgona.jpg" width="360" height="640" loading="lazy" decoding="async"
-          alt="Pastel blanco con dibujos pintados a mano en color borgoña — moños y esferas — y orilla de perlas" /></div>
-        <figcaption class="galeria-info"><span class="galeria-cat-tag">Temático</span><p>Pintado a mano</p></figcaption>
-      </figure>
-
-    </div>
-    <p class="galeria-empty hidden" id="galeriaEmpty">Aún no tenemos ejemplos de esta categoría aquí. Escríbenos y te mandamos fotos por WhatsApp.</p>
-    <div class="galeria-footer-cta">
-      <p>¿No encontraste lo que buscas? Publicamos cada pastel que sale del taller en Instagram.</p>
-      <a href="https://www.instagram.com/sweetbakery.cuu/" target="_blank" rel="noopener" class="btn btn-ghost">Ver más en Instagram</a>
-    </div>
-  </div>
-</section>
-
 <!-- ============== HISTORIA ============== -->
 <section class="section historia reveal" id="historia">
   <div class="container">
@@ -1118,7 +1155,17 @@
     </div>
   </footer>
 
-  <script src="script.js?v=17" defer></script>
+
+  <!-- Barra de acción fija (solo móvil) -->
+  <div class="barra-accion" id="barraAccion">
+    <a href="#cotizador" class="btn btn-primary btn-small">Cotizar mi pastel</a>
+    <a href="https://wa.me/5216142868000" target="_blank" rel="noopener" class="btn btn-whatsapp btn-small" aria-label="Escribir por WhatsApp">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11 11 0 0 0 3.6 17.3L2 22l4.8-1.6A11 11 0 0 0 20.5 3.5zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-2.9 1 1-2.8-.2-.3a9 9 0 1 1 7 3.6zm5-6.7c-.3-.1-1.6-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1a7.4 7.4 0 0 1-3.6-3.1c-.3-.5.3-.4.8-1.4 0-.2 0-.4-.1-.5l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4a3 3 0 0 0-1 2.3c0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.2 1.7.7 2.4.8 3.2.6.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3z"/></svg>
+      <span>WhatsApp</span>
+    </a>
+  </div>
+
+  <script src="script.js?v=24" defer></script>
 
 
   <!-- Modal resumen cotización -->
