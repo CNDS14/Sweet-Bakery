@@ -37,7 +37,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="style.css?v=13" />
+  <link rel="stylesheet" href="style.css?v=15" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
@@ -582,15 +582,11 @@
         <div class="social-proof-item"><strong>100%</strong><span>artesanal, hecho a mano</span></div>
       </div>
 
-      <div class="mosaic" aria-label="Estilos de pastel que hacemos">
-        <div class="mosaic-item m-1"><span aria-hidden="true">🎂</span><em>Clásicos</em></div>
-        <div class="mosaic-item m-2"><span aria-hidden="true">🌸</span><em>Flores naturales</em></div>
-        <div class="mosaic-item m-3"><span aria-hidden="true">💍</span><em>Bodas y XV</em></div>
-        <div class="mosaic-item m-4"><span aria-hidden="true">✨</span><em>Temáticos</em></div>
-        <div class="mosaic-item m-5"><span aria-hidden="true">🍓</span><em>Mostachones</em></div>
-        <div class="mosaic-item m-6"><span aria-hidden="true">🧁</span><em>Lunchbox</em></div>
-        <div class="mosaic-item m-7"><span aria-hidden="true">🌿</span><em>2 pisos</em></div>
-      </div>
+      <figure class="momentos-featured">
+        <img src="img/galeria/coleccion-minimalistas.jpg" width="1100" height="1245" loading="lazy" decoding="async"
+             alt="Mesa con varios pasteles de Sweet Bakery: azul marino con perlas, verde salvia, rosa, menta, blanco con mariposas amarillas y durazno con confeti" />
+        <figcaption>Una tanda cualquiera saliendo del taller.</figcaption>
+      </figure>
 
       <div class="instagram-banner">
         <div class="ig-content">
@@ -641,88 +637,81 @@
     <span class="eyebrow center">Encuentra tu estilo</span>
     <h2 class="section-title">Galería de Inspiración</h2>
     <p class="section-lead">Estos son los estilos que más trabajamos. Cada pastel es único y se diseña contigo. ¿Quieres ver fotos reales? Todo nuestro trabajo está en <a href="https://www.instagram.com/sweetbakery.cuu/" target="_blank" rel="noopener">Instagram</a>.</p>
-    <div class="galeria-filters" role="tablist" aria-label="Filtros de galeria">
+    <div class="galeria-filters" role="tablist" aria-label="Filtros de galería">
       <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">Todos</button>
       <button class="filter-btn" data-filter="clasicos" role="tab" aria-selected="false">Clásicos</button>
+      <button class="filter-btn" data-filter="minimalistas" role="tab" aria-selected="false">Minimalistas</button>
+      <button class="filter-btn" data-filter="flores" role="tab" aria-selected="false">Con flores</button>
       <button class="filter-btn" data-filter="2pisos" role="tab" aria-selected="false">2 Pisos</button>
       <button class="filter-btn" data-filter="tematicos" role="tab" aria-selected="false">Temáticos</button>
-      <button class="filter-btn" data-filter="lunchbox" role="tab" aria-selected="false">Lunchbox</button>
-      <button class="filter-btn" data-filter="flores" role="tab" aria-selected="false">Flores</button>
-      <button class="filter-btn" data-filter="korean" role="tab" aria-selected="false">Korean</button>
     </div>
+
     <div class="galeria-grid" id="galeriaGrid">
-      <div class="galeria-item" data-cat="clasicos">
-        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-clasico-01">
-          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><path d="M20 55 L60 55 L55 30 L25 30 Z" fill="#D4A396" opacity="0.6"/></svg><p>Pronto</p></div>
+
+      <figure class="galeria-item" data-cat="flores">
+        <div class="galeria-img">
+          <img src="img/galeria/verde-texturizado-flores.jpg" width="360" height="640" loading="lazy" decoding="async"
+               alt="Pastel verde salvia con betún texturizado en ondas, coronado con flores naturales en tonos rosa, fucsia y amarillo" />
         </div>
-        <div class="galeria-info"><span class="galeria-cat-tag">Clásico</span><p>Buttercream Liso</p></div>
-      </div>
-      <div class="galeria-item" data-cat="clasicos">
-        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-clasico-02">
-          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><path d="M20 55 L60 55 L55 30 L25 30 Z" fill="#C9956A" opacity="0.5"/></svg><p>Pronto</p></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Con flores</span><p>Verde texturizado</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="tematicos">
+        <div class="galeria-img">
+          <img src="img/galeria/blanco-dibujos-borgona.jpg" width="360" height="640" loading="lazy" decoding="async"
+               alt="Pastel blanco con dibujos pintados a mano en color borgoña — moños y esferas — y orilla de perlas" />
         </div>
-        <div class="galeria-info"><span class="galeria-cat-tag">Clásico</span><p>Naked Cake</p></div>
-      </div>
-      <div class="galeria-item" data-cat="2pisos">
-        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-2p-01">
-          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><rect x="22" y="42" width="36" height="16" rx="3" fill="#D4A396" opacity="0.7"/><rect x="28" y="28" width="24" height="16" rx="3" fill="#E5C5B5"/></svg><p>Pronto</p></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Temático</span><p>Pintado a mano</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="minimalistas">
+        <div class="galeria-img">
+          <img src="img/galeria/blanco-puntos-negros.jpg" width="480" height="640" loading="lazy" decoding="async"
+               alt="Pastel blanco minimalista con puntos negros y orilla superior en forma de festón" />
         </div>
-        <div class="galeria-info"><span class="galeria-cat-tag">2 Pisos</span><p>Clasico Elegante</p></div>
-      </div>
-      <div class="galeria-item" data-cat="2pisos">
-        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-2p-02">
-          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><rect x="22" y="42" width="36" height="16" rx="3" fill="#8A9A86" opacity="0.6"/><rect x="28" y="28" width="24" height="16" rx="3" fill="#D4A396" opacity="0.6"/></svg><p>Pronto</p></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Minimalista</span><p>Puntos y festón</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="2pisos">
+        <div class="galeria-img">
+          <img src="img/galeria/dos-pisos-monos-azules.jpg" width="480" height="640" loading="lazy" decoding="async"
+               alt="Pastel blanco de dos pisos decorado con moños de listón azul cielo y cerezas rojas en la parte superior" />
         </div>
-        <div class="galeria-info"><span class="galeria-cat-tag">2 Pisos</span><p>Con Flores</p></div>
-      </div>
-      <div class="galeria-item" data-cat="tematicos">
-        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-tematico-01">
-          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><path d="M40 15 L55 55 L25 55 Z" fill="#C9956A" opacity="0.5"/></svg><p>Pronto</p></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">2 Pisos</span><p>Moños y cerezas</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="flores">
+        <div class="galeria-img">
+          <img src="img/galeria/blanco-orquideas-perlas.jpg" width="361" height="640" loading="lazy" decoding="async"
+               alt="Pastel blanco con betún en ondas, orquídeas naturales moradas y blancas y perlas doradas" />
         </div>
-        <div class="galeria-info"><span class="galeria-cat-tag">Temático</span><p>Personalizado</p></div>
-      </div>
-      <div class="galeria-item" data-cat="lunchbox">
-        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-lunchbox-01">
-          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><rect x="20" y="28" width="40" height="30" rx="4" fill="#D4A396" opacity="0.6"/></svg><p>Pronto</p></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Con flores</span><p>Orquídeas y perlas</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="clasicos">
+        <div class="galeria-img">
+          <img src="img/galeria/mostachon-fresas-orquideas.jpg" width="360" height="640" loading="lazy" decoding="async"
+               alt="Mostachón redondo cubierto de fresas frescas y orquídeas blancas, con listón rosa" />
         </div>
-        <div class="galeria-info"><span class="galeria-cat-tag">Lunchbox</span><p>2 porciones</p></div>
-      </div>
-      <div class="galeria-item" data-cat="lunchbox">
-        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-lunchbox-02">
-          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><rect x="24" y="30" width="32" height="26" rx="4" fill="#8A9A86" opacity="0.4"/></svg><p>Pronto</p></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Clásico</span><p>Mostachón de fresas</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="clasicos">
+        <div class="galeria-img">
+          <img src="img/galeria/mostachon-mango-fresa.jpg" width="480" height="640" loading="lazy" decoding="async"
+               alt="Mostachón con mango y fresa en trozos, decorado con flores comestibles de colores" />
         </div>
-        <div class="galeria-info"><span class="galeria-cat-tag">Lunchbox</span><p>Decorado</p></div>
-      </div>
-      <div class="galeria-item" data-cat="flores">
-        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-flores-01">
-          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><circle cx="40" cy="30" r="14" fill="#D4A396" opacity="0.5"/><circle cx="30" cy="42" r="10" fill="#8A9A86" opacity="0.4"/><circle cx="50" cy="42" r="10" fill="#E5C5B5"/></svg><p>Pronto</p></div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Clásico</span><p>Mostachón de mango</p></figcaption>
+      </figure>
+
+      <figure class="galeria-item" data-cat="clasicos">
+        <div class="galeria-img">
+          <img src="img/galeria/limon-zarzamora.jpg" width="480" height="640" loading="lazy" decoding="async"
+               alt="Pastel rectangular con betún blanco, rodajas de limón, zarzamoras y hojas de menta" />
         </div>
-        <div class="galeria-info"><span class="galeria-cat-tag">Flores</span><p>Bouquet Natural</p></div>
-      </div>
-      <div class="galeria-item" data-cat="flores">
-        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-flores-02">
-          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><circle cx="40" cy="36" r="18" fill="#E5C5B5" opacity="0.6"/><circle cx="40" cy="36" r="10" fill="#D4A396"/></svg><p>Pronto</p></div>
-        </div>
-        <div class="galeria-info"><span class="galeria-cat-tag">Flores</span><p>Floral Korean</p></div>
-      </div>
-      <div class="galeria-item" data-cat="korean">
-        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-korean-01">
-          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><rect x="22" y="30" width="36" height="26" rx="4" fill="#FAF0E6"/></svg><p>Pronto</p></div>
-        </div>
-        <div class="galeria-info"><span class="galeria-cat-tag">Korean</span><p>Minimalista</p></div>
-      </div>
-      <div class="galeria-item" data-cat="tematicos">
-        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-tematico-02">
-          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><path d="M25 55 L40 15 L55 55 Z" fill="#D4A396" opacity="0.4"/></svg><p>Pronto</p></div>
-        </div>
-        <div class="galeria-info"><span class="galeria-cat-tag">Temático</span><p>XV Años</p></div>
-      </div>
-      <div class="galeria-item" data-cat="clasicos">
-        <div class="galeria-img cloudinary-placeholder" data-cloudinary-id="galeria-clasico-03">
-          <div class="img-placeholder-inner"><svg viewBox="0 0 80 80" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="8" fill="#F5E9DF"/><path d="M20 55 L60 55 L55 30 L25 30 Z" fill="#8A9A86" opacity="0.5"/></svg><p>Pronto</p></div>
-        </div>
-        <div class="galeria-info"><span class="galeria-cat-tag">Clásico</span><p>Ombre</p></div>
-      </div>
+        <figcaption class="galeria-info"><span class="galeria-cat-tag">Clásico</span><p>Limón y zarzamora</p></figcaption>
+      </figure>
+
     </div>
     <p class="galeria-empty hidden" id="galeriaEmpty">Aún no tenemos ejemplos de esta categoría aquí. Escríbenos y te mandamos fotos por WhatsApp.</p>
     <div class="galeria-footer-cta">
