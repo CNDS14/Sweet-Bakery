@@ -37,7 +37,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="style.css?v=16" />
+  <link rel="stylesheet" href="style.css?v=17" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
@@ -61,6 +61,7 @@
         <a href="#clasicos">Clásicos</a>
         <a href="#momentos">Momentos</a>
         <a href="#galeria">Galería</a>
+        <a href="#temporadas">Temporadas</a>
         <a href="#historia">Nosotros</a>
         <a href="#faq">FAQ</a>
         <a href="#contacto">Contacto</a>
@@ -631,6 +632,139 @@
   </div>
 </section>
 
+<!-- ============== TEMPORADAS ============== -->
+<section class="section temporadas reveal" id="temporadas">
+  <div class="container">
+    <span class="eyebrow center">El año en Sweet Bakery</span>
+    <h2 class="section-title">Temporadas</h2>
+    <p class="section-lead">
+      Cada temporada sacamos una carta especial que solo existe unas semanas. Esto es lo que hemos hecho
+      en años pasados — apúntate a la lista y te avisamos en cuanto abran los pedidos.
+    </p>
+
+    <div class="temporadas-grid" id="temporadasGrid">
+
+      <!-- Para poner una foto: cambia el <div class="temporada-img"> completo por
+           <div class="temporada-img"><img src="img/temporadas/muertos.jpg" width="700" height="500" loading="lazy" alt="..."></div> -->
+      <article class="temporada-card" data-mes-inicio="10" data-mes-fin="11" data-temporada="Pan de Muerto">
+        <div class="temporada-img temporada-img-muertos" aria-hidden="true">
+          <span class="temporada-emoji">💀</span>
+        </div>
+        <div class="temporada-body">
+          <div class="temporada-head">
+            <span class="temporada-mes">Octubre – Noviembre</span>
+            <span class="temporada-estado" data-estado></span>
+          </div>
+          <h3>Día de Muertos</h3>
+          <p class="temporada-desc">
+            Nuestro pan de muerto relleno, servido con cempasúchil. La temporada más esperada del año:
+            se hornea todos los días desde finales de octubre y vuela.
+          </p>
+          <ul class="temporada-lista">
+            <li>Pan de muerto tradicional con azúcar</li>
+            <li>Relleno de chocolate y avellana</li>
+            <li>Relleno de crema y de pistache</li>
+            <li>Relleno de galleta con crema</li>
+            <li>Relleno de nuez</li>
+          </ul>
+          <a class="btn btn-whatsapp btn-small temporada-cta" data-avisar="Pan de Muerto" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11 11 0 0 0 3.6 17.3L2 22l4.8-1.6A11 11 0 0 0 20.5 3.5zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-2.9 1 1-2.8-.2-.3a9 9 0 1 1 7 3.6zm5-6.7c-.3-.1-1.6-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1a7.4 7.4 0 0 1-3.6-3.1c-.3-.5.3-.4.8-1.4 0-.2 0-.4-.1-.5l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4a3 3 0 0 0-1 2.3c0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.2 1.7.7 2.4.8 3.2.6.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3z"/></svg>
+            <span>Avísame cuando abra</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="temporada-card" data-mes-inicio="12" data-mes-fin="12" data-temporada="Navidad">
+        <div class="temporada-img temporada-img-navidad" aria-hidden="true">
+          <span class="temporada-emoji">🎄</span>
+        </div>
+        <div class="temporada-body">
+          <div class="temporada-head">
+            <span class="temporada-mes">Diciembre</span>
+            <span class="temporada-estado" data-estado></span>
+          </div>
+          <h3>Navidad</h3>
+          <p class="temporada-desc">
+            La carta más completa del año: mesa de postres, regalos para llevar y los pasteles
+            de nochebuena pintados a mano que se volvieron tradición.
+          </p>
+          <ul class="temporada-lista">
+            <li>Pasteles con nochebuena pintada a mano</li>
+            <li>Galletas decoradas: bastón, jengibre y estrella</li>
+            <li>Brownie <em>Merry Christmas</em> en caja de regalo</li>
+            <li>Roscas y panqués de nuez y de pistache</li>
+            <li>Galletas en frasco de vidrio con moño</li>
+          </ul>
+          <a class="btn btn-whatsapp btn-small temporada-cta" data-avisar="la carta de Navidad" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11 11 0 0 0 3.6 17.3L2 22l4.8-1.6A11 11 0 0 0 20.5 3.5zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-2.9 1 1-2.8-.2-.3a9 9 0 1 1 7 3.6zm5-6.7c-.3-.1-1.6-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1a7.4 7.4 0 0 1-3.6-3.1c-.3-.5.3-.4.8-1.4 0-.2 0-.4-.1-.5l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4a3 3 0 0 0-1 2.3c0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.2 1.7.7 2.4.8 3.2.6.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3z"/></svg>
+            <span>Avísame cuando abra</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="temporada-card" data-mes-inicio="2" data-mes-fin="2" data-temporada="San Valentín">
+        <div class="temporada-img temporada-img-valentin" aria-hidden="true">
+          <span class="temporada-emoji">💌</span>
+        </div>
+        <div class="temporada-body">
+          <div class="temporada-head">
+            <span class="temporada-mes">Febrero</span>
+            <span class="temporada-estado" data-estado></span>
+          </div>
+          <h3>San Valentín</h3>
+          <p class="temporada-desc">
+            Cajas para regalar, listas desde el 13. Todo en tamaño para compartir — o para no
+            compartir, tú decides.
+          </p>
+          <ul class="temporada-lista">
+            <li>Brownies con mensaje: <em>Love you</em>, <em>XOXO</em>, <em>Be mine</em></li>
+            <li>Caja surtida: cupcakes, fresas con chocolate y macarons</li>
+            <li>Galletas en bolsa con listón</li>
+            <li>Pasteles corazón</li>
+          </ul>
+          <a class="btn btn-whatsapp btn-small temporada-cta" data-avisar="la caja de San Valentín" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11 11 0 0 0 3.6 17.3L2 22l4.8-1.6A11 11 0 0 0 20.5 3.5zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-2.9 1 1-2.8-.2-.3a9 9 0 1 1 7 3.6zm5-6.7c-.3-.1-1.6-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1a7.4 7.4 0 0 1-3.6-3.1c-.3-.5.3-.4.8-1.4 0-.2 0-.4-.1-.5l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4a3 3 0 0 0-1 2.3c0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.2 1.7.7 2.4.8 3.2.6.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3z"/></svg>
+            <span>Avísame cuando abra</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="temporada-card" data-mes-inicio="5" data-mes-fin="5" data-temporada="Día de las Madres">
+        <div class="temporada-img temporada-img-madres" aria-hidden="true">
+          <span class="temporada-emoji">🌷</span>
+        </div>
+        <div class="temporada-body">
+          <div class="temporada-head">
+            <span class="temporada-mes">Mayo</span>
+            <span class="temporada-estado" data-estado></span>
+          </div>
+          <h3>Día de las Madres</h3>
+          <p class="temporada-desc">
+            Sacamos catálogo propio cada año. Es el fin de semana con más pedidos, así que la
+            agenda se cierra con semanas de anticipación.
+          </p>
+          <ul class="temporada-lista">
+            <li>Catálogo especial con diseños del año</li>
+            <li>Pasteles con flores naturales y prensadas</li>
+            <li>Mostachones de temporada</li>
+            <li>Cajas con cupcakes y postres surtidos</li>
+          </ul>
+          <a class="btn btn-whatsapp btn-small temporada-cta" data-avisar="el catálogo del Día de las Madres" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11 11 0 0 0 3.6 17.3L2 22l4.8-1.6A11 11 0 0 0 20.5 3.5zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-2.9 1 1-2.8-.2-.3a9 9 0 1 1 7 3.6zm5-6.7c-.3-.1-1.6-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1a7.4 7.4 0 0 1-3.6-3.1c-.3-.5.3-.4.8-1.4 0-.2 0-.4-.1-.5l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4a3 3 0 0 0-1 2.3c0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.2 1.7.7 2.4.8 3.2.6.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3z"/></svg>
+            <span>Avísame cuando abra</span>
+          </a>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="temporadas-nota">
+      Las fechas exactas y los precios de cada temporada se anuncian primero en
+      <a href="https://www.instagram.com/sweetbakery.cuu/" target="_blank" rel="noopener">Instagram</a>.
+    </p>
+  </div>
+</section>
+
 <!-- ============== GALERIA INSPIRACION ============== -->
 <section class="section galeria reveal" id="galeria">
   <div class="container">
@@ -963,7 +1097,7 @@
     </div>
   </footer>
 
-  <script src="script.js?v=12" defer></script>
+  <script src="script.js?v=17" defer></script>
 
 
   <!-- Modal resumen cotización -->

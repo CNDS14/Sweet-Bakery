@@ -954,6 +954,66 @@
     if (ribbon) ribbon.textContent = (mesActual + ' ' + ahora.getFullYear()).toUpperCase();
   }
 
+  /* ── 12b) TEMPORADAS ────────────────────────────────────
+     Arma el botón de WhatsApp de cada temporada y marca cuál
+     está activa o cuál sigue, para que la sección no envejezca.
+     ------------------------------------------------------- */
+
+  function initTemporadas() {
+    var tarjetas = $$('.temporada-card');
+    if (!tarjetas.length) return;
+
+    var mesHoy = new Date().getMonth() + 1; // 1-12
+
+    // ¿Cuántos meses faltan para que empiece esta temporada?
+    function mesesFaltantes(inicio) {
+      var d = inicio - mesHoy;
+      return d < 0 ? d + 12 : d;
+    }
+
+    var siguiente = null;
+    var menorEspera = 99;
+
+    tarjetas.forEach(function (card) {
+      var inicio = Number(card.dataset.mesInicio);
+      var fin = Number(card.dataset.mesFin);
+      var activa = (mesHoy >= inicio && mesHoy <= fin);
+
+      if (activa) {
+        card.classList.add('es-activa');
+        var e = $('[data-estado]', card);
+        if (e) { e.textContent = 'Disponible ahora'; e.classList.add('activa'); }
+      } else {
+        var espera = mesesFaltantes(inicio);
+        if (espera < menorEspera) { menorEspera = espera; siguiente = card; }
+      }
+
+      // Botón de aviso con el mensaje ya escrito
+      var cta = $('.temporada-cta', card);
+      if (cta) {
+        var que = cta.dataset.avisar || card.dataset.temporada;
+        var msg = activa
+          ? '¡Hola Sweet Bakery! Vi en la web que ya tienen ' + que + '. ¿Qué opciones y precios manejan?'
+          : '¡Hola Sweet Bakery! Quiero que me avisen en cuanto abran pedidos de ' + que + '. ¿Me anotan en la lista?';
+        cta.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg);
+        if (activa) {
+          var t = $('span:not([class])', cta) || cta.querySelector('span:last-child');
+          if (t) t.textContent = 'Pedir ahora';
+        }
+      }
+    });
+
+    // Si ninguna está activa, señalamos la que viene
+    if (siguiente && !$('.temporada-card.es-activa')) {
+      siguiente.classList.add('es-proxima');
+      var el = $('[data-estado]', siguiente);
+      if (el) {
+        el.textContent = menorEspera <= 1 ? 'Próximamente' : 'Siguiente temporada';
+        el.classList.add('proxima');
+      }
+    }
+  }
+
   /* ── 13) LINK ACTIVO EN EL MENÚ ─────────────────────────── */
 
   function bindActiveNavLink() {
@@ -1014,6 +1074,7 @@
     bindWizard();
     bindGaleriaFilter();
     initSaborMes();
+    initTemporadas();
     bindActiveNavLink();
     bindSmoothScroll();
     setYear();
