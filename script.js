@@ -1,15 +1,20 @@
 /* ==========================================================
-   SWEET BAKERY · script.js  (v6 — toppers/velas fix)
+   SWEET BAKERY · script.js (v12)
+   Cotizador, estado del local, galería y mensajes de WhatsApp.
    ========================================================== */
 
 (function () {
   'use strict';
 
-  /* ── CONFIGURACIÓN ─────────────────────────────────────── */
-  const WHATSAPP_NUMBER = '5216142868000'; // WhatsApp Business real
-  const MIN_DAYS_AHEAD  = 4;
+  /* ── CONFIGURACIÓN ──────────────────────────────────────
+     Todo lo que cambia con el tiempo vive aquí arriba.
+     ------------------------------------------------------- */
 
-  const SCHEDULE = {
+  var WHATSAPP_NUMBER = '5216142868000'; // WhatsApp Business (formato internacional, sin +)
+  var MIN_DAYS_AHEAD  = 4;               // anticipación mínima para pastel personalizado
+
+  // 0 = domingo, 1 = lunes … 6 = sábado. null = cerrado.
+  var SCHEDULE = {
     0: null,
     1: { open: 10, close: 19 },
     2: { open: 10, close: 19 },
@@ -19,702 +24,1012 @@
     6: { open: 10, close: 16 }
   };
 
-  /* ── HELPERS ───────────────────────────────────────────── */
-  const $  = (sel, ctx = document) => ctx.querySelector(sel);
-  const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
-  const formatMoney = (n) => '$' + Math.round(n).toLocaleString('es-MX');
-  const pad = (n) => String(n).padStart(2, '0');
-  const toLocalISO = (d) =>
-    d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+  // Sabor del mes. Deja `nombre` en null para mostrar el texto genérico
+  // ("Pregunta por el sabor de este mes") sin tener que tocar el HTML.
+  var SABOR_MES = {
+    nombre: null,
+    descripcion: null
+  };
 
-  /* ── 1) ESTADO DEL LOCAL ───────────────────────────────── */
-  function isStoreOpenNow() {
-    const now   = new Date();
-    const sched = SCHEDULE[now.getDay()];
-    if (!sched) return false;
-    const hours = now.getHours() + now.getMinutes() / 60;
-    return hours >= sched.open && hours < sched.close;
-  }
+  /* ── PRECIOS (según la lista oficial de Sweet Bakery) ──── */
 
-  function updateStatusBadge() {
-    const badge = $('#statusBadge');
-    if (!badge) return;
-    const dot  = badge.querySelector('.status-dot');
-    const text = badge.querySelector('.status-text');
-    const open = isStoreOpenNow();
-    badge.classList.toggle('open',   open);
-    badge.classList.toggle('closed', !open);
-    if (text) text.textContent = open
-      ? '\u25CF Abierto ahora \u2014 Pasa por tu antojo'
-      : '\u25CB Cerrado por hoy \u2014 Consulta el cat\u00e1logo';
-  }
-
-  /* ── 2) BOTÓN VITRINA WHATSAPP ─────────────────────────── */
-  function updateVitrinaButton() {
-    const btn  = $('#vitrinaWhatsapp');
-    const txt  = $('#vitrinaWhatsappText');
-    const note = $('#vitrinaNote');
-    if (!btn || !txt) return;
-
-    const now  = new Date();
-    const day  = now.getDay();
-    const h    = now.getHours() + now.getMinutes() / 60;
-    const cerrado = !isStoreOpenNow();
-
-    if (cerrado) {
-      btn.classList.add('disabled');
-      btn.setAttribute('aria-disabled', 'true');
-      btn.removeAttribute('href');
-      txt.textContent = 'Vitrina cerrada \u2014 Visita en horario: Lun\u2013Vie 10\u201319h \u00b7 S\u00e1b 10\u201316h';
-      if (note) note.textContent = '\u00a1Te esperamos en nuestro pr\u00f3ximo horario!';
-    } else {
-      btn.classList.remove('disabled');
-      btn.removeAttribute('aria-disabled');
-      const msg = '\u00a1Hola Sweet Bakery! Vi la secci\u00f3n de Vitrina en la web. \u00bfQu\u00e9 postres o sabores tienen disponibles hoy para pasar a recoger?';
-      btn.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg);
-      txt.textContent = 'Pregunta por la vitrina de hoy';
-      if (note) note.textContent = 'Horario: Lun\u2013Vie 10\u201319h \u00b7 S\u00e1b 10\u201316h \u00b7 Dom cerrado';
-    }
-  }
-
-  /* ── 3) BOTONES CLÁSICOS ───────────────────────────────── */
-  function bindClasicoButtons() {
-    $$('[data-product]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const product = btn.dataset.product;
-        const msg = '\u00a1Hola Sweet Bakery! Vi su cat\u00e1logo en la web y me interesa ' + product + '. \u00bfCu\u00e1l es la disponibilidad y c\u00f3mo puedo apartar?';
-        window.open(
-          'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg),
-          '_blank', 'noopener'
-        );
-      });
-    });
-  }
-
-  /* ── 4) NAVBAR ─────────────────────────────────────────── */
-  function bindNavbar() {
-    const nav    = $('#navbar');
-    const toggle = $('#navToggle');
-    const links  = $('.nav-links');
-    if (!nav || !toggle || !links) return;
-
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 40);
-    }, { passive: true });
-
-    toggle.addEventListener('click', () => {
-      const expanded = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!expanded));
-      links.classList.toggle('open');
-    });
-
-    $$('.nav-links a').forEach((a) => {
-      a.addEventListener('click', () => {
-        links.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-  }
-
-  /* ── 5) REVEAL ON SCROLL ───────────────────────────────── */
-  function bindRevealObserver() {
-    const items = $$('.reveal');
-    if (!items.length) return;
-
-    if (!('IntersectionObserver' in window)) {
-      items.forEach(el => el.classList.add('in-view'));
-      return;
-    }
-
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            obs.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
-    );
-
-    items.forEach(el => obs.observe(el));
-
-    setTimeout(() => {
-      items.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-          el.classList.add('in-view');
-          obs.unobserve(el);
-        }
-      });
-    }, 100);
-  }
-
-  /* ── 6) COTIZADOR WIZARD ───────────────────────────────── */
-  const BETUN_OPTIONS = {
+  // Betún: el precio de Orillas/Vintage/Peludito cambia según el tamaño.
+  // "small" = Mini a Chico · "large" = Mediano y Grande.
+  var BETUN_OPTIONS = {
     small: [
-      { label: 'Chantilly', price: 0 },
-      { label: 'Buttercream', price: 0 },
-      { label: 'Crema Philadelphia', price: 0 },
-      { label: 'Bet\u00fan americano', price: 0 },
-      { label: 'Fondant', price: 100 }
+      { label: 'Orillas',           price: 20 },
+      { label: 'Vintage',           price: 50 },
+      { label: 'Peludito',          price: 60 }
     ],
     large: [
-      { label: 'Chantilly', price: 0 },
-      { label: 'Buttercream', price: 0 },
-      { label: 'Crema Philadelphia', price: 0 },
-      { label: 'Bet\u00fan americano', price: 0 },
-      { label: 'Fondant (cobro extra)', price: 150 },
-      { label: 'Semi naked / naked', price: 0 },
-      { label: 'Texturado', price: 0 },
-      { label: 'Efecto espejo', price: 200 }
+      { label: 'Orillas',           price: 30 },
+      { label: 'Vintage',           price: 80 },
+      { label: 'Peludito',          price: 100 }
+    ],
+    // Mismo precio en cualquier tamaño
+    fijos: [
+      { label: 'Cúpula',            price: 60 },
+      { label: 'Dibujo sencillo',   price: 60 },
+      { label: 'Dibujo elaborado',  price: 100 },
+      { label: 'Dripp',             price: 20 }
     ]
   };
 
-  let currentStep = 1;
-  const TOTAL_STEPS = 5;
+  // Tiritas de oblea: el precio depende del tamaño del pastel.
+  var TIRITAS_OBLEA = {
+    'Lunchbox': 100,
+    'Pequeño':  200,
+    'Chico':    200,
+    'Mediano':  300,
+    'Grande':   400
+  };
 
-  const state = { size: null, tier: null, basePrice: 0 };
+  var MACARON_PRICE = 20;
+  var MACARON_MAX   = 6;
+
+  /* ── HELPERS ────────────────────────────────────────────── */
+
+  function $(sel, ctx) { return (ctx || document).querySelector(sel); }
+  function $$(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function formatMoney(n) { return '$' + Math.round(n).toLocaleString('es-MX'); }
+  function toLocalISO(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+
+  // "2026-09-07" → Date local (evita el corrimiento de zona horaria de new Date(str))
+  function parseLocalDate(str) {
+    if (!str) return null;
+    var p = str.split('-');
+    return new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+  }
+
+  function formatPickupDate(date) {
+    if (!date) return '';
+    return date.toLocaleDateString('es-MX', {
+      weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+    });
+  }
+
+  function capitalize(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+
+  function isClosedDay(date) { return !SCHEDULE[date.getDay()]; }
+
+  /* ── 1) ESTADO DEL LOCAL ────────────────────────────────── */
+
+  function isStoreOpenNow() {
+    var now = new Date();
+    var sched = SCHEDULE[now.getDay()];
+    if (!sched) return false;
+    var hours = now.getHours() + now.getMinutes() / 60;
+    return hours >= sched.open && hours < sched.close;
+  }
+
+  // Próximo momento en que abrimos, en texto corto ("mañana a las 10:00").
+  function nextOpeningText() {
+    var now = new Date();
+    for (var i = 0; i < 8; i++) {
+      var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i);
+      var sched = SCHEDULE[d.getDay()];
+      if (!sched) continue;
+      if (i === 0) {
+        var h = now.getHours() + now.getMinutes() / 60;
+        if (h < sched.open) return 'hoy a las ' + pad(sched.open) + ':00';
+        continue; // ya cerramos por hoy
+      }
+      if (i === 1) return 'mañana a las ' + pad(sched.open) + ':00';
+      return 'el ' + d.toLocaleDateString('es-MX', { weekday: 'long' }) + ' a las ' + pad(sched.open) + ':00';
+    }
+    return 'en nuestro próximo horario';
+  }
+
+  function updateStatusBadge() {
+    var badge = $('#statusBadge');
+    if (!badge) return;
+    var text = $('.status-text', badge);
+    if (!text) return;
+    if (isStoreOpenNow()) {
+      badge.classList.add('open');
+      badge.classList.remove('closed');
+      text.textContent = 'Abierto ahora — pasa por tu antojo';
+    } else {
+      badge.classList.add('closed');
+      badge.classList.remove('open');
+      text.textContent = 'Cerrado — abrimos ' + nextOpeningText();
+    }
+  }
+
+  /* ── 2) BOTÓN DE WHATSAPP DE LA VITRINA ──────────────────
+     Siempre activo: WhatsApp es asíncrono y contestamos al abrir.
+     Solo cambia el texto de apoyo según el horario.
+     ------------------------------------------------------- */
+
+  function updateVitrinaButton() {
+    var btn  = $('#vitrinaWhatsapp');
+    var txt  = $('#vitrinaWhatsappText');
+    var note = $('#vitrinaNote');
+    if (!btn || !txt) return;
+
+    var abierto = isStoreOpenNow();
+    var msg = abierto
+      ? '¡Hola Sweet Bakery! Vi la sección de Vitrina en la web. ¿Qué postres tienen disponibles hoy para pasar a recoger?'
+      : '¡Hola Sweet Bakery! Vi la sección de Vitrina en la web. Me gustaría apartar algo de la vitrina para cuando abran. ¿Qué tienen disponible?';
+
+    btn.classList.remove('disabled');
+    btn.removeAttribute('aria-disabled');
+    btn.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg);
+    txt.textContent = abierto ? 'Pregunta por la vitrina de hoy' : 'Aparta tu antojo por WhatsApp';
+
+    if (note) {
+      note.textContent = abierto
+        ? 'Estamos abiertos ahora · Lun–Vie 10–19h · Sáb 10–16h · Dom cerrado'
+        : 'Escríbenos cuando quieras, te contestamos al abrir (' + nextOpeningText() + ').';
+    }
+  }
+
+  /* ── 3) BOTONES DE CLÁSICOS ─────────────────────────────── */
+
+  function bindClasicoButtons() {
+    $$('[data-product]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var producto = btn.dataset.product;
+        var msg = '¡Hola Sweet Bakery! Vi su catálogo en la web y me interesa ' + producto +
+                  '. ¿Cuál es la disponibilidad y cómo puedo apartarlo?';
+        window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+      });
+    });
+  }
+
+  /* ── 4) NAVBAR ──────────────────────────────────────────── */
+
+  function bindNavbar() {
+    var nav = $('#navbar');
+    var toggle = $('#navToggle');
+    var links = $('.nav-links');
+    if (!nav) return;
+
+    window.addEventListener('scroll', function () {
+      nav.classList.toggle('scrolled', window.scrollY > 30);
+    }, { passive: true });
+
+    if (toggle && links) {
+      toggle.addEventListener('click', function () {
+        var open = links.classList.toggle('open');
+        toggle.classList.toggle('is-open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+      });
+
+      $$('.nav-links a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          links.classList.remove('open');
+          toggle.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.setAttribute('aria-label', 'Abrir menú');
+        });
+      });
+
+      // Cerrar el menú móvil con Escape
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && links.classList.contains('open')) {
+          links.classList.remove('open');
+          toggle.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.focus();
+        }
+      });
+    }
+  }
+
+  /* ── 5) REVEAL ON SCROLL ────────────────────────────────── */
+
+  function bindRevealObserver() {
+    var items = $$('.reveal');
+    if (!items.length) return;
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(function (el) { el.classList.add('in-view'); });
+      return;
+    }
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    items.forEach(function (el) { obs.observe(el); });
+  }
+
+  /* ── 6) COTIZADOR ───────────────────────────────────────── */
+
+  var TOTAL_STEPS = 5;
+  var currentStep = 1;
+  var state = { size: null, tier: 'small', basePrice: 0 };
 
   function calcTotal() {
-    let total = state.basePrice;
+    var total = state.basePrice;
 
-        // Relleno (radio único)
-    const rellenoSel = $('input[name="relleno"]:checked');
-    if (rellenoSel) total += Number(rellenoSel.dataset.price || 0);
-    // Bet\u00fan (radio)
-    const betunChecked = $('[name="betun"]:checked');
-    if (betunChecked) total += Number(betunChecked.dataset.price || 0);
-    // Topper (radio \u00fanico entre MDF/Acr\u00edlico/Cartoncillo)
-    const topperChecked = $('[name="topper"]:checked');
-    if (topperChecked) total += Number(topperChecked.dataset.price || 0);
-    // Extras
-    $$('[name="extra"]:checked').forEach(el => {
-      const qty = el.dataset.quantity
-        ? Number(el.closest('.chip').querySelector('.qty-input')?.value || 1)
-        : 1;
-      total += Number(el.dataset.price || 0) * qty;
+    // Relleno cremoso (incluido, pero por si algún día tiene costo)
+    var cremoso = $('input[name="cremoso"]:checked');
+    if (cremoso) total += Number(cremoso.dataset.price || 0);
+
+    // Rellenos crujientes (varios)
+    $$('input[name="crujiente"]:checked').forEach(function (el) {
+      total += Number(el.dataset.price || 0);
     });
-    // Flor
-    const florChecked = $('[name="flor"]:checked');
-    if (florChecked) total += Number(florChecked.dataset.price || 0);
-    // Vela (radio \u00fanica)
-    const velaChecked = $('[name="vela"]:checked');
-    if (velaChecked) total += Number(velaChecked.dataset.price || 0);
 
-    // Macarons stepper
-    const macaronQtyEl = document.getElementById('macaronQty');
-    const macaronQty = macaronQtyEl ? parseInt(macaronQtyEl.value) || 0 : 0;
-    total += macaronQty * 20;
+    // Relleno especial del mes
+    $$('input[name="especial"]:checked').forEach(function (el) {
+      total += Number(el.dataset.price || 0);
+    });
+
+    // Betún (varios acabados)
+    $$('input[name="betun"]:checked').forEach(function (el) {
+      total += Number(el.dataset.price || 0);
+    });
+
+    // Toppers (varios)
+    $$('input[name="topper"]:checked').forEach(function (el) {
+      total += Number(el.dataset.price || 0);
+    });
+
+    // Extras (algunos con cantidad)
+    $$('input[name="extra"]:checked').forEach(function (el) {
+      var price = Number(el.dataset.price || 0);
+      var qty = 1;
+      if (el.dataset.quantity) {
+        var chip = el.closest('.chip');
+        var input = chip && chip.querySelector('.qty-input');
+        qty = input ? (Number(input.value) || 1) : 1;
+      }
+      total += price * qty;
+    });
+
+    // Flor natural (una)
+    var flor = $('input[name="flor"]:checked');
+    if (flor) total += Number(flor.dataset.price || 0);
+
+    // Vela (una)
+    var vela = $('input[name="vela"]:checked');
+    if (vela) total += Number(vela.dataset.price || 0);
+
+    // Macarons (stepper)
+    total += getMacaronQty() * MACARON_PRICE;
+
     return total;
   }
 
-  function renderTotal() {
-    const el = $('#totalAmount');
-    if (el) el.textContent = formatMoney(calcTotal());
+  function getMacaronQty() {
+    var el = document.getElementById('macaronQty');
+    return el ? (parseInt(el.value, 10) || 0) : 0;
   }
+
+  function renderTotal() {
+    var el = $('#totalAmount');
+    if (!el) return;
+    el.textContent = formatMoney(calcTotal());
+    el.classList.remove('bump');
+    void el.offsetWidth; // reinicia la animación
+    el.classList.add('bump');
+    updateWizardPreview();
+  }
+
+  /* ---- Betún dinámico según el tamaño ---- */
 
   function renderBetunOptions(tier) {
-    const grid = $('#betunGrid');
-    const hint = $('#betunHint');
+    var grid = $('#betunGrid');
+    var hint = $('#betunHint');
     if (!grid) return;
-    const opts = BETUN_OPTIONS[tier] || BETUN_OPTIONS.small;
-    if (hint) hint.textContent = tier === 'large'
-      ? 'Para pasteles medianos o grandes puedes elegir varios acabados.'
-      : 'Elige el estilo de bet\u00fan.';
-    grid.innerHTML = opts.map((o, i) =>
-      '<label class="chip">' +
-        '<input type="radio" name="betun" value="' + o.label + '" data-price="' + o.price + '"' + (i === 0 ? ' checked' : '') + '/>' +
-        '<span>' + o.label + (o.price > 0 ? ' <small>(+$' + o.price + ')</small>' : '') + '</span>' +
-      '</label>'
-    ).join('');
-    grid.querySelectorAll('input').forEach(inp =>
-      inp.addEventListener('change', renderTotal)
-    );
+
+    var previas = {};
+    $$('input[name="betun"]', grid).forEach(function (i) { previas[i.value] = i.checked; });
+
+    var opciones = (BETUN_OPTIONS[tier] || BETUN_OPTIONS.small).concat(BETUN_OPTIONS.fijos);
+
+    grid.innerHTML = opciones.map(function (o) {
+      var checked = previas[o.label] ? ' checked' : '';
+      return '<label class="chip">' +
+               '<input type="checkbox" name="betun" value="' + o.label + '" data-price="' + o.price + '"' + checked + ' />' +
+               '<span>' + o.label + ' <small>(+$' + o.price + ')</small></span>' +
+             '</label>';
+    }).join('');
+
+    if (hint) {
+      hint.textContent = tier === 'large'
+        ? 'Puedes combinar varios acabados. En Mediano y Grande, Orillas, Vintage y Peludito tienen precio ampliado.'
+        : 'Puedes combinar varios acabados para tu pastel.';
+    }
+
+    $$('input[name="betun"]', grid).forEach(function (i) {
+      i.addEventListener('change', renderTotal);
+    });
   }
 
+  /* ---- Tiritas de oblea: precio según tamaño ---- */
+
+  function renderObleaOptions(sizeValue) {
+    var grid = $('#obleaGrid');
+    if (!grid) return;
+
+    if (!sizeValue || !TIRITAS_OBLEA[sizeValue]) {
+      grid.innerHTML = '<p class="field-note">Elige primero el tamaño de tu pastel para ver el precio de las tiritas de oblea.</p>';
+      return;
+    }
+
+    var previo = $('input[name="extra"][data-oblea]', grid);
+    var estaba = previo ? previo.checked : false;
+    var precio = TIRITAS_OBLEA[sizeValue];
+
+    grid.innerHTML =
+      '<label class="chip">' +
+        '<input type="checkbox" name="extra" data-oblea="true" value="Tiritas de oblea (' + sizeValue + ')" data-price="' + precio + '"' + (estaba ? ' checked' : '') + ' />' +
+        '<span>Tiritas de oblea <small>(+$' + precio + ' · tamaño ' + sizeValue + ')</small></span>' +
+      '</label>';
+
+    $$('input', grid).forEach(function (i) { i.addEventListener('change', renderTotal); });
+  }
+
+  /* ---- Navegación de pasos ---- */
+
   function setStep(n) {
-    $$('.step').forEach(s => s.classList.remove('active'));
-    const target = $('.step[data-step="' + n + '"]');
+    $$('.step').forEach(function (s) { s.classList.remove('active'); });
+    var target = $('.step[data-step="' + n + '"]');
     if (target) target.classList.add('active');
 
-    $$('.step-pill').forEach(p => {
-      const num = Number(p.dataset.pill);
+    $$('.step-pill').forEach(function (p) {
+      var num = Number(p.dataset.pill);
       p.classList.toggle('active', num === n);
-      p.classList.toggle('done',   num < n);
+      p.classList.toggle('done', num < n);
     });
 
-    const fill   = $('#progressFill');
+    var fill = $('#progressFill');
     if (fill) fill.style.width = ((n - 1) / (TOTAL_STEPS - 1) * 100) + '%';
 
-    const prev   = $('#btnPrev');
-    const next   = $('#btnNext');
-    const submit = $('#btnSubmit');
-    if (prev)   prev.disabled = n === 1;
-    if (next)   next.classList.toggle('hidden', n === TOTAL_STEPS);
+    var prev = $('#btnPrev'), next = $('#btnNext'), submit = $('#btnSubmit');
+    if (prev) prev.disabled = (n === 1);
+    if (next) next.classList.toggle('hidden', n === TOTAL_STEPS);
     if (submit) submit.classList.toggle('hidden', n !== TOTAL_STEPS);
 
     if (n === 5) buildPickupOptions();
 
     currentStep = n;
     renderTotal();
+
+    // Sube al inicio del cotizador para que no quede fuera de vista
+    var wiz = $('.wizard');
+    if (wiz) {
+      var top = wiz.getBoundingClientRect().top + window.scrollY - 90;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+  }
+
+  function validateStep(step) {
+    if (step === 1) {
+      if (!$('input[name="size"]:checked')) {
+        showToast('Elige un tamaño para tu pastel.');
+        return false;
+      }
+    }
+    if (step === 2) {
+      var pan = $('#panSelect');
+      if (!pan || !pan.value) { showToast('Selecciona el tipo de pan.'); return false; }
+      if (!$('input[name="cremoso"]:checked')) { showToast('Elige un relleno cremoso.'); return false; }
+    }
+    if (step === 3) {
+      if (!$('input[name="betun"]:checked')) {
+        showToast('Elige al menos un acabado de betún.');
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /* ---- Fecha y hora de recolección ---- */
+
+  function primeraFechaValida() {
+    var d = new Date();
+    d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() + MIN_DAYS_AHEAD);
+    // Si cae en un día cerrado (domingo), avanzamos al siguiente día hábil
+    var guard = 0;
+    while (isClosedDay(d) && guard < 14) {
+      d.setDate(d.getDate() + 1);
+      guard++;
+    }
+    return d;
   }
 
   function buildPickupOptions() {
-    const dateInput  = $('#pickupDate');
-    const timeSelect = $('#pickupTime');
+    var dateInput = $('#pickupDate');
+    var timeSelect = $('#pickupTime');
     if (!dateInput || !timeSelect) return;
 
-    const now = new Date();
-    const minDate = new Date(now);
-    minDate.setDate(minDate.getDate() + MIN_DAYS_AHEAD);
+    var minDate = primeraFechaValida();
     dateInput.min = toLocalISO(minDate);
     if (!dateInput.value) dateInput.value = toLocalISO(minDate);
 
-    function buildTimes() {
-      const d    = dateInput.value ? new Date(dateInput.value + 'T12:00:00') : minDate;
-      const sched = SCHEDULE[d.getDay()];
-      timeSelect.innerHTML = '<option value="">Selecciona una hora</option>';
-      if (!sched) {
-        timeSelect.innerHTML += '<option disabled>Cerrado ese d\u00eda</option>';
-        return;
-      }
-      for (let h = sched.open; h < sched.close; h++) {
-        timeSelect.innerHTML += '<option value="' + pad(h) + ':00">' + pad(h) + ':00</option>';
-        if (h + 0.5 < sched.close)
-          timeSelect.innerHTML += '<option value="' + pad(h) + ':30">' + pad(h) + ':30</option>';
-      }
+    if (!dateInput._sbBound) {
+      dateInput.addEventListener('change', onDateChange);
+      dateInput._sbBound = true;
+    }
+    onDateChange();
+  }
+
+  function onDateChange() {
+    var dateInput = $('#pickupDate');
+    var help = $('#dateHelp');
+    if (!dateInput) return;
+
+    var minDate = primeraFechaValida();
+    var picked = parseLocalDate(dateInput.value);
+
+    if (!picked) { refreshTimeOptions(null); return; }
+
+    // Domingo (o cualquier día cerrado) → regresamos a la primera fecha válida
+    if (isClosedDay(picked)) {
+      dateInput.value = toLocalISO(minDate);
+      picked = minDate;
+      showToast('Los domingos cerramos. Te movimos al ' + formatPickupDate(minDate) + '.');
     }
 
-    buildTimes();
-    dateInput.removeEventListener('change', buildTimes);
-    dateInput.addEventListener('change', buildTimes);
+    // Antes del mínimo → regresamos al mínimo
+    if (picked < minDate) {
+      dateInput.value = toLocalISO(minDate);
+      picked = minDate;
+      showToast('Necesitamos mínimo ' + MIN_DAYS_AHEAD + ' días de anticipación.');
+    }
+
+    if (help) {
+      help.textContent = 'Recolección el ' + formatPickupDate(picked) + '.';
+      help.classList.add('is-ok');
+    }
+
+    refreshTimeOptions(picked);
+  }
+
+  function refreshTimeOptions(date) {
+    var select = $('#pickupTime');
+    if (!select) return;
+
+    var previo = select.value;
+    select.innerHTML = '<option value="">Selecciona una hora</option>';
+
+    var sched = date ? SCHEDULE[date.getDay()] : null;
+    if (!sched) {
+      var op = document.createElement('option');
+      op.disabled = true;
+      op.textContent = 'Cerrado ese día';
+      select.appendChild(op);
+      return;
+    }
+
+    for (var h = sched.open; h < sched.close; h += 0.5) {
+      var hh = Math.floor(h);
+      var mm = (h % 1 === 0) ? '00' : '30';
+      var label = pad(hh) + ':' + mm;
+      var opt = document.createElement('option');
+      opt.value = label;
+      opt.textContent = label + ' hrs';
+      select.appendChild(opt);
+    }
+
+    // Conservamos la hora si sigue siendo válida
+    if (previo && $$('option', select).some(function (o) { return o.value === previo; })) {
+      select.value = previo;
+    }
+  }
+
+  /* ---- Mensaje de WhatsApp ---- */
+
+  function recogerDatos() {
+    var size = $('input[name="size"]:checked');
+    var pan = $('#panSelect');
+    var cremoso = $('input[name="cremoso"]:checked');
+    var betun = $$('input[name="betun"]:checked');
+    var toppers = $$('input[name="topper"]:checked');
+    var flor = $('input[name="flor"]:checked');
+    var vela = $('input[name="vela"]:checked');
+    var fecha = parseLocalDate($('#pickupDate') ? $('#pickupDate').value : '');
+
+    return {
+      size: size,
+      pan: pan ? pan.value : '',
+      cremoso: cremoso ? cremoso.value : '',
+      crujientes: $$('input[name="crujiente"]:checked').map(function (i) { return i.value; }),
+      especiales: $$('input[name="especial"]:checked').map(function (i) { return i.value; }),
+      betun: betun.map(function (i) { return i.value + ' (+$' + i.dataset.price + ')'; }),
+      toppers: toppers.map(function (i) { return i.value; }),
+      topperTexto: ($('#topperDetailInput') ? $('#topperDetailInput').value : '').trim(),
+      extras: $$('input[name="extra"]:checked').map(function (el) {
+        if (el.dataset.quantity) {
+          var chip = el.closest('.chip');
+          var input = chip && chip.querySelector('.qty-input');
+          var qty = input ? (Number(input.value) || 1) : 1;
+          return qty > 1 ? el.value + ' x' + qty : el.value;
+        }
+        return el.value;
+      }),
+      macarons: getMacaronQty(),
+      flor: (flor && flor.value !== 'Sin flor') ? flor.value : null,
+      vela: (vela && vela.value !== 'Sin vela') ? vela.value : null,
+      fecha: fecha,
+      fechaTexto: fecha ? capitalize(formatPickupDate(fecha)) : '(sin fecha)',
+      hora: $('#pickupTime') ? $('#pickupTime').value : '',
+      nombre: ($('#customerName') ? $('#customerName').value : '').trim() || 'Cliente Sweet Bakery',
+      telefono: ($('#customerPhone') ? $('#customerPhone').value : '').trim(),
+      notas: ($('#customerNotes') ? $('#customerNotes').value : '').trim(),
+      total: calcTotal()
+    };
   }
 
   function buildWhatsappMessage() {
-    const size   = $('[name="size"]:checked');
-    const pan    = $('#panSelect');
+    var d = recogerDatos();
+    var L = [];
 
-    const relleno  = $('[name="relleno"]:checked');
+    L.push('¡Hola Sweet Bakery! 🎂');
+    L.push('Quiero cotizar un pastel personalizado:');
+    L.push('');
+    L.push('👤 *Nombre:* ' + d.nombre);
+    if (d.telefono) L.push('📱 *WhatsApp:* ' + d.telefono);
+    L.push('');
+    L.push('🎂 *PASTEL*');
+    L.push('• Tamaño: ' + (d.size ? d.size.value + ' ($' + d.size.dataset.price + ')' : '—'));
+    L.push('• Pan: ' + (d.pan || '—'));
+    L.push('• Relleno cremoso: ' + (d.cremoso || '—'));
+    if (d.crujientes.length) L.push('• Relleno crujiente: ' + d.crujientes.join(', '));
+    if (d.especiales.length) L.push('• Relleno especial: ' + d.especiales.join(', '));
 
+    if (d.betun.length) {
+      L.push('');
+      L.push('🍥 *BETÚN*');
+      d.betun.forEach(function (b) { L.push('• ' + b); });
+    }
 
-    const betun  = $('[name="betun"]:checked');
-    const topper = $('[name="topper"]:checked');
-    const extras = $$('[name="extra"]:checked').map(e => {
-      const qty = e.dataset.quantity
-        ? Number(e.closest('.chip').querySelector('.qty-input')?.value || 1)
-        : 1;
-      return qty > 1 ? e.value + ' x' + qty : e.value;
-    });
-    const flor   = $('[name="flor"]:checked');
-    const vela   = $('[name="vela"]:checked');
-    const date   = $('#pickupDate')?.value || '(sin fecha)';
-    const time   = $('#pickupTime')?.value || '(sin hora)';
-    const name   = $('#customerName')?.value || 'Cliente';
-    const total  = calcTotal();
+    if (d.toppers.length) {
+      L.push('');
+      L.push('🎀 *TOPPERS*');
+      d.toppers.forEach(function (t) { L.push('• ' + t); });
+      if (d.topperTexto) L.push('• Texto: "' + d.topperTexto + '"');
+    }
 
-    let msg = '\ud83c\udf82 *Cotizaci\u00f3n Sweet Bakery*\n\n';
-    msg += '\ud83d\udc64 Nombre: ' + name + '\n';
-    msg += '\ud83d\udccf Tama\u00f1o: ' + (size ? size.value : '\u2014') + ' ($' + (size ? size.dataset.price : 0) + ')\n';
-    msg += '\ud83c\udf5e Pan: ' + (pan ? pan.value : '\u2014') + '\n';
-                msg += '\uD83C\uDF53 Relleno: ' + (relleno ? relleno.value : '\u2014') + '\n';
-    msg += '\ud83c\udfa8 Bet\u00fan: ' + (betun ? betun.value : '\u2014') + '\n';
-        if (topper && topper.value !== 'Sin topper') {
-                 var _tDetail = (document.getElementById('topperDetailInput')?.value || '').trim();
-                 msg += '\ud83c\udf80 Topper: ' + topper.value + (_tDetail ? ' \u2014 ' + _tDetail : '') + '\n';
-        }
-    if (extras.length) msg += '\u2728 Extras: ' + extras.join(', ') + '\n';
-    if (flor && flor.value !== 'Sin flor') msg += '\ud83d\udc90 Flor: ' + flor.value + '\n';
-    if (vela && vela.value !== 'Sin vela') msg += '\ud83d\udd6f Vela: ' + vela.value + '\n';
-         var _mQty = parseInt(document.getElementById('macaronQty')?.value) || 0;
-         if (_mQty > 0) msg += '\ud83c\udf70 Macarons: ' + _mQty + ' pza (+' + formatMoney(_mQty * 20) + ')\n';
-    msg += '\n\ud83d\udcc5 Fecha de recolecci\u00f3n: ' + date + ' a las ' + time + '\n';
-    msg += '\n\ud83d\udcb0 *Total estimado: ' + formatMoney(total) + '*\n\n';
-    msg += '_(Los precios son estimados. El total final se confirma al apartar con anticipo.)_';
-        return msg;
+    if (d.extras.length || d.macarons > 0 || d.flor || d.vela) {
+      L.push('');
+      L.push('✨ *EXTRAS Y DECORACIÓN*');
+      d.extras.forEach(function (e) { L.push('• ' + e); });
+      if (d.macarons > 0) L.push('• Macarons x' + d.macarons + ' (+' + formatMoney(d.macarons * MACARON_PRICE) + ')');
+      if (d.flor) L.push('• ' + d.flor);
+      if (d.vela) L.push('• ' + d.vela);
+    }
+
+    L.push('');
+    L.push('📅 *RECOLECCIÓN EN TIENDA*');
+    L.push('• Fecha: ' + d.fechaTexto);
+    L.push('• Hora: ' + (d.hora ? d.hora + ' hrs' : '(sin hora)'));
+    L.push('• Sucursal: Calle 24 #2104, Chihuahua, Chih.');
+
+    if (d.notas) {
+      L.push('');
+      L.push('📝 *Notas:* ' + d.notas);
+    }
+
+    L.push('');
+    L.push('💰 *TOTAL ESTIMADO: ' + formatMoney(d.total) + '*');
+    L.push('');
+    L.push('Quedo al pendiente para confirmar y dejar el anticipo. ¡Gracias! 💕');
+
+    return L.join('\n');
   }
 
+  /* ---- Vista previa dentro del cotizador ---- */
+
+  function updateWizardPreview() {
+    var preview = document.getElementById('wizardPreview');
+    if (!preview) return;
+
+    var size = $('input[name="size"]:checked');
+    if (!size) { preview.classList.remove('visible'); return; }
+
+    var pan = $('#panSelect');
+    var cremoso = $('input[name="cremoso"]:checked');
+    var texto = 'Pastel ' + size.value;
+    if (pan && pan.value) texto += ' de ' + pan.value.toLowerCase();
+    if (cremoso) texto += ' con ' + cremoso.value.toLowerCase();
+
+    var crujientes = $$('input[name="crujiente"]:checked').map(function (i) { return i.value.toLowerCase(); });
+    if (crujientes.length) texto += ' y ' + crujientes.join(', ');
+
+    preview.classList.add('visible');
+    var content = preview.querySelector('.wizard-preview-content');
+    if (content) content.textContent = texto;
+  }
+
+  /* ---- Enlaces del cotizador ---- */
+
   function bindWizard() {
-    const wizard = $('.wizard');
+    var wizard = $('.wizard');
     if (!wizard) return;
 
-    // Tama\u00f1o
-    $$('[name="size"]').forEach(radio => {
-      radio.addEventListener('change', () => {
+    // Tamaño → recalcula betún, oblea y total
+    $$('input[name="size"]').forEach(function (radio) {
+      radio.addEventListener('change', function () {
         state.basePrice = Number(radio.dataset.price || 0);
-        state.tier      = radio.dataset.tier || 'small';
-        state.size      = radio.value;
+        state.tier = radio.dataset.tier || 'small';
+        state.size = radio.value;
         renderBetunOptions(state.tier);
+        renderObleaOptions(state.size);
         renderTotal();
       });
     });
 
-    // Todos los inputs de precio
-    wizard.addEventListener('change', (e) => {
-      const el = e.target;
-      if (['relleno','extra','flor','betun','topper','vela'].includes(el.name)) {
+    // Cualquier cambio de precio dentro del cotizador
+    wizard.addEventListener('change', function (e) {
+      var el = e.target;
+      var nombres = ['cremoso', 'crujiente', 'especial', 'extra', 'flor', 'betun', 'topper', 'vela', 'pan'];
+      if (nombres.indexOf(el.name) > -1) renderTotal();
+
+      // Habilita/deshabilita el contador de los extras con cantidad
+      if (el.name === 'extra' && el.dataset.quantity) {
+        var chip = el.closest('.chip');
+        var qty = chip && chip.querySelector('.qty-input');
+        if (qty) {
+          qty.disabled = !el.checked;
+          if (el.checked && !qty.value) qty.value = 1;
+        }
         renderTotal();
       }
-      // Macarons cantidad (m\u00e1x 6)
-      if (el.name === 'extra' && el.dataset.quantity) {
-        const qtyInput = el.closest('.chip').querySelector('.qty-input');
-        if (qtyInput) {
-          qtyInput.disabled = !el.checked;
-          if (el.checked) qtyInput.max = 6;
-        }
+
+      if (el.name === 'topper') updateTopperDetail();
+    });
+
+    wizard.addEventListener('input', function (e) {
+      if (e.target.classList.contains('qty-input')) {
+        var v = parseInt(e.target.value, 10);
+        var max = Number(e.target.max) || 99;
+        if (isNaN(v) || v < 1) v = 1;
+        if (v > max) v = max;
+        e.target.value = v;
+        renderTotal();
       }
     });
 
-    wizard.addEventListener('input', (e) => {
-      if (e.target.classList.contains('qty-input')) renderTotal();
+    // Evita que al escribir la cantidad se marque/desmarque el chip
+    $$('.qty-input').forEach(function (q) {
+      q.addEventListener('click', function (e) { e.stopPropagation(); });
     });
 
-    // Navegaci\u00f3n
-    $('#btnNext')?.addEventListener('click', () => {
-      if (currentStep < TOTAL_STEPS) {
-        if (!validateStep(currentStep)) return;
-        markStepCompleted(currentStep);
-        setStep(currentStep + 1);
-      }
+    // Navegación
+    var next = $('#btnNext'), prev = $('#btnPrev'), submit = $('#btnSubmit');
+    if (next) next.addEventListener('click', function () {
+      if (currentStep < TOTAL_STEPS && validateStep(currentStep)) setStep(currentStep + 1);
     });
-    $('#btnPrev')?.addEventListener('click', () => {
+    if (prev) prev.addEventListener('click', function () {
       if (currentStep > 1) setStep(currentStep - 1);
     });
 
-    // Enviar por WhatsApp
-    $('#btnSubmit')?.addEventListener('click', () => {
-      const name = $('#customerName')?.value.trim();
-      const date = $('#pickupDate')?.value;
-      const time = $('#pickupTime')?.value;
-      if (!name) { showToast('Por favor ingresa tu nombre.'); return; }
-      if (!date) { showToast('Por favor elige una fecha de recolección.'); return; }
-      if (!time) { showToast('Por favor elige una hora de recolección.'); return; }
-      showQuoteModal();
-    });
-    // Inicializar
-    renderBetunOptions('small');
-    setStep(1);
-  }
-
-  /* ── 7) A\u00d1O EN FOOTER ──────────────────────────────────── */
-  function setYear() {
-    const el = $('#year');
-    if (el) el.textContent = new Date().getFullYear();
-  }
-
-  /* ── 8) SMOOTH SCROLL ───────────────────────────────────── */
-  function bindSmoothScroll() {
-    $$('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const target = document.querySelector(a.getAttribute('href'));
-        if (!target) return;
-        e.preventDefault();
-        const offset = 80;
-        const top = target.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior: 'smooth' });
+    // Permite saltar a un paso ya visitado desde la barra de progreso
+    $$('.step-pill').forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        var n = Number(pill.dataset.pill);
+        if (n < currentStep) setStep(n);
       });
     });
+
+    if (submit) submit.addEventListener('click', function () {
+      var nombre = ($('#customerName') ? $('#customerName').value : '').trim();
+      var fecha = $('#pickupDate') ? $('#pickupDate').value : '';
+      var hora = $('#pickupTime') ? $('#pickupTime').value : '';
+      if (!nombre) { showToast('Escribe tu nombre para poder identificar tu pedido.'); focusEl('#customerName'); return; }
+      if (!fecha) { showToast('Elige una fecha de recolección.'); focusEl('#pickupDate'); return; }
+      if (!hora) { showToast('Elige una hora de recolección.'); focusEl('#pickupTime'); return; }
+      showQuoteModal();
+    });
+
+    // Estado inicial
+    renderBetunOptions('small');
+    renderObleaOptions(null);
+    setStepSilent(1);
   }
 
-  /* ── 9) ACTIVE NAV LINK ─────────────────────────────────── */
-  function bindActiveNavLink() {
-    const sections = $$('section[id], footer[id]');
-    const navLinks = $$('.nav-links a');
-    if (!sections.length || !navLinks.length) return;
+  function focusEl(sel) { var el = $(sel); if (el) el.focus(); }
 
-    const obs = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            navLinks.forEach(a => {
-              a.classList.toggle('active',
-                a.getAttribute('href') === '#' + entry.target.id);
-            });
-          }
-        });
-      },
-      { threshold: 0.35 }
-    );
-    sections.forEach(s => obs.observe(s));
-  }
-
-  /* ── INIT ───────────────────────────────────────────────── */
-  document.addEventListener('DOMContentLoaded', () => {
-    updateStatusBadge();
-    updateVitrinaButton();
-    bindClasicoButtons();
-    bindNavbar();
-    bindRevealObserver();
-    bindWizard();
-    setYear();
-    bindSmoothScroll();
-    bindActiveNavLink();
-
-    setInterval(() => {
-      updateStatusBadge();
-      updateVitrinaButton();
-    }, 60000);
-  
-  // Stepper de Macarons: llamado desde onclick en index.html
-  window.changeMacarons = function changeMacarons(delta) {
-    const countEl  = document.getElementById('macaronCount');
-    const qtyInput = document.getElementById('macaronQty');
-    const minusBtn = document.getElementById('macaronMinus');
-    const plusBtn  = document.getElementById('macaronPlus');
-    const priceTag = document.getElementById('macaronPriceTag');
-    if (!countEl || !qtyInput) return;
-    let current = parseInt(countEl.textContent) || 0;
-    current = Math.min(6, Math.max(0, current + delta));
-    countEl.textContent = current;
-    qtyInput.value = current;
-    // Botones
-    minusBtn.disabled = current === 0;
-    plusBtn.disabled  = current === 6;
-    // Precio inline
-    if (priceTag) {
-      if (current > 0) {
-        priceTag.textContent = '$' + (current * 20);
-        priceTag.style.display = '';
-      } else {
-        priceTag.style.display = 'none';
-      }
-    }
-    // Recalcular
-    calcTotal();
+  // Como setStep() hace scroll, en el arranque usamos una versión sin scroll
+  function setStepSilent(n) {
+    $$('.step').forEach(function (s) { s.classList.toggle('active', Number(s.dataset.step) === n); });
+    $$('.step-pill').forEach(function (p) {
+      var num = Number(p.dataset.pill);
+      p.classList.toggle('active', num === n);
+      p.classList.toggle('done', num < n);
+    });
+    var fill = $('#progressFill');
+    if (fill) fill.style.width = ((n - 1) / (TOTAL_STEPS - 1) * 100) + '%';
+    var prev = $('#btnPrev'), next = $('#btnNext'), submit = $('#btnSubmit');
+    if (prev) prev.disabled = true;
+    if (next) next.classList.remove('hidden');
+    if (submit) submit.classList.add('hidden');
+    currentStep = n;
     renderTotal();
-  };
+  }
 
-  // ---- Campo dinámico del Topper ----
+  /* ── 7) TOPPER: campo de texto ──────────────────────────── */
+
   function updateTopperDetail() {
-    const selected = document.querySelector('[name="topper"]:checked');
-    const detail   = document.getElementById('topperDetail');
-    const label    = document.getElementById('topperDetailLabel');
-    const input    = document.getElementById('topperDetailInput');
-    const hint     = document.getElementById('topperDetailHint');
-    if (!detail || !selected) return;
+    var seleccionados = $$('input[name="topper"]:checked');
+    var detail = document.getElementById('topperDetail');
+    var label = document.getElementById('topperDetailLabel');
+    var input = document.getElementById('topperDetailInput');
+    var hint = document.getElementById('topperDetailHint');
+    if (!detail) return;
 
-    const val = selected.value;
-    const needsName   = val.indexOf('Nombre') > -1;
-    const needsNumber = val.indexOf('N\u00famero') > -1 || val.indexOf('Numero') > -1;
+    var necesitaNombre = seleccionados.some(function (t) { return t.value.indexOf('Nombre') > -1; });
+    var necesitaNumero = seleccionados.some(function (t) { return t.value.indexOf('Número') > -1; });
 
-    if (!needsName && !needsNumber) {
-      detail.style.display = 'none';
+    if (!necesitaNombre && !necesitaNumero) {
+      detail.classList.remove('visible');
       if (input) input.value = '';
       return;
     }
 
-    detail.style.display = 'block';
+    detail.classList.add('visible');
 
-    if (needsName) {
-      if (label) label.textContent = '\u00bfQu\u00e9 nombre llevar\u00e1 el topper?';
-      if (input) { input.type = 'text'; input.maxLength = 30; input.placeholder = 'Ej. Mar\u00eda, Carlos, Sof\u00eda\u2026'; }
-      if (hint)  hint.textContent = 'M\u00e1x. 30 caracteres \u00b7 Solo el primer nombre o apodo';
+    if (necesitaNombre && necesitaNumero) {
+      if (label) label.textContent = '¿Qué nombre y número llevarán tus toppers?';
+      if (input) input.placeholder = 'Ej. Sofía · 15';
+      if (hint) hint.textContent = 'Escríbelos tal como los quieres sobre el pastel.';
+    } else if (necesitaNombre) {
+      if (label) label.textContent = '¿Qué nombre llevará el topper?';
+      if (input) input.placeholder = 'Ej. María, Carlos, Sofía…';
+      if (hint) hint.textContent = 'Máx. 60 caracteres · tal como lo quieres escrito.';
     } else {
-      if (label) label.textContent = '\u00bfQu\u00e9 n\u00famero llevar\u00e1 el topper?';
-      if (input) { input.type = 'number'; input.min = '0'; input.max = '999'; input.placeholder = 'Ej. 15, 18, 50\u2026'; }
-      if (hint)  hint.textContent = 'N\u00famero de a\u00f1os, fecha o cualquier cifra';
+      if (label) label.textContent = '¿Qué número llevará el topper?';
+      if (input) input.placeholder = 'Ej. 15, 18, 50…';
+      if (hint) hint.textContent = 'Número de años, fecha o cualquier cifra.';
     }
   }
 
-  // Bind topper detail listener
-  document.querySelectorAll('[name="topper"]').forEach(function(radio) {
-    radio.addEventListener('change', updateTopperDetail);
-  });
-  // Run once on load
-  updateTopperDetail();
-});
+  /* ── 8) MACARONS (stepper) ──────────────────────────────── */
 
+  window.changeMacarons = function (delta) {
+    var countEl = document.getElementById('macaronCount');
+    var qtyInput = document.getElementById('macaronQty');
+    var minusBtn = document.getElementById('macaronMinus');
+    var plusBtn = document.getElementById('macaronPlus');
+    var priceTag = document.getElementById('macaronPriceTag');
+    if (!countEl || !qtyInput) return;
 
+    var current = parseInt(countEl.textContent, 10) || 0;
+    current = Math.min(MACARON_MAX, Math.max(0, current + delta));
+    countEl.textContent = current;
+    qtyInput.value = current;
 
-  /* ===== TOAST NOTIFICATION ===== */
+    if (minusBtn) minusBtn.disabled = (current === 0);
+    if (plusBtn) plusBtn.disabled = (current === MACARON_MAX);
+
+    if (priceTag) {
+      priceTag.textContent = formatMoney(current * MACARON_PRICE);
+      priceTag.style.display = current > 0 ? '' : 'none';
+    }
+
+    renderTotal();
+  };
+
+  /* ── 9) TOAST ───────────────────────────────────────────── */
+
   function showToast(msg, type) {
     var toast = document.getElementById('validationToast');
     if (!toast) return;
     toast.textContent = msg;
     toast.className = 'validation-toast visible' + (type === 'success' ? ' toast-success' : '');
     clearTimeout(toast._timer);
-    toast._timer = setTimeout(function() { toast.className = 'validation-toast'; }, 3200);
+    toast._timer = setTimeout(function () { toast.className = 'validation-toast'; }, 3600);
   }
 
-  /* ===== STEP VALIDATION ===== */
-  function validateStep(step) {
-    if (step === 1) {
-      var sized = document.querySelector('input[name="size"]:checked');
-      if (!sized) { showToast('Por favor elige un tamaño para tu pastel.'); return false; }
-    }
-    if (step === 2) {
-      var pan = document.getElementById('panSelect');
-      if (!pan || !pan.value) { showToast('Por favor selecciona el tipo de pan.'); return false; }
-      var relleno = document.querySelector('input[name="relleno"]:checked');
-      if (!relleno) { showToast('Por favor elige un relleno.'); return false; }
-    }
-    if (step === 3) {
-      var betun = document.querySelector('input[name="betun"]:checked');
-      if (!betun) { showToast('Por favor elige un estilo de betún.'); return false; }
-    }
-    return true;
-  }
+  /* ── 10) MODAL DE RESUMEN ───────────────────────────────── */
 
-  /* ===== PROGRESS STEP MARKS ===== */
-  var _completedSteps = new Set();
-  function markStepCompleted(step) {
-    _completedSteps.add(step);
-    var pills = document.querySelectorAll('.progress-pill');
-    if (pills[step - 1]) pills[step - 1].setAttribute('data-done', 'true');
-  }
+  var _modalPrevFocus = null;
 
-  /* ===== QUOTE SUMMARY MODAL ===== */
   function showQuoteModal() {
     var modal = document.getElementById('quoteModal');
     var body = document.getElementById('quoteModalBody');
     var totalEl = document.getElementById('quoteModalTotal');
     if (!modal || !body) return;
 
-    // Build summary rows
-    var size = document.querySelector('input[name="size"]:checked');
-    var pan = document.getElementById('panSelect');
-    var relleno = document.querySelector('input[name="relleno"]:checked');
-    var betun = document.querySelector('input[name="betun"]:checked');
-    var date = document.getElementById('pickupDate')?.value || '';
-    var time = document.getElementById('pickupTime')?.value || '';
-    var name = document.getElementById('customerName')?.value.trim() || '';
-    var total = calcTotal();
-
+    var d = recogerDatos();
     var rows = [];
-    if (size) rows.push(['Tamaño', size.closest('label')?.querySelector('h3,h4,strong')?.textContent?.trim() || size.value]);
-    if (pan) rows.push(['Pan', pan.options[pan.selectedIndex]?.text || '']);
-    if (relleno) rows.push(['Relleno', relleno.value]);
-    if (betun) rows.push(['Betún', betun.value]);
-    if (date) rows.push(['Fecha', date]);
-    if (time) rows.push(['Hora', time]);
-    if (name) rows.push(['Nombre', name]);
 
-    body.innerHTML = rows.map(function(r) {
-      return '<div class="quote-row"><span class="quote-row-label">' + r[0] + '</span><span class="quote-row-value">' + r[1] + '</span></div>';
+    if (d.size) rows.push(['Tamaño', d.size.value + ' · ' + formatMoney(Number(d.size.dataset.price))]);
+    if (d.pan) rows.push(['Pan', d.pan]);
+    if (d.cremoso) rows.push(['Relleno cremoso', d.cremoso]);
+    if (d.crujientes.length) rows.push(['Relleno crujiente', d.crujientes.join(', ')]);
+    if (d.especiales.length) rows.push(['Relleno especial', d.especiales.join(', ')]);
+    if (d.betun.length) rows.push(['Betún', d.betun.join(', ')]);
+    if (d.toppers.length) rows.push(['Toppers', d.toppers.join(', ') + (d.topperTexto ? ' — "' + d.topperTexto + '"' : '')]);
+
+    var extrasTexto = d.extras.slice();
+    if (d.macarons > 0) extrasTexto.push('Macarons x' + d.macarons);
+    if (extrasTexto.length) rows.push(['Extras', extrasTexto.join(', ')]);
+    if (d.flor) rows.push(['Flor natural', d.flor]);
+    if (d.vela) rows.push(['Vela', d.vela]);
+
+    rows.push(['Fecha', d.fechaTexto]);
+    if (d.hora) rows.push(['Hora', d.hora + ' hrs']);
+    rows.push(['Nombre', d.nombre]);
+    if (d.telefono) rows.push(['WhatsApp', d.telefono]);
+    if (d.notas) rows.push(['Notas', d.notas]);
+
+    body.innerHTML = rows.map(function (r) {
+      return '<div class="quote-row"><span class="quote-row-label">' + escapeHtml(r[0]) +
+             '</span><span class="quote-row-value">' + escapeHtml(r[1]) + '</span></div>';
     }).join('');
 
-    if (totalEl) totalEl.textContent = '$' + total.toLocaleString();
+    if (totalEl) totalEl.textContent = formatMoney(d.total);
 
+    _modalPrevFocus = document.activeElement;
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 
-    // Bind confirm button
     var confirmBtn = document.getElementById('quoteModalConfirm');
     var cancelBtn = document.getElementById('quoteModalCancel');
     var closeBtn = document.getElementById('quoteModalClose');
 
-    function closeModal() {
-      modal.style.display = 'none';
-      document.body.style.overflow = '';
+    if (closeBtn) closeBtn.onclick = closeQuoteModal;
+    if (cancelBtn) cancelBtn.onclick = closeQuoteModal;
+    if (confirmBtn) {
+      confirmBtn.onclick = function () {
+        closeQuoteModal();
+        window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(buildWhatsappMessage()),
+                    '_blank', 'noopener');
+      };
+      confirmBtn.focus();
     }
 
-    if (closeBtn) closeBtn.onclick = closeModal;
-    if (cancelBtn) cancelBtn.onclick = closeModal;
-    if (confirmBtn) confirmBtn.onclick = function() {
-      closeModal();
-      var url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(buildWhatsappMessage());
-      window.open(url, '_blank');
-    };
-
-    modal.onclick = function(e) { if (e.target === modal) closeModal(); };
+    modal.onclick = function (e) { if (e.target === modal) closeQuoteModal(); };
+    document.addEventListener('keydown', onModalKeydown);
   }
 
+  function closeQuoteModal() {
+    var modal = document.getElementById('quoteModal');
+    if (!modal) return;
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+    document.removeEventListener('keydown', onModalKeydown);
+    if (_modalPrevFocus && _modalPrevFocus.focus) _modalPrevFocus.focus();
+  }
 
+  function onModalKeydown(e) {
+    if (e.key === 'Escape') closeQuoteModal();
+  }
 
-  /* ── GALERIA FILTRABLE ──────────────────────── */
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  /* ── 11) GALERÍA FILTRABLE ──────────────────────────────── */
+
   function bindGaleriaFilter() {
-    var filterBtns = document.querySelectorAll('.filter-btn');
-    var galeriaItems = document.querySelectorAll('.galeria-item');
-    if (!filterBtns.length || !galeriaItems.length) return;
-    filterBtns.forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var filter = btn.getAttribute('data-filter');
-        filterBtns.forEach(function(b) {
+    var botones = $$('.filter-btn');
+    var items = $$('.galeria-item');
+    if (!botones.length || !items.length) return;
+
+    botones.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var filtro = btn.getAttribute('data-filter');
+        botones.forEach(function (b) {
           b.classList.remove('active');
           b.setAttribute('aria-selected', 'false');
         });
         btn.classList.add('active');
         btn.setAttribute('aria-selected', 'true');
-        galeriaItems.forEach(function(item) {
+
+        var visibles = 0;
+        items.forEach(function (item) {
           var cat = item.getAttribute('data-cat');
-          if (filter === 'all' || cat === filter) {
-            item.classList.remove('hidden');
-          } else {
-            item.classList.add('hidden');
-          }
+          var mostrar = (filtro === 'all' || cat === filtro);
+          item.classList.toggle('hidden', !mostrar);
+          if (mostrar) visibles++;
         });
+
+        var vacio = document.getElementById('galeriaEmpty');
+        if (vacio) vacio.classList.toggle('hidden', visibles > 0);
       });
     });
   }
 
-  /* ── COTIZADOR VISTA PREVIA ─────────────────── */
-  function updateWizardPreview() {
-    var preview = document.getElementById('wizardPreview');
-    if (!preview) return;
-    var size = document.querySelector('input[name="size"]:checked');
-    var pan = document.getElementById('panSelect');
-    var relleno = document.querySelector('input[name="relleno"]:checked');
-    if (!size) { preview.classList.remove('visible'); return; }
-    preview.classList.add('visible');
-    var text = 'Pastel ' + size.value;
-    if (pan && pan.value) text += ' de ' + pan.value;
-    if (relleno) text += ' con ' + relleno.value;
-    var content = preview.querySelector('.wizard-preview-content');
-    if (content) content.innerHTML = '<strong>' + text + '</strong>';
-  }
-
-  function bindWizardPreview() {
-    var previewDiv = document.getElementById('wizardPreview');
-    if (!previewDiv) return;
-    document.querySelectorAll('input[name="size"]').forEach(function(inp) {
-      inp.addEventListener('change', updateWizardPreview);
-    });
-    var panSel = document.getElementById('panSelect');
-    if (panSel) panSel.addEventListener('change', updateWizardPreview);
-    document.querySelectorAll('input[name="relleno"]').forEach(function(inp) {
-      inp.addEventListener('change', updateWizardPreview);
-    });
-  }
-
-  /* ── SABOR DEL MES CONFIG ─────────────────── */
-  var SABOR_MES = {
-    nombre: 'Fresas con Crema',
-    stock: 8,
-    mes: 'Mayo 2025'
-  };
+  /* ── 12) SABOR DEL MES ──────────────────────────────────── */
 
   function initSaborMes() {
+    var meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+                 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    var ahora = new Date();
+    var mesActual = meses[ahora.getMonth()];
+
     var nombreEl = document.getElementById('saborMesNombre');
-    var stockEl = document.getElementById('saborMesStock');
-    if (nombreEl) nombreEl.textContent = SABOR_MES.nombre;
-    if (stockEl) stockEl.textContent = SABOR_MES.stock;
+    var descEl = document.getElementById('saborMesDesc');
+    var mesEl = document.getElementById('saborMesMes');
+    var ribbon = document.getElementById('saborMesRibbon');
+
+    if (nombreEl && SABOR_MES.nombre) nombreEl.textContent = SABOR_MES.nombre;
+    if (descEl && SABOR_MES.descripcion) descEl.textContent = SABOR_MES.descripcion;
+    if (mesEl) mesEl.textContent = mesActual;
+    if (ribbon) ribbon.textContent = (mesActual + ' ' + ahora.getFullYear()).toUpperCase();
   }
 
-  /* ── INIT EXTENDIDO ───────────────────────── */
-  
-  /* ── DEDUPLICATION - eliminar secciones duplicadas ─ */
-  function removeDuplicateSections() {
-    var ids = ['sabor-mes', 'galeria', 'historia', 'politica', 'faq'];
-    ids.forEach(function(id) {
-      var sections = document.querySelectorAll('#' + id);
-      for (var i = 1; i < sections.length; i++) {
-        sections[i].parentNode.removeChild(sections[i]);
-      }
+  /* ── 13) LINK ACTIVO EN EL MENÚ ─────────────────────────── */
+
+  function bindActiveNavLink() {
+    var secciones = $$('section[id], footer[id]');
+    var links = $$('.nav-links a');
+    if (!secciones.length || !links.length) return;
+    if (!('IntersectionObserver' in window)) return;
+
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        links.forEach(function (a) {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id);
+        });
+      });
+    }, { threshold: 0.35 });
+
+    secciones.forEach(function (s) { obs.observe(s); });
+  }
+
+  /* ── 14) SCROLL SUAVE ───────────────────────────────────── */
+
+  function bindSmoothScroll() {
+    $$('a[href^="#"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var href = a.getAttribute('href');
+        if (!href || href === '#') return;
+        var target = document.querySelector(href);
+        if (!target) return;
+        e.preventDefault();
+        var top = target.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+        if (history.replaceState) history.replaceState(null, '', href);
+      });
     });
-    // Also deduplicate galeria-grid
-    var grids = document.querySelectorAll('.galeria-grid');
-    for (var i = 1; i < grids.length; i++) {
-      grids[i].parentNode.removeChild(grids[i]);
-    }
   }
 
-document.addEventListener('DOMContentLoaded', function() {
+  /* ── 15) AÑO EN EL PIE ──────────────────────────────────── */
+
+  var ANO_FUNDACION = 2017;
+
+  function setYear() {
+    var ahora = new Date().getFullYear();
+    var el = $('#year');
+    if (el) el.textContent = ahora;
+    var anos = $('#anosActivos');
+    if (anos) anos.textContent = ahora - ANO_FUNDACION;
+  }
+
+  /* ── ARRANQUE ───────────────────────────────────────────── */
+
+  function init() {
+    updateStatusBadge();
+    updateVitrinaButton();
+    bindClasicoButtons();
+    bindNavbar();
+    bindRevealObserver();
+    bindWizard();
     bindGaleriaFilter();
-    bindWizardPreview();
-    removeDuplicateSections();
     initSaborMes();
-  });
+    bindActiveNavLink();
+    bindSmoothScroll();
+    setYear();
+    updateTopperDetail();
+
+    // Revisamos el estado del local cada minuto
+    setInterval(function () {
+      updateStatusBadge();
+      updateVitrinaButton();
+    }, 60000);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 
 })();
-

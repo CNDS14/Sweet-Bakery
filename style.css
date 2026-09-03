@@ -1083,202 +1083,207 @@ textarea { resize: vertical; min-height: 80px; }
 }
 
 /* Reduce motion */
+/* ==============================================
+   SWEET BAKERY - Parches v2 (correcciones)
+   Estas reglas vivian por error dentro de
+   @media (prefers-reduced-motion), asi que solo
+   aplicaban a quien tuviera animaciones reducidas.
+   ============================================== */
+
+
+/* --- REVEAL: fix visibilidad inicial --- */
+/* El hero siempre debe ser visible de inmediato */
+.hero.reveal {
+     opacity: 1 !important;
+     transform: none !important;
+     filter: none !important;
+}
+
+/* Corrección: asegurarse que in-view funcione en todas secciones */
+.reveal {
+     opacity: 0;
+     transform: translateY(32px);
+     filter: blur(3px);
+     transition:
+       opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+            filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.in-view {
+     opacity: 1;
+     transform: translateY(0);
+     filter: blur(0);
+}
+
+/* --- NAVBAR: link activo destacado --- */
+.nav-links a.active {
+     color: var(--blush-dark);
+     font-weight: 600;
+}
+.nav-links a {
+     position: relative;
+     transition: color var(--t-fast);
+}
+.nav-links a::after {
+     content: '';
+     position: absolute;
+     bottom: -2px;
+     left: 0;
+     right: 0;
+     height: 2px;
+     background: var(--blush);
+     transform: scaleX(0);
+     transition: transform var(--t-fast);
+     border-radius: 2px;
+}
+.nav-links a:hover::after,
+.nav-links a.active::after {
+     transform: scaleX(1);
+}
+
+/* --- WIZARD: mejoras visuales --- */
+.wizard-footer {
+     border-top: 1px solid var(--line);
+     padding-top: 1.5rem;
+     margin-top: 2rem;
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     flex-wrap: wrap;
+     gap: 1rem;
+}
+
+.total-display {
+     display: flex;
+     flex-direction: column;
+     gap: 0.15rem;
+}
+
+.total-label {
+     font-size: 0.75rem;
+     text-transform: uppercase;
+     letter-spacing: 0.15em;
+     color: var(--olive);
+     font-weight: 500;
+}
+
+.total-amount {
+     font-family: var(--font-serif);
+     font-size: 2rem;
+     font-weight: 600;
+     color: var(--blush-dark);
+     line-height: 1;
+}
+
+.wizard-controls {
+     display: flex;
+     gap: 0.75rem;
+     flex-wrap: wrap;
+}
+
+/* --- PROGRESS BAR --- */
+.progress-bar {
+     height: 4px;
+     background: var(--line);
+     border-radius: 99px;
+     overflow: hidden;
+     margin-bottom: 1rem;
+}
+.progress-fill {
+     height: 100%;
+     background: linear-gradient(90deg, var(--blush), var(--blush-dark));
+     border-radius: 99px;
+     transition: width 0.4s ease;
+     width: 0%;
+}
+
+.step-pill {
+     font-size: 0.75rem;
+     padding: 0.25rem 0.75rem;
+     border-radius: 99px;
+     border: 1px solid var(--line);
+     color: var(--ink-soft);
+     cursor: default;
+     transition: all var(--t-fast);
+}
+.step-pill.active {
+     background: var(--blush);
+     color: #fff;
+     border-color: var(--blush);
+     font-weight: 600;
+}
+.step-pill.done {
+     background: var(--cream-2);
+     color: var(--olive);
+     border-color: var(--olive);
+}
+.progress-steps {
+     display: flex;
+     gap: 0.5rem;
+     flex-wrap: wrap;
+     justify-content: center;
+}
+
+/* --- VITRINA CARDS: mejoradas --- */
+.vitrina-card {
+     transition: transform var(--t-med), box-shadow var(--t-med);
+}
+.vitrina-card:hover {
+     transform: translateY(-6px) scale(1.02);
+     box-shadow: var(--shadow-lg);
+}
+
+/* --- CLASICO CARDS: hover mejora --- */
+.clasico-card {
+     transition: transform var(--t-med), box-shadow var(--t-med);
+}
+.clasico-card:hover {
+     transform: translateY(-4px);
+     box-shadow: var(--shadow-lg);
+}
+
+/* --- BTN WHATSAPP: mejor visibilidad cuando disabled --- */
+.btn-whatsapp.disabled {
+     opacity: 0.5;
+     cursor: not-allowed;
+     background: #ccc !important;
+}
+
+/* --- STATUS BADGE: estilos abierto/cerrado --- */
+.status-badge.open .status-dot {
+     background: #22c55e;
+     box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
+}
+.status-badge.closed .status-dot {
+     background: #ef4444;
+     box-shadow: 0 0 0 3px rgba(239,68,68,0.2);
+}
+
+/* --- FOOTER CONTACTO: links con hover --- */
+.footer-col a:hover {
+     color: var(--blush);
+     text-decoration: underline;
+}
+
+/* --- HIDDEN HELPER --- */
+.hidden { display: none !important; }
+
+/* --- MEJORA ACCESIBILIDAD: focus visible --- */
+:focus-visible {
+     outline: 2px solid var(--blush);
+     outline-offset: 3px;
+     border-radius: 4px;
+}
+
+/* Respeta la preferencia de movimiento reducido del sistema */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-
-
-   /* ==============================================
-      SWEET BAKERY · Parches v2 (correcciones)
-      ============================================== */
-
-   /* --- REVEAL: fix visibilidad inicial --- */
-   /* El hero siempre debe ser visible de inmediato */
-   .hero.reveal {
-        opacity: 1 !important;
-        transform: none !important;
-        filter: none !important;
-   }
-
-   /* Corrección: asegurarse que in-view funcione en todas secciones */
-   .reveal {
-        opacity: 0;
-        transform: translateY(32px);
-        filter: blur(3px);
-        transition:
-          opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-               transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-               filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-   }
-   .reveal.in-view {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-   }
-
-   /* --- NAVBAR: link activo destacado --- */
-   .nav-links a.active {
-        color: var(--blush-dark);
-        font-weight: 600;
-   }
-   .nav-links a {
-        position: relative;
-        transition: color var(--t-fast);
-   }
-   .nav-links a::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: var(--blush);
-        transform: scaleX(0);
-        transition: transform var(--t-fast);
-        border-radius: 2px;
-   }
-   .nav-links a:hover::after,
-   .nav-links a.active::after {
-        transform: scaleX(1);
-   }
-
-   /* --- WIZARD: mejoras visuales --- */
-   .wizard-footer {
-        border-top: 1px solid var(--line);
-        padding-top: 1.5rem;
-        margin-top: 2rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 1rem;
-}
-
-   .total-display {
-        display: flex;
-        flex-direction: column;
-        gap: 0.15rem;
-   }
-
-   .total-label {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.15em;
-        color: var(--olive);
-        font-weight: 500;
-   }
-
-   .total-amount {
-        font-family: var(--font-serif);
-        font-size: 2rem;
-        font-weight: 600;
-        color: var(--blush-dark);
-        line-height: 1;
-   }
-
-   .wizard-controls {
-        display: flex;
-        gap: 0.75rem;
-        flex-wrap: wrap;
-   }
-
-   /* --- PROGRESS BAR --- */
-   .progress-bar {
-        height: 4px;
-        background: var(--line);
-        border-radius: 99px;
-        overflow: hidden;
-        margin-bottom: 1rem;
-   }
-   .progress-fill {
-        height: 100%;
-        background: linear-gradient(90deg, var(--blush), var(--blush-dark));
-        border-radius: 99px;
-        transition: width 0.4s ease;
-        width: 0%;
-   }
-
-   .step-pill {
-        font-size: 0.75rem;
-        padding: 0.25rem 0.75rem;
-        border-radius: 99px;
-        border: 1px solid var(--line);
-        color: var(--ink-soft);
-        cursor: default;
-        transition: all var(--t-fast);
-   }
-   .step-pill.active {
-        background: var(--blush);
-        color: #fff;
-        border-color: var(--blush);
-        font-weight: 600;
-   }
-   .step-pill.done {
-        background: var(--cream-2);
-        color: var(--olive);
-        border-color: var(--olive);
-   }
-   .progress-steps {
-        display: flex;
-        gap: 0.5rem;
-        flex-wrap: wrap;
-        justify-content: center;
-   }
-
-   /* --- VITRINA CARDS: mejoradas --- */
-   .vitrina-card {
-        transition: transform var(--t-med), box-shadow var(--t-med);
-   }
-   .vitrina-card:hover {
-        transform: translateY(-6px) scale(1.02);
-        box-shadow: var(--shadow-lg);
-   }
-
-   /* --- CLASICO CARDS: hover mejora --- */
-   .clasico-card {
-        transition: transform var(--t-med), box-shadow var(--t-med);
-   }
-   .clasico-card:hover {
-        transform: translateY(-4px);
-        box-shadow: var(--shadow-lg);
-   }
-
-   /* --- BTN WHATSAPP: mejor visibilidad cuando disabled --- */
-   .btn-whatsapp.disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-        background: #ccc !important;
-   }
-
-   /* --- STATUS BADGE: estilos abierto/cerrado --- */
-   .status-badge.open .status-dot {
-        background: #22c55e;
-        box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
-   }
-   .status-badge.closed .status-dot {
-        background: #ef4444;
-        box-shadow: 0 0 0 3px rgba(239,68,68,0.2);
-   }
-
-   /* --- FOOTER CONTACTO: links con hover --- */
-   .footer-col a:hover {
-        color: var(--blush);
-        text-decoration: underline;
-   }
-
-   /* --- HIDDEN HELPER --- */
-   .hidden { display: none !important; }
-
-   /* --- MEJORA ACCESIBILIDAD: focus visible --- */
-   :focus-visible {
-        outline: 2px solid var(--blush);
-        outline-offset: 3px;
-        border-radius: 4px;
-   }
-   
-  .reveal { opacity: 1; transform: none; filter: none; }
+  .reveal,
+  .reveal.in-view { opacity: 1; transform: none; filter: none; }
 }
 
 
@@ -1512,7 +1517,6 @@ textarea { resize: vertical; min-height: 80px; }
 }
 
 /* ===================================================
- /* ===================================================
    MACARON CHIP — Sweet Bakery
    Se integra visualmente igual que Sprinkles/Mariposas
    =================================================== */
@@ -1611,7 +1615,6 @@ textarea { resize: vertical; min-height: 80px; }
   from { opacity: 0; transform: scale(0.85); }
   to   { opacity: 1; transform: scale(1); }
 }
-}
 
 /* ===================================================
    TOPPER DETAIL INPUT — Sweet Bakery
@@ -1661,11 +1664,10 @@ textarea { resize: vertical; min-height: 80px; }
   margin-top: 6px;
   opacity: 0.8;
 }
-}
 
-/* Force: topper-detail oculto por defecto */
-.topper-detail { display: none !important; }
-.topper-detail.visible { display: block !important; }
+/* El campo de texto del topper se muestra agregando .visible desde el JS */
+.topper-detail { display: none; }
+.topper-detail.visible { display: block; }
 
 
 /* ===== TOAST NOTIFICATION ===== */
@@ -2859,3 +2861,311 @@ section[id], .section[id], #hero, #vitrina, #cotizador, #clasicos,
 /* 7) Scroll nativo/instantaneo: scroll-behavior smooth global hacia
       que la rueda del mouse se sintiera lenta/trabada. Lo dejamos auto. */
 html { scroll-behavior: auto !important; }
+
+/* ============================================================
+   SWEET BAKERY · v12 — Estilos de los elementos nuevos
+   (logo real, galletas con foto, prueba social, catálogo
+   completo del cotizador, notas y arreglos responsive)
+   ============================================================ */
+
+/* ── LOGO REAL EN NAVBAR Y PIE ───────────────────────────── */
+.navbar .logo {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+.navbar .logo img {
+  width: 56px;
+  height: 56px;
+  display: block;
+  object-fit: contain;
+  transition: transform var(--t-fast);
+}
+.navbar .logo:hover img { transform: scale(1.05); }
+.navbar.scrolled .logo img { width: 48px; height: 48px; }
+
+.footer-logo {
+  width: 96px;
+  height: 96px;
+  display: block;
+  object-fit: contain;
+  margin-bottom: 14px;
+}
+.footer-note {
+  font-size: 0.78rem;
+  opacity: 0.75;
+  margin-top: 6px;
+}
+
+/* ── PRUEBA SOCIAL (Instagram) ───────────────────────────── */
+.social-proof-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin: 26px auto 34px;
+  max-width: 720px;
+}
+.social-proof-item {
+  flex: 1 1 180px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 18px 16px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+.social-proof-item strong {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: var(--blush-dark);
+  line-height: 1.1;
+}
+.social-proof-item span {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+/* ── MOSAICO DE ESTILOS ──────────────────────────────────── */
+.mosaic-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+  padding: 12px;
+}
+.mosaic-item span { font-size: clamp(1.6rem, 4vw, 2.4rem); line-height: 1; }
+.mosaic-item em {
+  font-style: normal;
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(90, 62, 43, 0.45);
+}
+.mosaic-item.m-1 { background: linear-gradient(135deg, #FAF0E6, #D4A396); }
+.mosaic-item.m-2 { background: linear-gradient(135deg, #E8D4C4, #8A9A86); }
+.mosaic-item.m-3 { background: linear-gradient(135deg, #F5E9DF, #D4A396); }
+.mosaic-item.m-4 { background: linear-gradient(135deg, #D4A396, #B88675); }
+.mosaic-item.m-5 { background: linear-gradient(135deg, #E5C5B5, #8A9A86); }
+.mosaic-item.m-6 { background: linear-gradient(135deg, #FAF0E6, #E5C5B5); }
+.mosaic-item.m-7 { background: linear-gradient(135deg, #8A9A86, #6B7E68); }
+
+/* ── TARJETA DE GALLETAS CON FOTO REAL ───────────────────── */
+.clasico-card-galletas {
+  display: grid;
+  grid-template-columns: minmax(200px, 300px) 1fr;
+  gap: 26px;
+  align-items: start;
+  text-align: left;
+}
+.clasico-img-photo {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--cream-2);
+  box-shadow: var(--shadow-sm);
+  height: auto;
+  aspect-ratio: auto;
+}
+.clasico-img-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+.clasico-card-galletas .clasico-card-body { min-width: 0; }
+.clasico-card-galletas h3 { margin-top: 0; }
+
+.galletas-list {
+  list-style: none;
+  margin: 16px 0 20px;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.galletas-list li {
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  padding-left: 14px;
+  position: relative;
+}
+.galletas-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--blush);
+}
+.galletas-list strong { color: var(--ink); font-weight: 600; }
+
+/* ── COTIZADOR: notas, chips con cantidad, avisos ────────── */
+.field-note {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  opacity: 0.85;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+.wizard textarea {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  resize: vertical;
+  min-height: 84px;
+  box-sizing: border-box;
+  transition: border-color var(--t-fast);
+}
+.wizard textarea:focus {
+  outline: none;
+  border-color: var(--blush);
+  box-shadow: var(--glow);
+}
+
+.chip.quantity-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.chip.quantity-chip .qty-input {
+  width: 62px;
+  padding: 5px 8px;
+  font-size: 0.85rem;
+  font-family: var(--font-sans);
+  text-align: center;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--ink);
+}
+.chip.quantity-chip .qty-input:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.chip.quantity-chip input[type="checkbox"]:checked ~ .qty-input {
+  border-color: var(--blush);
+}
+
+.field-help.is-ok { color: var(--olive-dark); }
+
+/* ── GALERÍA: estado vacío ───────────────────────────────── */
+.galeria-empty {
+  text-align: center;
+  padding: 30px 16px;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+.section-lead a {
+  color: var(--blush-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.section-lead a:hover { color: var(--olive-dark); }
+
+/* ── BOTÓN DE WHATSAPP: que nunca se desborde ────────────── */
+.btn-whatsapp {
+  max-width: 100%;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.35;
+}
+.btn-whatsapp svg { flex: 0 0 auto; }
+
+.vitrina-cta-wrap { max-width: 100%; }
+.vitrina-note {
+  display: block;
+  max-width: 46ch;
+  margin: 12px auto 0;
+  line-height: 1.5;
+}
+
+/* ── NAVBAR MÓVIL: hamburguesa animada ──────────────────── */
+.nav-toggle.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.is-open span:nth-child(2) { opacity: 0; }
+.nav-toggle.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav-toggle span { transition: transform var(--t-fast), opacity var(--t-fast); }
+
+/* ── BARRA DE PROGRESO: pasos ya visitados son clicables ── */
+.step-pill.done { cursor: pointer; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .clasico-card-galletas {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .clasico-img-photo { max-width: 340px; margin: 0 auto; }
+  .clasico-card-galletas h3,
+  .clasico-card-galletas .galletas-prices { text-align: center; }
+  .clasico-card-galletas .galletas-prices { justify-content: center; }
+}
+
+@media (max-width: 720px) {
+  .navbar .logo img,
+  .navbar.scrolled .logo img { width: 46px; height: 46px; }
+  .social-proof-item { flex: 1 1 100%; padding: 14px; }
+  .social-proof-item strong { font-size: 1.35rem; }
+  .footer-logo { width: 76px; height: 76px; margin-inline: auto; }
+}
+
+@media (max-width: 480px) {
+  .galletas-list li { font-size: 0.82rem; }
+  .chip.quantity-chip .qty-input { width: 56px; }
+  .mosaic-item em { font-size: 0.66rem; }
+}
+
+/* ── SABOR DEL MES: que la fila de disponibilidad envuelva ─
+   Era inline-flex sin wrap: su min-content (364px) estiraba
+   la columna del grid y desbordaba en pantallas chicas.      */
+.sabor-mes-stock {
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
+  row-gap: 4px;
+}
+.sabor-mes-inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.sabor-mes-badge,
+.sabor-mes-img-wrap { min-width: 0; }
+
+@media (max-width: 900px) {
+  .sabor-mes-inner { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ── HERO: el sello no debe encimarse con el topper del pastel ── */
+.hero-stamp {
+  top: -6px;
+  right: 4px;
+  max-width: 62%;
+  text-align: right;
+  line-height: 1.3;
+  pointer-events: none;
+}
+
+@media (max-width: 720px) {
+  .hero-stamp {
+    position: static;
+    display: block;
+    transform: none;
+    max-width: 100%;
+    text-align: center;
+    margin-top: 10px;
+  }
+}
