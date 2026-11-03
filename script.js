@@ -672,7 +672,13 @@
         renderTotal();
       }
 
-      if (el.name === 'topper') updateTopperDetail();
+      if (el.name === 'topper' || el.name === 'extra') updateTopperDetail();
+
+      // Letras e impresión van acostadas sobre la tapa: de lado no se aprecian,
+      // así que el pastel gira solo para que se vean.
+      if (el.name === 'extra' && el.checked && soloDesdeArriba([el.value]) && vistaActual !== 'arriba') {
+        cambiarVista('arriba', true);
+      }
     });
 
     wizard.addEventListener('input', function (e) {
@@ -748,7 +754,12 @@
   /* ── 7) TOPPER: campo de texto ──────────────────────────── */
 
   function updateTopperDetail() {
-    var seleccionados = $$('input[name="topper"]:checked');
+    var seleccionados = $$('input[name="topper"]:checked').filter(function (t) {
+      return t.value.indexOf('Joyas') === -1;   // las joyas no llevan texto
+    });
+    var letras = $$('input[name="extra"]:checked').some(function (e) {
+      return e.value.indexOf('Letras Chocolate') > -1;
+    });
     var detail = document.getElementById('topperDetail');
     var label = document.getElementById('topperDetailLabel');
     var input = document.getElementById('topperDetailInput');
@@ -758,13 +769,21 @@
     var necesitaNombre = seleccionados.some(function (t) { return t.value.indexOf('Nombre') > -1; });
     var necesitaNumero = seleccionados.some(function (t) { return t.value.indexOf('Número') > -1; });
 
-    if (!necesitaNombre && !necesitaNumero) {
+    if (!necesitaNombre && !necesitaNumero && !letras) {
       detail.classList.remove('visible');
       if (input) input.value = '';
       return;
     }
 
     detail.classList.add('visible');
+
+    // Si solo hay letras de chocolate, el campo es para ellas
+    if (letras && !necesitaNombre && !necesitaNumero) {
+      if (label) label.textContent = '¿Qué dicen las letras de chocolate?';
+      if (input) input.placeholder = 'Ej. Felicidades';
+      if (hint) hint.textContent = 'Lo verás escrito sobre el pastel en la vista de arriba.';
+      return;
+    }
 
     if (necesitaNombre && necesitaNumero) {
       if (label) label.textContent = '¿Qué nombre y número llevarán tus toppers?';
@@ -1513,8 +1532,8 @@
     // ── Orillas: conchas piped arriba y abajo ──
     if (tiene(betun, 'Orillas')) {
       var sombraPipe = oscurecer(base, 0.20);
-      o.push(conchas(cx, techo, rx, ry, w, pipe, sombraPipe, enMuesca, 1.1));
-      o.push(conchas(cx, suelo, rx, ry * 0.92, w, aclarar(base, 0.44), sombraPipe, function () { return false; }, 1.25));
+      o.push(conchas(cx, techo, rx, ry, w, pipe, sombraPipe, enMuesca, 0.95));
+      o.push(conchas(cx, suelo, rx, ry * 0.92, w, aclarar(base, 0.44), sombraPipe, function () { return false; }, 1.05));
     }
 
     // ── Vintage: volantes gruesos + puntos, como el pastel borgoña ──
@@ -1525,13 +1544,14 @@
         var tq = (Math.PI / m) * q;
         if (enMuesca(tq)) continue;
         var vx2 = cx + Math.cos(tq) * rx, vy2 = techo + Math.sin(tq) * ry;
-        var rr2 = w * 0.055;
+        var rr2 = w * 0.078;
         vg += '<g transform="translate(' + vx2.toFixed(1) + ',' + vy2.toFixed(1) + ')">' +
               '<path d="M0 ' + (-rr2) + ' Q' + rr2 + ' ' + (-rr2 * 0.2) + ' 0 ' + rr2 +
               ' Q' + (-rr2) + ' ' + (-rr2 * 0.2) + ' 0 ' + (-rr2) + ' Z" fill="' + pipe +
               '" stroke="' + oscurecer(base, 0.2) + '" stroke-width="0.6" stroke-opacity="0.5"/>' +
-              '<path d="M0 ' + (-rr2 * 0.55) + ' Q' + (rr2 * 0.5) + ' 0 0 ' + (rr2 * 0.55) +
-              '" stroke="' + pipeSombra + '" stroke-width="0.9" fill="none" opacity="0.45"/></g>';
+              '<path d="M0 ' + (-rr2 * 0.62) + ' A' + (rr2 * 0.62) + ' ' + (rr2 * 0.62) + ' 0 1 1 ' + (-rr2 * 0.52) + ' ' + (rr2 * 0.32) +
+              ' A' + (rr2 * 0.34) + ' ' + (rr2 * 0.34) + ' 0 1 0 ' + (rr2 * 0.22) + ' ' + (-rr2 * 0.12) +
+              '" stroke="' + oscurecer(base, 0.24) + '" stroke-width="1.1" fill="none" opacity="0.6"/></g>';
       }
       // volante inferior
       var m2 = Math.max(6, Math.round(w / 14));
@@ -1588,7 +1608,14 @@
 
     // ── Letras de chocolate ──
     if (tiene(extras, 'Letras Chocolate')) {
-      o.push('<text x="' + (cx - 10) + '" y="' + (mesa - 6) + '" text-anchor="middle" font-family="Playfair Display, serif" font-weight="600" font-size="17" fill="#4A2F23">abc</text>');
+      // De lado las letras se ven casi de canto: se insinúan y la vista de
+      // arriba es la que las muestra de verdad.
+      var lt = textoDelPastel() || 'Tu texto';
+      if (lt.length > 10) lt = lt.slice(0, 10) + '…';
+      o.push('<text x="' + (cx - w * 0.16) + '" y="' + (mesa + ry * 0.35) + '" text-anchor="middle" ' +
+             'font-family="Playfair Display, serif" font-weight="600" font-size="13" fill="#4A2F23" ' +
+             'opacity="0.9" transform="rotate(-4 ' + (cx - w * 0.16) + ' ' + (mesa + ry * 0.35) + ')">' +
+             escapeHtml(lt) + '</text>');
     }
 
     // ── Fruta ──
@@ -1727,13 +1754,18 @@
     lienzo.innerHTML =
       '<svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + o.join('') + '</svg>';
 
-    // Resumen, que también es el alt
+    pintarResumen(size, betun, cremosoSel, flor);
+  }
+
+  /* ── Resumen en texto: sirve igual de alt para lectores de pantalla ── */
+  function pintarResumen(size, betun, cremosoSel, flor) {
     var partes = [];
     if (size) partes.push('Pastel ' + size.value.toLowerCase());
     partes.push('betún ' + colorElegido.nombre.toLowerCase());
     if (betun.length) partes.push(betun.join(' y ').toLowerCase());
     if (cremosoSel) partes.push('relleno de ' + cremosoSel.value.toLowerCase());
     if (flor && flor.value !== 'Sin flor') partes.push('con ' + flor.value.replace('Flor — ', '').toLowerCase());
+    if (vistaActual === 'arriba') partes.push('visto desde arriba');
     var res = $('#pastelResumen');
     if (res) res.textContent = size ? (partes.join(' · ') + '.') : 'Empieza eligiendo un tamaño';
   }
@@ -1796,6 +1828,355 @@
     return s;
   }
 
+
+  /* ══════════════ VISTA DESDE ARRIBA ══════════════
+     De lado hay cosas que simplemente no se ven: las letras de chocolate y la
+     impresión en oblea van acostadas sobre la tapa. Esta vista las muestra.
+     ──────────────────────────────────────────────── */
+
+  var vistaActual = 'lado';
+
+  // Lo que solo se aprecia desde arriba
+  function soloDesdeArriba(extras) {
+    return tiene(extras, 'Letras Chocolate') || tiene(extras, 'Impresión');
+  }
+
+  function textoDelPastel() {
+    return ($('#topperDetailInput') ? $('#topperDetailInput').value : '').trim();
+  }
+
+  function cambiarVista(v, avisar) {
+    if (vistaActual === v) return;
+    vistaActual = v;
+    $$('.vista-btn').forEach(function (b) {
+      var on = b.dataset.vista === v;
+      b.classList.toggle('activo', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
+    var lienzo = $('#pastelLienzo');
+    if (lienzo) {
+      lienzo.classList.remove('girando');
+      void lienzo.offsetWidth;
+      lienzo.classList.add('girando');
+    }
+    sincronizarMostrador();
+    if (avisar) confirmar(v === 'arriba' ? 'Girado para que lo veas desde arriba' : 'De vuelta a la vista de lado');
+  }
+
+  function bindVista() {
+    $$('.vista-btn').forEach(function (b) {
+      b.addEventListener('click', function () { cambiarVista(b.dataset.vista, false); });
+    });
+  }
+
+  function dibujarPastelArriba() {
+    var lienzo = $('#pastelLienzo');
+    if (!lienzo) return;
+
+    var size = $('input[name="size"]:checked');
+    var forma = FORMAS[size ? size.value : 'Chico'] || FORMAS['Chico'];
+    var betun = elegidos('betun');
+    var extras = elegidos('extra');
+    var toppers = elegidos('topper');
+    var flor = $('input[name="flor"]:checked');
+    var vela = $('input[name="vela"]:checked');
+    var cremosoSel = $('input[name="cremoso"]:checked');
+    var panSel = $('#panSelect');
+
+    var base = colorElegido.hex;
+    var tapa = aclarar(base, 0.34);
+    var crema = aclarar(base, 0.62);
+    var pipe = aclarar(base, 0.52);
+    var sombraPipe = oscurecer(base, 0.20);
+
+    var cx = 160, cy = 150;
+    var Rt = Math.min(128, forma.w * 0.62);
+    var pan = PANES[panSel ? panSel.value : 'Vainilla'] || PANES['Vainilla'];
+    var relleno = RELLENOS[cremosoSel ? cremosoSel.value : ''] || '#F6E7CE';
+
+    // Mismos ángulos de la rebanada que en la vista de lado
+    var a1 = 0.10 * Math.PI, a2 = 0.46 * Math.PI;
+    var pt = function (a, r) { return [(cx + Math.cos(a) * r).toFixed(1), (cy + Math.sin(a) * r).toFixed(1)]; };
+
+    var o = [];
+
+    o.push('<defs>' +
+      '<radialGradient id="aGTapa" cx="0.38" cy="0.32" r="0.78">' +
+        '<stop offset="0" stop-color="' + aclarar(base, 0.46) + '"/>' +
+        '<stop offset="1" stop-color="' + oscurecer(tapa, 0.08) + '"/></radialGradient>' +
+    '</defs>');
+
+    // Plato
+    o.push('<circle cx="' + cx + '" cy="' + cy + '" r="' + (Rt + 24) + '" fill="#E4D6C6"/>');
+    o.push('<circle cx="' + cx + '" cy="' + cy + '" r="' + (Rt + 18) + '" fill="#F8F1E8"/>');
+
+    // Tapa
+    o.push('<circle cx="' + cx + '" cy="' + cy + '" r="' + Rt + '" fill="url(#aGTapa)"/>');
+
+    // La rebanada que falta: cuña hacia el centro
+    o.push('<path d="M' + cx + ' ' + cy + ' L' + pt(a1, Rt) + ' A' + Rt + ' ' + Rt + ' 0 0 1 ' + pt(a2, Rt) + ' Z" fill="#6B5A4A"/>');
+    // Los cantos del corte dejan ver pan y relleno
+    [[a1, 1], [a2, 0.75]].forEach(function (c) {
+      o.push('<path d="M' + cx + ' ' + cy + ' L' + pt(c[0], Rt) + '" stroke="' + pan.miga +
+             '" stroke-width="5" opacity="' + c[1] + '"/>');
+      o.push('<path d="M' + cx + ' ' + cy + ' L' + pt(c[0], Rt) + '" stroke="' + relleno +
+             '" stroke-width="1.8" opacity="' + c[1] + '"/>');
+    });
+
+    // Textura del betún vista desde arriba
+    if (tiene(betun, 'Peludito')) {
+      var pl = '';
+      for (var i = 0; i < 34; i++) {
+        var pa = (Math.PI * 2 / 34) * i;
+        pl += '<path d="M' + pt(pa, Rt * 0.42) + ' L' + pt(pa, Rt * 0.97) + '" stroke="' + aclarar(base, 0.42) +
+              '" stroke-width="3.4" opacity="0.45" stroke-linecap="round"/>';
+      }
+      o.push('<g>' + pl + '</g>');
+    }
+    if (tiene(betun, 'Dibujo')) {
+      var cuantos = tiene(betun, 'elaborado') ? 9 : 5;
+      var trazo = oscurecer(base, 0.42);
+      var dib = '';
+      for (var d2 = 0; d2 < cuantos; d2++) {
+        var da = (Math.PI * 2 / cuantos) * d2 + 0.4;
+        var dp = pt(da, Rt * 0.64);
+        dib += '<g transform="translate(' + dp[0] + ',' + dp[1] + ')" opacity="0.6">';
+        for (var pe = 0; pe < 5; pe++) {
+          var ppa = (Math.PI * 2 / 5) * pe;
+          dib += '<ellipse cx="' + (Math.cos(ppa) * 4.4).toFixed(1) + '" cy="' + (Math.sin(ppa) * 4.4).toFixed(1) +
+                 '" rx="3.6" ry="2.2" fill="' + trazo + '" transform="rotate(' + (ppa * 180 / Math.PI) + ' ' +
+                 (Math.cos(ppa) * 4.4).toFixed(1) + ' ' + (Math.sin(ppa) * 4.4).toFixed(1) + ')"/>';
+        }
+        dib += '<circle r="2.1" fill="' + aclarar(trazo, 0.4) + '"/></g>';
+      }
+      o.push(dib);
+    }
+
+    // Brillos
+    if (tiene(extras, 'Pintado completo')) o.push('<circle cx="' + cx + '" cy="' + cy + '" r="' + Rt + '" fill="#C9A227" opacity="0.28"/>');
+    if (tiene(extras, 'Hoja de oro')) {
+      var hj = '';
+      for (var g3 = 0; g3 < 7; g3++) {
+        var ga = (Math.PI * 2 / 7) * g3 + 0.9, gp = pt(ga, Rt * (0.42 + (g3 % 3) * 0.18)), gs = 5 + (g3 % 3);
+        hj += '<path d="M0 ' + (-gs) + ' L' + (gs * 0.8) + ' ' + (-gs * 0.2) + ' L' + (gs * 0.4) + ' ' + gs +
+              ' L' + (-gs * 0.6) + ' ' + (gs * 0.7) + ' L' + (-gs * 0.9) + ' ' + (-gs * 0.3) + ' Z" ' +
+              'transform="translate(' + gp[0] + ',' + gp[1] + ') rotate(' + (g3 * 47) + ')" fill="#C9A227" opacity="0.88"/>';
+      }
+      o.push(hj);
+    }
+    if (tiene(extras, 'Glitter') || tiene(extras, 'Salpicado')) {
+      var col3 = tiene(extras, 'Salpicado') ? '#C9A227' : '#F2E3EC';
+      var gl = '';
+      for (var q4 = 0; q4 < 46; q4++) {
+        var qa2 = (q4 * 2.39996), qr = Rt * Math.sqrt((q4 + 1) / 48) * 0.95;
+        var qp = pt(qa2, qr);
+        gl += '<circle cx="' + qp[0] + '" cy="' + qp[1] + '" r="' + (0.8 + (q4 % 3) * 0.4) + '" fill="' + col3 + '" opacity="0.8"/>';
+      }
+      o.push('<g>' + gl + '</g>');
+    }
+    if (tiene(extras, 'Sprinkles')) {
+      var cols = ['#E4756B', '#E8B04B', '#7FA3C9', '#8FB37C', '#D98CB0'];
+      var spr = '';
+      for (var p3 = 0; p3 < 26; p3++) {
+        var sa = (p3 * 2.39996), sr = Rt * Math.sqrt((p3 + 1) / 28) * 0.92;
+        var sp = pt(sa, sr);
+        spr += '<rect x="' + sp[0] + '" y="' + sp[1] + '" width="6" height="2.2" rx="1.1" fill="' + cols[p3 % cols.length] +
+               '" transform="rotate(' + ((p3 * 53) % 180) + ' ' + sp[0] + ' ' + sp[1] + ')"/>';
+      }
+      o.push(spr);
+    }
+
+    // Impresión en oblea: la lámina impresa va acostada sobre la tapa
+    if (tiene(extras, 'Impresión')) {
+      var lw = Rt * 1.08, lh = Rt * 0.78;
+      o.push('<g>' +
+        '<rect x="' + (cx - lw / 2) + '" y="' + (cy - lh / 2) + '" width="' + lw + '" height="' + lh +
+        '" rx="7" fill="#FBF5EA" stroke="#E3D5BF" stroke-width="1.4"/>' +
+        '<rect x="' + (cx - lw / 2 + 6) + '" y="' + (cy - lh / 2 + 6) + '" width="' + (lw - 12) + '" height="' + (lh - 12) +
+        '" rx="4" fill="#E8DFD0"/>' +
+        '<circle cx="' + (cx - lw * 0.18) + '" cy="' + (cy - lh * 0.12) + '" r="' + (lh * 0.17) + '" fill="#CBBDA6"/>' +
+        '<path d="M' + (cx - lw / 2 + 8) + ' ' + (cy + lh / 2 - 9) + ' l' + (lw * 0.26) + ' ' + (-lh * 0.3) +
+        ' l' + (lw * 0.2) + ' ' + (lh * 0.17) + ' l' + (lw * 0.22) + ' ' + (-lh * 0.24) +
+        ' l' + (lw * 0.14) + ' ' + (lh * 0.37) + ' Z" fill="#CBBDA6"/></g>');
+    }
+
+    // Letras de chocolate: el texto real del cliente
+    if (tiene(extras, 'Letras Chocolate')) {
+      var txt = textoDelPastel() || 'Tu texto';
+      if (txt.length > 18) txt = txt.slice(0, 18) + '…';
+      var tam = Math.max(13, Math.min(27, Rt * 2 / Math.max(5, txt.length) * 1.5));
+      o.push('<text x="' + cx + '" y="' + (cy + tam * 0.34) + '" text-anchor="middle" ' +
+             'font-family="Playfair Display, serif" font-weight="600" font-size="' + tam.toFixed(1) + '" ' +
+             'fill="#4A2F23">' + escapeHtml(txt) + '</text>');
+      o.push('<text x="' + cx + '" y="' + (cy + tam * 0.34 + 1.2) + '" text-anchor="middle" ' +
+             'font-family="Playfair Display, serif" font-weight="600" font-size="' + tam.toFixed(1) + '" ' +
+             'fill="#2B1A12" opacity="0.28">' + escapeHtml(txt) + '</text>');
+    }
+
+    // Joyas de plástico: desde arriba se ven pegadas al borde
+    if (tiene(toppers, 'Joyas')) {
+      var joyas = ['#D63A5A', '#3E7BC4', '#2FA05E', '#E8B32C', '#9B5BC4', '#E86FA8', '#39BFC4'];
+      var jy = '';
+      for (var ji = 0; ji < 20; ji++) {
+        var ja = (Math.PI * 2 / 20) * ji;
+        if (ja > a1 && ja < a2) continue;
+        var jp = pt(ja, Rt * 0.88);
+        jy += '<g transform="translate(' + jp[0] + ',' + jp[1] + ')">' +
+              '<circle r="4.2" fill="' + joyas[(ji * 3) % joyas.length] + '"/>' +
+              '<circle cx="-1.3" cy="-1.5" r="1.4" fill="#fff" opacity="0.7"/></g>';
+      }
+      o.push('<g>' + jy + '</g>');
+    }
+
+    // Fruta
+    if (tiene(extras, 'Cerezas')) {
+      o.push('<g><circle cx="' + (cx - Rt * 0.3) + '" cy="' + (cy - Rt * 0.42) + '" r="6.6" fill="#C3283C"/>' +
+        '<circle cx="' + (cx - Rt * 0.33) + '" cy="' + (cy - Rt * 0.46) + '" r="2" fill="#fff" opacity="0.4"/>' +
+        '<circle cx="' + (cx - Rt * 0.09) + '" cy="' + (cy - Rt * 0.52) + '" r="5.6" fill="#A81F31"/></g>');
+    }
+    if (tiene(extras, 'Berries')) {
+      var bs = '';
+      [[-0.46, -0.2], [-0.3, -0.36], [-0.14, -0.22], [-0.36, -0.05]].forEach(function (b3, bi) {
+        bs += '<circle cx="' + (cx + Rt * b3[0]) + '" cy="' + (cy + Rt * b3[1]) + '" r="' + (5.4 - bi * 0.3) +
+              '" fill="' + ['#B3324F', '#55304B', '#C13A54', '#45263E'][bi] + '"/>';
+      });
+      o.push('<g>' + bs + '</g>');
+    }
+
+    // Flores
+    if (flor && flor.value !== 'Sin flor') {
+      var v = flor.value, fl = '';
+      var punto = function (fa, fr) { return pt(fa, Rt * fr); };
+      if (v.indexOf('Tulipanes') > -1) {
+        [[2.5, 0.52], [2.9, 0.34], [3.3, 0.55]].forEach(function (c4, i4) {
+          var cp = punto(c4[0], c4[1]);
+          fl += '<g transform="translate(' + cp[0] + ',' + cp[1] + ') rotate(' + (i4 * 40 - 40) + ')">' +
+                florTulipan(['#E0607E', '#C94B6B', '#F2A7B8'][i4], '#FBD3DC', 10) + '</g>';
+        });
+      } else if (v.indexOf('Anturios') > -1) {
+        [[2.5, 0.5], [3.0, 0.32], [3.5, 0.52]].forEach(function (c4, i4) {
+          var cp = punto(c4[0], c4[1]);
+          fl += '<g transform="translate(' + cp[0] + ',' + cp[1] + ') rotate(' + (i4 * 44 - 44) + ')">' +
+                florAnturio('#C3283C', 13 - i4) + '</g>';
+        });
+      } else if (v.indexOf('Mucha') > -1) {
+        var cp1 = punto(2.4, 0.5), cp2 = punto(2.85, 0.3), cp3 = punto(3.3, 0.5), cp4 = punto(3.7, 0.3);
+        fl += '<g transform="translate(' + cp1[0] + ',' + cp1[1] + ')">' + florRosa('#E07A94', '#C45A74', 11) + '</g>';
+        fl += '<g transform="translate(' + cp2[0] + ',' + cp2[1] + ')">' + florGerbera('#E8549A', 10) + '</g>';
+        fl += '<g transform="translate(' + cp3[0] + ',' + cp3[1] + ')">' + florMargarita(9) + '</g>';
+        fl += '<g transform="translate(' + cp4[0] + ',' + cp4[1] + ')">' + florRosa('#F2C14E', '#D9A42F', 8) + '</g>';
+      } else {
+        var cq1 = punto(2.6, 0.48), cq2 = punto(3.1, 0.32);
+        fl += '<g transform="translate(' + cq1[0] + ',' + cq1[1] + ')">' + florRosa('#E07A94', '#C45A74', 11) + '</g>';
+        fl += '<g transform="translate(' + cq2[0] + ',' + cq2[1] + ')">' + florMargarita(9) + '</g>';
+      }
+      o.push('<g>' + fl + '</g>');
+    }
+
+    // Velas: desde arriba son círculos con su llama
+    if (vela && vela.value !== 'Sin vela') {
+      var bengala = vela.value.indexOf('engala') > -1;
+      var cuantas = vela.value.indexOf('úmero') > -1 ? 2 : 3;
+      var vel = '';
+      for (var c2 = 0; c2 < cuantas; c2++) {
+        var vp = pt(5.3 + c2 * 0.3, Rt * 0.42);
+        vel += '<circle cx="' + vp[0] + '" cy="' + vp[1] + '" r="4" fill="#FBF3E6" stroke="' + oscurecer(base, 0.2) + '" stroke-width="0.8"/>';
+        if (bengala) {
+          for (var ch = 0; ch < 8; ch++) {
+            var ca = (Math.PI * 2 / 8) * ch;
+            vel += '<line x1="' + vp[0] + '" y1="' + vp[1] + '" x2="' + (+vp[0] + Math.cos(ca) * 10).toFixed(1) +
+                   '" y2="' + (+vp[1] + Math.sin(ca) * 10).toFixed(1) + '" stroke="#E8B04B" stroke-width="1.3" stroke-linecap="round" opacity="0.9"/>';
+          }
+        } else {
+          vel += '<circle cx="' + vp[0] + '" cy="' + vp[1] + '" r="2.2" fill="#F2A93B"/>';
+        }
+      }
+      o.push('<g>' + vel + '</g>');
+    }
+
+    // Topper: desde arriba se ve el canto de la placa
+    if (toppers.filter(function (t2) { return t2.indexOf('Joyas') === -1; }).length) {
+      var acr = tiene(toppers, 'Acrílico');
+      var tt = textoDelPastel() || (tiene(toppers, 'Cruz') ? '✝' : 'Tu texto');
+      if (tt.length > 14) tt = tt.slice(0, 14) + '…';
+      var tinta = acr ? '#A98247' : '#7A5C42';
+      o.push('<g transform="translate(' + cx + ',' + (cy - Rt * 0.1) + ') rotate(-7)">' +
+        '<rect x="-44" y="-11" width="88" height="22" rx="11" fill="#FBF5EA" opacity="0.88" stroke="' + tinta + '" stroke-width="1"/>' +
+        '<text y="6" text-anchor="middle" font-family="Great Vibes, cursive" font-size="19" fill="' + tinta + '">' + escapeHtml(tt) + '</text></g>');
+    }
+
+    // Borde piped, al final para que quede encima del canto
+    if (tiene(betun, 'Orillas')) o.push(aroDeConchas(cx, cy, Rt, pipe, sombraPipe, a1, a2, 0.030));
+    if (tiene(betun, 'Vintage')) o.push(aroVintage(cx, cy, Rt, pipe, sombraPipe, a1, a2));
+    if (tiene(betun, 'Dripp')) {
+      var dr = '';
+      var n5 = Math.max(10, Math.round(Rt / 7));
+      for (var i5 = 0; i5 < n5; i5++) {
+        var da2 = (Math.PI * 2 / n5) * i5;
+        if (da2 > a1 && da2 < a2) continue;
+        var largo = 7 + ((i5 * 7) % 3) * 6;
+        var dp2 = pt(da2, Rt - largo);
+        dr += '<circle cx="' + dp2[0] + '" cy="' + dp2[1] + '" r="' + (Rt * 0.075).toFixed(1) + '" fill="' + crema + '"/>';
+      }
+      o.push('<circle cx="' + cx + '" cy="' + cy + '" r="' + (Rt - 3) + '" fill="none" stroke="' + crema + '" stroke-width="7"/>');
+      o.push('<g>' + dr + '</g>');
+    }
+
+    // Macarons: afuera, sobre el plato
+    var macs = getMacaronQty();
+    if (macs > 0) {
+      var mc = ['#F2C9D4', '#F6DDA8', '#C9DCC2', '#E8C3A8', '#D9C2E0', '#F2B8A8'];
+      var mm = '';
+      for (var m4 = 0; m4 < macs; m4++) {
+        var ma = 0.72 + (m4 * 0.30);
+        var mp = pt(ma, Rt + 11);
+        mm += '<g transform="translate(' + mp[0] + ',' + mp[1] + ')">' +
+              '<circle r="8" fill="' + mc[m4 % mc.length] + '"/>' +
+              '<circle r="5" fill="#FBF3E6" opacity="0.5"/></g>';
+      }
+      o.push('<g>' + mm + '</g>');
+    }
+
+    lienzo.innerHTML =
+      '<svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + o.join('') + '</svg>';
+    pintarResumen(size, betun, cremosoSel, flor);
+  }
+
+  /* ── Aros piped para la vista de arriba ── */
+  function aroDeConchas(cx, cy, Rt, color, sombra, a1, a2, fr) {
+    var n = Math.max(16, Math.round(Rt / 6));
+    var s = '';
+    for (var i = 0; i < n; i++) {
+      var a = (Math.PI * 2 / n) * i;
+      if (a > a1 && a < a2) continue;
+      var px = cx + Math.cos(a) * Rt, py = cy + Math.sin(a) * Rt;
+      var r = Rt * fr;
+      s += '<g transform="translate(' + px.toFixed(1) + ',' + py.toFixed(1) + ') rotate(' + (a * 180 / Math.PI) + ')">' +
+           '<path d="M' + (-r) + ' 0 Q' + (-r * 0.5) + ' ' + (-r * 1.25) + ' 0 ' + (-r * 0.35) +
+           ' Q' + (r * 0.5) + ' ' + (-r * 1.25) + ' ' + r + ' 0' +
+           ' Q' + (r * 0.5) + ' ' + (r * 1.1) + ' 0 ' + (r * 0.9) +
+           ' Q' + (-r * 0.5) + ' ' + (r * 1.1) + ' ' + (-r) + ' 0 Z" fill="' + color +
+           '" stroke="' + sombra + '" stroke-width="0.6" stroke-opacity="0.55"/></g>';
+    }
+    return '<g>' + s + '</g>';
+  }
+
+  function aroVintage(cx, cy, Rt, color, sombra, a1, a2) {
+    var n = Math.max(10, Math.round(Rt / 11));
+    var s = '';
+    for (var i = 0; i < n; i++) {
+      var a = (Math.PI * 2 / n) * i;
+      if (a > a1 && a < a2) continue;
+      var px = cx + Math.cos(a) * Rt, py = cy + Math.sin(a) * Rt;
+      var r = Rt * 0.082;
+      s += '<g transform="translate(' + px.toFixed(1) + ',' + py.toFixed(1) + ')">' +
+           '<circle r="' + r.toFixed(1) + '" fill="' + color + '" stroke="' + sombra + '" stroke-width="0.6" stroke-opacity="0.5"/>' +
+           '<path d="M0 ' + (-r * 0.6) + ' A' + (r * 0.6) + ' ' + (r * 0.6) + ' 0 1 1 ' + (-r * 0.52) + ' ' + (r * 0.3) +
+           ' A' + (r * 0.32) + ' ' + (r * 0.32) + ' 0 1 0 ' + (r * 0.2) + ' ' + (-r * 0.12) +
+           '" stroke="' + sombra + '" stroke-width="1" fill="none" opacity="0.6"/></g>';
+    }
+    return '<g>' + s + '</g>';
+  }
 
   /* ── El ticket desglosado ──────────────────────────────── */
 
@@ -1935,7 +2316,8 @@
   /* ── Un solo punto de actualización ────────────────────── */
 
   function sincronizarMostrador() {
-    dibujarPastel();
+    if (vistaActual === 'arriba') dibujarPastelArriba();
+    else dibujarPastel();
     dibujarTicket();
   }
 
@@ -1955,6 +2337,7 @@
     setYear();
     updateTopperDetail();
     pintarColores();
+    bindVista();
     bindDeshacer();
     bindConfirmaciones();
     sincronizarMostrador();

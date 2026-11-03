@@ -37,7 +37,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="style.css?v=32" />
+  <link rel="stylesheet" href="style.css?v=40" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
@@ -365,6 +365,12 @@
             <h3 class="step-title">Extras y decoración</h3>
             <p class="step-hint">Personaliza cada detalle. Puedes combinar todos los que quieras.</p>
 
+            <div class="topper-detail" id="topperDetail">
+              <label id="topperDetailLabel" for="topperDetailInput">Texto del pastel</label>
+              <input type="text" id="topperDetailInput" name="topperDetail" maxlength="60" placeholder="Ej. Sofía · 15" autocomplete="off" />
+              <p class="topper-hint" id="topperDetailHint">Escribe el nombre, número o dedicatoria tal como lo quieres.</p>
+            </div>
+
             <details class="extras-group" open>
               <summary>Toppers <small>(puedes elegir varios)</small></summary>
               <div class="chip-grid">
@@ -376,11 +382,6 @@
                 <label class="chip"><input type="checkbox" name="topper" value="Topper Acrílico Número" data-price="70" /><span>Acrílico · Número <small>(+$70)</small></span></label>
                 <label class="chip"><input type="checkbox" name="topper" value="Topper Cartoncillo" data-price="200" /><span>Cartoncillo <small>(+$200)</small></span></label>
                 <label class="chip"><input type="checkbox" name="topper" value="Joyas de plástico" data-price="70" /><span>Joyas de plástico <small>(desde +$70)</small></span></label>
-              </div>
-              <div class="topper-detail" id="topperDetail" style="display:none">
-                <label id="topperDetailLabel" for="topperDetailInput">Texto para tus toppers</label>
-                <input type="text" id="topperDetailInput" name="topperDetail" maxlength="60" placeholder="Ej. Sofía · 15" autocomplete="off" />
-                <p class="topper-hint" id="topperDetailHint">Escribe el nombre, número o dedicatoria tal como lo quieres.</p>
               </div>
             </details>
 
@@ -528,6 +529,10 @@
       <aside class="mostrador" aria-label="Tu pastel y tu cuenta">
 
         <figure class="pastel-escena">
+          <div class="vista-switch" role="group" aria-label="Cómo ver el pastel">
+            <button type="button" class="vista-btn activo" data-vista="lado" aria-pressed="true">De lado</button>
+            <button type="button" class="vista-btn" data-vista="arriba" aria-pressed="false">Desde arriba</button>
+          </div>
           <div class="pastel-lienzo" id="pastelLienzo" role="img" aria-labelledby="pastelResumen">
             <!-- SVG generado en script.js -->
           </div>
@@ -1210,7 +1215,7 @@
     </a>
   </div>
 
-  <script src="script.js?v=38" defer></script>
+  <script src="script.js?v=40" defer></script>
 
 
   <!-- Modal resumen cotización -->
