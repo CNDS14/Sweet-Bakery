@@ -1185,6 +1185,91 @@
     return lista.some(function (v) { return v.indexOf(texto) > -1; });
   }
 
+  /* ── Colores del pan y de los rellenos, para el corte ── */
+  var PANES = {
+    'Vainilla':  { miga: '#F2DDAE', veta: '#E3C98C' },
+    'Chocolate': { miga: '#6B4A3A', veta: '#573A2D' },
+    'Zanahoria': { miga: '#D7A057', veta: '#C08842' }
+  };
+  var RELLENOS = {
+    'Mermelada de frutos rojos': '#B32A47',
+    'Nutella':                   '#4A2F23',
+    'Queso crema':               '#FBF4E8',
+    'Dulce de leche':            '#C98B3F'
+  };
+  var CRUJIENTES = {
+    'Nuez':                  '#8A6240',
+    'Chispas de chocolate':  '#3B2A22',
+    'Oreo':                  '#2B2522'
+  };
+
+  /* ── Flores, cada una con su forma real ── */
+
+  function florRosa(c1, c2, r) {
+    var s = '<circle r="' + r + '" fill="' + c1 + '"/>';
+    for (var i = 0; i < 3; i++) {
+      var rr = r * (0.76 - i * 0.22);
+      s += '<path d="M' + (-rr) + ' 0 A' + rr + ' ' + rr + ' 0 1 1 ' + rr + ' ' + (rr * 0.22) +
+           '" stroke="' + c2 + '" stroke-width="' + (r * 0.17) + '" fill="none" stroke-linecap="round" opacity="0.85"/>';
+    }
+    return s;
+  }
+  function florMargarita(r) {
+    var s = '';
+    for (var i = 0; i < 9; i++) {
+      var a = (Math.PI * 2 / 9) * i;
+      s += '<ellipse cx="' + (Math.cos(a) * r * 0.72).toFixed(1) + '" cy="' + (Math.sin(a) * r * 0.72).toFixed(1) +
+           '" rx="' + (r * 0.52).toFixed(1) + '" ry="' + (r * 0.24).toFixed(1) +
+           '" fill="#FFFDF8" transform="rotate(' + (a * 180 / Math.PI) + ' ' +
+           (Math.cos(a) * r * 0.72).toFixed(1) + ' ' + (Math.sin(a) * r * 0.72).toFixed(1) + ')"/>';
+    }
+    return s + '<circle r="' + (r * 0.36) + '" fill="#E8B23C"/>';
+  }
+  function florGerbera(c1, r) {
+    var s = '';
+    for (var i = 0; i < 14; i++) {
+      var a = (Math.PI * 2 / 14) * i;
+      s += '<ellipse cx="' + (Math.cos(a) * r * 0.70).toFixed(1) + '" cy="' + (Math.sin(a) * r * 0.70).toFixed(1) +
+           '" rx="' + (r * 0.50).toFixed(1) + '" ry="' + (r * 0.17).toFixed(1) +
+           '" fill="' + c1 + '" transform="rotate(' + (a * 180 / Math.PI) + ' ' +
+           (Math.cos(a) * r * 0.70).toFixed(1) + ' ' + (Math.sin(a) * r * 0.70).toFixed(1) + ')"/>';
+    }
+    return s + '<circle r="' + (r * 0.34) + '" fill="#6B4A2A"/>' +
+           '<circle r="' + (r * 0.19) + '" fill="#2E2018"/>';
+  }
+  // Tulipán: copa cerrada de tres pétalos
+  function florTulipan(c1, c2, r) {
+    return '<path d="M' + (-r * 0.78) + ' ' + (-r * 0.25) +
+           ' Q' + (-r * 0.9) + ' ' + (r * 0.95) + ' 0 ' + (r * 1.12) +
+           ' Q' + (r * 0.9) + ' ' + (r * 0.95) + ' ' + (r * 0.78) + ' ' + (-r * 0.25) +
+           ' Q' + (r * 0.42) + ' ' + (r * 0.2) + ' 0 ' + (-r * 0.1) +
+           ' Q' + (-r * 0.42) + ' ' + (r * 0.2) + ' ' + (-r * 0.78) + ' ' + (-r * 0.25) + ' Z" fill="' + c1 + '"/>' +
+           '<path d="M' + (-r * 0.40) + ' ' + (-r * 0.2) + ' Q' + (-r * 0.5) + ' ' + (r * 0.85) + ' 0 ' + (r * 1.05) +
+           ' Q' + (r * 0.5) + ' ' + (r * 0.85) + ' ' + (r * 0.40) + ' ' + (-r * 0.2) +
+           ' Q' + (r * 0.2) + ' ' + (r * 0.35) + ' 0 ' + (r * 0.3) +
+           ' Q' + (-r * 0.2) + ' ' + (r * 0.35) + ' ' + (-r * 0.40) + ' ' + (-r * 0.2) + ' Z" fill="' + c2 + '" opacity="0.75"/>';
+  }
+  // Anturio: espata plana en forma de corazón + espádice curvo
+  function florAnturio(c1, r) {
+    return '<path d="M0 ' + (r * 0.95) +
+           ' C' + (-r * 1.25) + ' ' + (r * 0.1) + ' ' + (-r * 0.95) + ' ' + (-r * 0.95) + ' 0 ' + (-r * 0.42) +
+           ' C' + (r * 0.95) + ' ' + (-r * 0.95) + ' ' + (r * 1.25) + ' ' + (r * 0.1) + ' 0 ' + (r * 0.95) +
+           ' Z" fill="' + c1 + '"/>' +
+           '<path d="M0 ' + (r * 0.55) + ' C' + (-r * 0.5) + ' ' + (r * 0.05) + ' ' + (-r * 0.3) + ' ' + (-r * 0.5) + ' 0 ' + (-r * 0.25) +
+           '" stroke="' + oscurecer(c1, 0.25) + '" stroke-width="1" fill="none" opacity="0.5"/>' +
+           '<path d="M0 ' + (-r * 0.25) + ' q' + (r * 0.42) + ' ' + (-r * 0.3) + ' ' + (r * 0.44) + ' ' + (-r * 0.72) +
+           '" stroke="#F2E2B8" stroke-width="' + (r * 0.24) + '" fill="none" stroke-linecap="round"/>';
+  }
+  function espiga(h2) {
+    var s = '<path d="M0 0 q3 ' + (-h2 * 0.5) + ' 1 ' + (-h2) + '" stroke="#C9AE83" stroke-width="1.4" fill="none"/>';
+    for (var i = 0; i < 7; i++) {
+      var yy = -h2 * (0.32 + i * 0.1);
+      s += '<ellipse cx="' + (1.2 + (i % 2 ? 2.4 : -2.4)) + '" cy="' + yy.toFixed(1) +
+           '" rx="2.4" ry="1.5" fill="#D8C09B" transform="rotate(' + (i % 2 ? 28 : -28) + ' ' + (1.2 + (i % 2 ? 2.4 : -2.4)) + ' ' + yy.toFixed(1) + ')"/>';
+    }
+    return s;
+  }
+
   function dibujarPastel() {
     var lienzo = $('#pastelLienzo');
     if (!lienzo) return;
@@ -1196,263 +1281,443 @@
     var toppers = elegidos('topper');
     var flor = $('input[name="flor"]:checked');
     var vela = $('input[name="vela"]:checked');
+    var panSel = $('#panSelect');
+    var cremosoSel = $('input[name="cremoso"]:checked');
+    var crujientes = elegidos('crujiente');
 
     var base = colorElegido.hex;
     var luz = aclarar(base, 0.26);
     var oscuro = oscurecer(base, 0.20);
-    var tapa = aclarar(base, 0.34);
     var crema = aclarar(base, 0.62);
+    var pipe = aclarar(base, 0.52);           // color del betún piped
+    var pipeSombra = oscurecer(base, 0.10);
 
-    var cx = 160, suelo = 250;
+    var cx = 160, suelo = 248;
     var w = forma.w, h = forma.h;
     var x = cx - w / 2;
     var techo = suelo - h;
     var rx = w / 2, ry = Math.max(10, w * 0.095);
 
     var cupula = tiene(betun, 'Cúpula');
-    // Borde frontal de la tapa: por donde cuelga el dripp y se posan las perlas
-    var frente = techo + ry;
-    // Altura real de la superficie donde van flores, velas y topper
     var mesa = cupula ? techo - h * 0.22 : techo;
+
+    // Muesca de la rebanada que falta, al frente-derecho. De un corte radial
+    // solo la cara de a1 queda viendo al frente; la de a2 se va casi de canto,
+    // así que esa va en sombra. Dibujar las dos iguales hacía que pareciera
+    // un panel pegado, y centrarla al frente la hacía parecer una puerta.
+    var a1 = 0.10 * Math.PI, a2 = 0.46 * Math.PI;
+    var P = function (a, cy) { return [cx + rx * Math.cos(a), cy + ry * Math.sin(a)]; };
+    var R = P(a1, techo), L = P(a2, techo);
+    var Rb = P(a1, suelo), Lb = P(a2, suelo);
+    var A = [cx, techo], Ab = [cx, suelo];
+    var enMuesca = function (a) { return a > a1 - 0.03 && a < a2 + 0.03; };
+
+    var pan = PANES[panSel ? panSel.value : 'Vainilla'] || PANES['Vainilla'];
+    var relleno = RELLENOS[cremosoSel ? cremosoSel.value : ''] || '#F6E7CE';
 
     var o = [];
 
-    // ── Degradados: dan volumen sin cortes duros ──
+    // ── Degradados y recortes ──
     o.push('<defs>' +
       '<linearGradient id="pGCuerpo" x1="0" y1="0" x2="1" y2="0">' +
-        '<stop offset="0" stop-color="' + luz + '"/>' +
-        '<stop offset="0.38" stop-color="' + base + '"/>' +
-        '<stop offset="1" stop-color="' + oscuro + '"/>' +
-      '</linearGradient>' +
-      '<linearGradient id="pGTapa" x1="0" y1="0" x2="0.4" y2="1">' +
-        '<stop offset="0" stop-color="' + aclarar(base, 0.46) + '"/>' +
-        '<stop offset="1" stop-color="' + tapa + '"/>' +
-      '</linearGradient>' +
+        '<stop offset="0" stop-color="' + aclarar(base, 0.34) + '"/>' +
+        '<stop offset="0.34" stop-color="' + base + '"/>' +
+        '<stop offset="1" stop-color="' + oscuro + '"/></linearGradient>' +
+      '<linearGradient id="pGTapa" x1="0.1" y1="0" x2="0.6" y2="1">' +
+        '<stop offset="0" stop-color="' + aclarar(base, 0.48) + '"/>' +
+        '<stop offset="1" stop-color="' + aclarar(base, 0.30) + '"/></linearGradient>' +
+      '<clipPath id="pCaraD"><polygon points="' + A + ' ' + R + ' ' + Rb + ' ' + Ab + '"/></clipPath>' +
+      '<clipPath id="pCaraI"><polygon points="' + A + ' ' + L + ' ' + Lb + ' ' + Ab + '"/></clipPath>' +
     '</defs>');
 
     // ── Plato ──
-    o.push('<ellipse cx="' + cx + '" cy="' + (suelo + 10) + '" rx="' + (rx + 32) + '" ry="' + (ry * 0.72) + '" fill="#E7DACB"/>');
-    o.push('<ellipse cx="' + cx + '" cy="' + (suelo + 7) + '" rx="' + (rx + 26) + '" ry="' + (ry * 0.62) + '" fill="#F8F1E8"/>');
+    o.push('<ellipse cx="' + cx + '" cy="' + (suelo + 11) + '" rx="' + (rx + 33) + '" ry="' + (ry * 0.70) + '" fill="#E4D6C6"/>');
+    o.push('<ellipse cx="' + cx + '" cy="' + (suelo + 8) + '" rx="' + (rx + 27) + '" ry="' + (ry * 0.60) + '" fill="#F8F1E8"/>');
 
-    // ── Cuerpo ──
-    o.push('<path d="M' + x + ' ' + techo + ' L' + x + ' ' + suelo +
+    // ── Cuerpo, con una curvatura suave en los costados ──
+    o.push('<path d="M' + x + ' ' + techo +
+           ' C' + (x - w * 0.025) + ' ' + (techo + h * 0.45) + ' ' + (x - w * 0.015) + ' ' + (suelo - h * 0.2) + ' ' + x + ' ' + suelo +
            ' A' + rx + ' ' + ry + ' 0 0 0 ' + (x + w) + ' ' + suelo +
-           ' L' + (x + w) + ' ' + techo + ' Z" fill="url(#pGCuerpo)"/>');
+           ' C' + (x + w * 1.015) + ' ' + (suelo - h * 0.2) + ' ' + (x + w * 1.025) + ' ' + (techo + h * 0.45) + ' ' + (x + w) + ' ' + techo +
+           ' Z" fill="url(#pGCuerpo)"/>');
 
-    // ── Peludito: textura vertical sobre el cuerpo ──
+    // ── Peludito: plisado vertical sobre todo el cuerpo ──
     if (tiene(betun, 'Peludito')) {
       var t = '';
-      for (var k = 0; k * 7 < w - 6; k++) {
-        var px = x + 5 + k * 7;
-        t += '<path d="M' + px + ' ' + (techo + ry * 0.4) + ' q3.5 ' + (h * 0.34) + ' 0 ' + (h * 0.74) +
-             '" stroke="' + oscuro + '" stroke-width="2.4" fill="none" opacity="0.26" stroke-linecap="round"/>';
+      for (var k = 0; k * 6 < w - 4; k++) {
+        var px = x + 3 + k * 6;
+        t += '<path d="M' + px + ' ' + (techo + ry * 0.3) + ' q4 ' + (h * 0.35) + ' 1 ' + (h * 0.78) +
+             '" stroke="' + aclarar(base, 0.42) + '" stroke-width="4" fill="none" opacity="0.5" stroke-linecap="round"/>' +
+             '<path d="M' + (px + 2.4) + ' ' + (techo + ry * 0.3) + ' q4 ' + (h * 0.35) + ' 1 ' + (h * 0.78) +
+             '" stroke="' + pipeSombra + '" stroke-width="1.4" fill="none" opacity="0.3" stroke-linecap="round"/>';
       }
       o.push(t);
     }
 
-    // ── Dibujo pintado a mano, sobre el cuerpo ──
+    // ── Dibujo pintado a mano: trazo suelto, translúcido ──
     if (tiene(betun, 'Dibujo')) {
-      var cuantos = tiene(betun, 'elaborado') ? 7 : 4;
-      var trazo = oscurecer(base, 0.40);
+      var cuantos = tiene(betun, 'elaborado') ? 8 : 4;
+      var trazo = oscurecer(base, 0.42);
       var dib = '';
       for (var f = 0; f < cuantos; f++) {
-        var fx = x + w * (0.16 + 0.68 * (f / Math.max(1, cuantos - 1)));
-        var fy = techo + ry + h * (f % 2 === 0 ? 0.34 : 0.58);
-        dib += '<g transform="translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ')" opacity="0.66">' +
-               '<circle r="3" fill="' + trazo + '"/>' +
-               '<circle cx="-5.2" cy="-2.5" r="2.5" fill="' + trazo + '" opacity="0.7"/>' +
-               '<circle cx="5.2" cy="-2.5" r="2.5" fill="' + trazo + '" opacity="0.7"/>' +
-               '<circle cx="0" cy="5.4" r="2.5" fill="' + trazo + '" opacity="0.7"/></g>';
+        var fx = x + w * (0.12 + 0.52 * (f / Math.max(1, cuantos - 1)));
+        var fy = techo + ry + h * (f % 2 === 0 ? 0.30 : 0.56);
+        dib += '<g transform="translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') rotate(' + ((f * 37) % 50 - 25) + ')" opacity="0.6">';
+        for (var pe = 0; pe < 5; pe++) {
+          var pa = (Math.PI * 2 / 5) * pe;
+          dib += '<ellipse cx="' + (Math.cos(pa) * 4.2).toFixed(1) + '" cy="' + (Math.sin(pa) * 4.2).toFixed(1) +
+                 '" rx="3.4" ry="2.1" fill="' + trazo + '" transform="rotate(' + (pa * 180 / Math.PI) + ' ' +
+                 (Math.cos(pa) * 4.2).toFixed(1) + ' ' + (Math.sin(pa) * 4.2).toFixed(1) + ')"/>';
+        }
+        dib += '<circle r="2" fill="' + aclarar(trazo, 0.4) + '"/></g>';
+        if (tiene(betun, 'elaborado')) {
+          dib += '<path d="M' + (fx - 10) + ' ' + (fy + 12) + ' q10 7 20 0" stroke="' + trazo +
+                 '" stroke-width="1.2" fill="none" opacity="0.4"/>';
+        }
       }
       o.push(dib);
     }
 
-    // ── Brillos y sprinkles sobre el cuerpo ──
-    var brillo = null;
-    if (tiene(extras, 'Hoja de oro') || tiene(extras, 'Salpicado') || tiene(extras, 'Pintado completo')) brillo = '#C9A227';
-    else if (tiene(extras, 'Glitter')) brillo = '#E7CBDB';
-    if (brillo) {
-      var sp = '';
-      for (var g2 = 0; g2 < 24; g2++) {
-        sp += '<circle cx="' + (x + 9 + ((g2 * 53) % Math.max(1, w - 18))) +
-              '" cy="' + (frente + 5 + ((g2 * 37) % Math.max(1, h - ry - 12))) +
-              '" r="' + (1 + (g2 % 3) * 0.55) + '" fill="' + brillo + '" opacity="0.7"/>';
+    // ── Brillos: cada uno con su textura propia ──
+    if (tiene(extras, 'Pintado completo')) {
+      o.push('<path d="M' + x + ' ' + techo + ' L' + x + ' ' + suelo + ' A' + rx + ' ' + ry + ' 0 0 0 ' + (x + w) + ' ' + suelo +
+             ' L' + (x + w) + ' ' + techo + ' Z" fill="#C9A227" opacity="0.30"/>');
+    }
+    if (tiene(extras, 'Hoja de oro')) {
+      // Hojuelas irregulares, no puntos
+      var hj = '';
+      [[0.18, 0.28, 7], [0.34, 0.55, 5], [0.12, 0.66, 4], [0.46, 0.2, 5], [0.28, 0.42, 3]].forEach(function (p3, i3) {
+        var gx = x + w * p3[0], gy = techo + ry + (h - ry) * p3[1], gs = p3[2];
+        hj += '<path d="M0 ' + (-gs) + ' L' + (gs * 0.8) + ' ' + (-gs * 0.2) + ' L' + (gs * 0.4) + ' ' + gs +
+              ' L' + (-gs * 0.6) + ' ' + (gs * 0.7) + ' L' + (-gs * 0.9) + ' ' + (-gs * 0.3) + ' Z" ' +
+              'transform="translate(' + gx.toFixed(1) + ',' + gy.toFixed(1) + ') rotate(' + (i3 * 53) + ')" ' +
+              'fill="#C9A227" opacity="0.88"/>';
+      });
+      o.push(hj);
+    }
+    if (tiene(extras, 'Salpicado')) {
+      var sal = '';
+      for (var s3 = 0; s3 < 26; s3++) {
+        var sx3 = x + 8 + ((s3 * 53) % Math.max(1, w * 0.62));
+        var sy3 = techo + ry + 6 + ((s3 * 37) % Math.max(1, h - ry - 12));
+        sal += '<ellipse cx="' + sx3 + '" cy="' + sy3 + '" rx="' + (0.9 + (s3 % 3) * 0.7) + '" ry="' + (0.7 + (s3 % 2) * 0.5) +
+               '" fill="#C9A227" opacity="0.8" transform="rotate(' + ((s3 * 29) % 90) + ' ' + sx3 + ' ' + sy3 + ')"/>';
       }
-      o.push(sp);
+      o.push(sal);
+    }
+    if (tiene(extras, 'Glitter')) {
+      var gl = '';
+      for (var q3 = 0; q3 < 40; q3++) {
+        var qx = x + 6 + ((q3 * 47) % Math.max(1, w * 0.64));
+        var qy = techo + ry + 4 + ((q3 * 31) % Math.max(1, h - ry - 10));
+        gl += '<circle cx="' + qx + '" cy="' + qy + '" r="0.8" fill="#F2E3EC" opacity="0.85"/>';
+      }
+      o.push('<g>' + gl + '</g>');
     }
     if (tiene(extras, 'Sprinkles')) {
       var cols = ['#E4756B', '#E8B04B', '#7FA3C9', '#8FB37C', '#D98CB0'];
       var spr = '';
-      for (var p2 = 0; p2 < 22; p2++) {
-        var sx = x + 11 + ((p2 * 61) % Math.max(1, w - 22));
-        var sy = frente + 7 + ((p2 * 43) % Math.max(1, h - ry - 14));
-        spr += '<rect x="' + sx + '" y="' + sy + '" width="5.4" height="2" rx="1" fill="' + cols[p2 % cols.length] +
-               '" opacity="0.88" transform="rotate(' + ((p2 * 47) % 180) + ' ' + sx + ' ' + sy + ')"/>';
+      for (var p2 = 0; p2 < 20; p2++) {
+        var sx = x + 9 + ((p2 * 61) % Math.max(1, w * 0.6));
+        var sy = techo + ry + 7 + ((p2 * 43) % Math.max(1, h - ry - 14));
+        spr += '<rect x="' + sx + '" y="' + sy + '" width="5.6" height="2.1" rx="1.05" fill="' + cols[p2 % cols.length] +
+               '" transform="rotate(' + ((p2 * 47) % 180) + ' ' + sx + ' ' + sy + ')"/>';
       }
       o.push(spr);
     }
+
+    // ── Joyas de plástico: bolitas de colores alrededor del pastel ──
+    if (tiene(toppers, 'Joyas')) {
+      var joyas = ['#D63A5A', '#3E7BC4', '#2FA05E', '#E8B32C', '#9B5BC4', '#E86FA8', '#39BFC4'];
+      var jy = '';
+      var filas = Math.max(2, Math.round(h / 34));
+      for (var fi = 0; fi < filas; fi++) {
+        var n3 = Math.round(w / 21);
+        for (var ji = 0; ji < n3; ji++) {
+          var ang = Math.PI + (Math.PI / (n3 - 1)) * ji;   // arco frontal visible
+          var jx = cx + Math.cos(ang) * rx * 0.97;
+          var jyy = techo + ry + (h - ry * 1.5) * ((fi + 0.55) / filas) + ((ji % 2) * 6);
+          var col = joyas[(ji * 3 + fi) % joyas.length];
+          var jr = 4.4 - fi * 0.3;
+          jy += '<g transform="translate(' + jx.toFixed(1) + ',' + jyy.toFixed(1) + ')">' +
+                '<circle r="' + jr.toFixed(1) + '" fill="' + col + '"/>' +
+                '<circle r="' + jr.toFixed(1) + '" fill="none" stroke="#fff" stroke-width="0.7" opacity="0.5"/>' +
+                '<circle cx="' + (-jr * 0.32).toFixed(1) + '" cy="' + (-jr * 0.36).toFixed(1) +
+                '" r="' + (jr * 0.34).toFixed(1) + '" fill="#fff" opacity="0.72"/></g>';
+        }
+      }
+      o.push('<g>' + jy + '</g>');
+    }
+
+    // ── La rebanada que falta ──
+    // Fondo de la muesca (se ve el plato al fondo)
+    o.push('<path d="M' + R + ' L' + Rb + ' A' + rx + ' ' + ry + ' 0 0 1 ' + Lb + ' L' + L + ' Z" fill="#6B5A4A"/>');
+    // Cara derecha, más clara (la luz entra por ahí)
+    o.push('<g clip-path="url(#pCaraD)">' + capasDelCorte(x, w, techo, suelo, h, pan, relleno, crujientes, 1) + '</g>');
+    // Cara lejana: casi de canto, así que se hunde en sombra. El salto de valor
+    // contra la cara iluminada es lo que da la profundidad del corte.
+    o.push('<g clip-path="url(#pCaraI)">' + capasDelCorte(x, w, techo, suelo, h, pan, relleno, crujientes, 0.42) + '</g>');
+    // Arista interior donde se juntan las dos caras
+    o.push('<line x1="' + A[0] + '" y1="' + A[1] + '" x2="' + Ab[0] + '" y2="' + Ab[1] +
+           '" stroke="' + oscurecer(pan.miga, 0.45) + '" stroke-width="1.4" opacity="0.55"/>');
+    // Sombra en lo hondo de la cavidad
+    o.push('<path d="M' + A + ' L' + R + ' L' + Rb + ' L' + Ab + ' L' + Lb + ' L' + L +
+           ' Z" fill="#2C2724" opacity="0.13"/>');
+    // Filos del corte: el betún se ve en el canto
+    o.push('<path d="M' + A + ' L' + R + '" stroke="' + aclarar(base, 0.5) + '" stroke-width="2"/>');
+    o.push('<path d="M' + A + ' L' + L + '" stroke="' + aclarar(base, 0.5) + '" stroke-width="2"/>');
 
     // ── Tapa ──
     if (cupula) {
       o.push('<path d="M' + x + ' ' + techo + ' Q' + cx + ' ' + (techo - h * 0.46) + ' ' + (x + w) + ' ' + techo +
              ' A' + rx + ' ' + ry + ' 0 0 1 ' + x + ' ' + techo + ' Z" fill="url(#pGTapa)"/>');
     } else {
-      o.push('<ellipse cx="' + cx + '" cy="' + techo + '" rx="' + rx + '" ry="' + ry + '" fill="url(#pGTapa)"/>');
+      // Elipse de la tapa menos la cuña: del borde R se recorre el arco largo
+      // (por detrás) hasta L, y de ahí al centro. Así la muesca queda abierta.
+      o.push('<path d="M' + A[0] + ' ' + A[1] +
+             ' L' + R[0].toFixed(1) + ' ' + R[1].toFixed(1) +
+             ' A' + rx + ' ' + ry + ' 0 1 0 ' + L[0].toFixed(1) + ' ' + L[1].toFixed(1) +
+             ' Z" fill="url(#pGTapa)"/>');
     }
 
-    // ── Dripp: cuelga del borde frontal y escurre hacia abajo ──
+    // ── Dripp: ganache que escurre, con brillo ──
     if (tiene(betun, 'Dripp')) {
-      var gotas = Math.max(5, Math.round(w / 24));
-      var d = 'M' + x + ' ' + techo;
-      // baja por el borde frontal izquierdo
-      d += ' L' + x + ' ' + (techo + 4);
+      // Una cinta gruesa pegada al borde, y de ahí cuelgan gotas con punta
+      // redonda. Antes salían en pico y parecían banderines.
+      var gotas = Math.max(6, Math.round(w / 20));
+      var dr = '<path d="M' + x + ' ' + techo +
+               ' A' + rx + ' ' + ry + ' 0 0 0 ' + (x + w) + ' ' + techo +
+               ' L' + (x + w) + ' ' + (techo + ry * 0.55) +
+               ' A' + rx + ' ' + (ry * 1.1) + ' 0 0 1 ' + x + ' ' + (techo + ry * 0.55) +
+               ' Z" fill="' + crema + '"/>';
       for (var i = 0; i < gotas; i++) {
-        var x1 = x + (w / gotas) * i;
-        var x2 = x + (w / gotas) * (i + 1);
-        var medio = (x1 + x2) / 2;
-        // cuánto escurre cada gota: alterna para que no quede parejo
-        var largo = ry + 10 + ((i % 3) * 13) + h * 0.06;
-        d += ' Q' + medio + ' ' + (techo + largo) + ' ' + x2 + ' ' + (techo + 4);
+        var gcx = x + (w / gotas) * (i + 0.5);
+        var ang = Math.acos(Math.max(-1, Math.min(1, (gcx - cx) / rx)));
+        if (enMuesca(ang)) continue;
+        var borde = techo + Math.sin(ang) * ry * 0.75;
+        var gw = (w / gotas) * 0.40;
+        var largo = 10 + ((i * 7) % 3) * 15 + h * 0.05;
+        dr += '<path d="M' + (gcx - gw) + ' ' + borde.toFixed(1) +
+              ' L' + (gcx - gw) + ' ' + (borde + largo).toFixed(1) +
+              ' a' + gw + ' ' + gw + ' 0 0 0 ' + (gw * 2) + ' 0' +
+              ' L' + (gcx + gw) + ' ' + borde.toFixed(1) + ' Z" fill="' + crema + '"/>';
+        dr += '<ellipse cx="' + (gcx - gw * 0.3).toFixed(1) + '" cy="' + (borde + largo * 0.55).toFixed(1) +
+              '" rx="' + (gw * 0.26).toFixed(1) + '" ry="' + (largo * 0.2).toFixed(1) +
+              '" fill="#fff" opacity="0.28"/>';
       }
-      d += ' L' + (x + w) + ' ' + techo +
-           ' A' + rx + ' ' + ry + ' 0 0 1 ' + x + ' ' + techo + ' Z';
-      o.push('<path d="' + d + '" fill="' + crema + '"/>');
+      o.push('<g>' + dr + '</g>');
     }
 
-    // ── Orillas: perlas sobre el arco FRONTAL de la tapa y de la base ──
+    // ── Orillas: conchas piped arriba y abajo ──
     if (tiene(betun, 'Orillas')) {
-      var perlas = '';
-      var n = Math.max(6, Math.round(w / 12));
-      var r1 = w * 0.032;
-      for (var j = 0; j <= n; j++) {
-        var tt = (Math.PI / n) * j;              // 0 → π recorre el frente
-        perlas += '<circle cx="' + (cx + Math.cos(tt) * rx).toFixed(1) +
-                  '" cy="' + (techo + Math.sin(tt) * ry).toFixed(1) +
-                  '" r="' + r1.toFixed(1) + '" fill="' + crema + '"/>';
-        perlas += '<circle cx="' + (cx + Math.cos(tt) * rx).toFixed(1) +
-                  '" cy="' + (suelo + Math.sin(tt) * ry * 0.9).toFixed(1) +
-                  '" r="' + r1.toFixed(1) + '" fill="' + aclarar(base, 0.5) + '"/>';
-      }
-      o.push(perlas);
+      var sombraPipe = oscurecer(base, 0.20);
+      o.push(conchas(cx, techo, rx, ry, w, pipe, sombraPipe, enMuesca, 1.1));
+      o.push(conchas(cx, suelo, rx, ry * 0.92, w, aclarar(base, 0.44), sombraPipe, function () { return false; }, 1.25));
     }
 
-    // ── Vintage: rosetones en el arco frontal de la tapa ──
+    // ── Vintage: volantes gruesos + puntos, como el pastel borgoña ──
     if (tiene(betun, 'Vintage')) {
-      var ros = '';
-      var m = Math.max(4, Math.round(w / 24));
+      var m = Math.max(5, Math.round(w / 17));
+      var vg = '';
       for (var q = 0; q <= m; q++) {
         var tq = (Math.PI / m) * q;
-        var rxp = cx + Math.cos(tq) * rx;
-        var ryp = techo + Math.sin(tq) * ry;
-        ros += '<g transform="translate(' + rxp.toFixed(1) + ',' + ryp.toFixed(1) + ')">' +
-               '<circle r="' + (w * 0.05).toFixed(1) + '" fill="' + crema + '"/>' +
-               '<circle r="' + (w * 0.026).toFixed(1) + '" fill="' + base + '" opacity="0.45"/></g>';
+        if (enMuesca(tq)) continue;
+        var vx2 = cx + Math.cos(tq) * rx, vy2 = techo + Math.sin(tq) * ry;
+        var rr2 = w * 0.055;
+        vg += '<g transform="translate(' + vx2.toFixed(1) + ',' + vy2.toFixed(1) + ')">' +
+              '<path d="M0 ' + (-rr2) + ' Q' + rr2 + ' ' + (-rr2 * 0.2) + ' 0 ' + rr2 +
+              ' Q' + (-rr2) + ' ' + (-rr2 * 0.2) + ' 0 ' + (-rr2) + ' Z" fill="' + pipe +
+              '" stroke="' + oscurecer(base, 0.2) + '" stroke-width="0.6" stroke-opacity="0.5"/>' +
+              '<path d="M0 ' + (-rr2 * 0.55) + ' Q' + (rr2 * 0.5) + ' 0 0 ' + (rr2 * 0.55) +
+              '" stroke="' + pipeSombra + '" stroke-width="0.9" fill="none" opacity="0.45"/></g>';
       }
-      o.push(ros);
+      // volante inferior
+      var m2 = Math.max(6, Math.round(w / 14));
+      for (var z = 0; z <= m2; z++) {
+        var tz = (Math.PI / m2) * z;
+        var zx = cx + Math.cos(tz) * rx, zy = suelo + Math.sin(tz) * ry * 0.9;
+        vg += '<path d="M' + (zx - w * 0.04) + ' ' + zy + ' Q' + zx + ' ' + (zy + w * 0.055) + ' ' + (zx + w * 0.04) + ' ' + zy +
+              '" fill="' + aclarar(base, 0.40) + '" stroke="' + pipeSombra + '" stroke-width="0.6" opacity="0.95"/>';
+      }
+      // puntos sueltos
+      for (var dd = 0; dd < 14; dd++) {
+        var dx2 = x + 12 + ((dd * 59) % Math.max(1, w * 0.58));
+        var dy2 = techo + ry + 10 + ((dd * 41) % Math.max(1, h * 0.5));
+        vg += '<circle cx="' + dx2 + '" cy="' + dy2 + '" r="1.9" fill="' + pipe + '" opacity="0.9"/>';
+      }
+      o.push('<g>' + vg + '</g>');
     }
 
-    // ── Fruta sobre la mesa del pastel ──
+    // ── Tiritas de oblea: volantes verticales translúcidos ──
+    if (tiene(extras, 'Tiritas de oblea')) {
+      var tir = '';
+      for (var tb = 0; tb < Math.round(w / 15); tb++) {
+        var tx2 = x + 6 + tb * 15;
+        if (tx2 > R[0] && tx2 < L[0]) continue;
+        tir += '<path d="M' + tx2 + ' ' + (techo + ry * 0.4) + ' q9 ' + (h * 0.3) + ' -2 ' + (h * 0.62) +
+               ' q-9 ' + (-h * 0.3) + ' 2 ' + (-h * 0.62) + ' Z" fill="#FBF3E4" opacity="0.72" stroke="#E8DCC6" stroke-width="0.7"/>';
+      }
+      o.push(tir);
+    }
+
+    // ── Isomalt: esquirlas de azúcar tipo vidrio ──
+    if (tiene(extras, 'Isomalt')) {
+      o.push('<g opacity="0.8">' +
+        '<path d="M' + (cx - 48) + ' ' + (mesa - 2) + ' L' + (cx - 40) + ' ' + (mesa - 40) + ' L' + (cx - 30) + ' ' + (mesa - 14) + ' Z" fill="#CFE6EE" opacity="0.75" stroke="#AFD2DE" stroke-width="0.8"/>' +
+        '<path d="M' + (cx - 24) + ' ' + (mesa - 2) + ' L' + (cx - 14) + ' ' + (mesa - 30) + ' L' + (cx - 6) + ' ' + (mesa - 8) + ' Z" fill="#E6F2F6" opacity="0.7" stroke="#AFD2DE" stroke-width="0.8"/></g>');
+    }
+
+    // ── Bolas de acrílico ──
+    if (tiene(extras, 'Bolas acrílico')) {
+      o.push('<g>' +
+        '<circle cx="' + (cx - 34) + '" cy="' + (mesa - 9) + '" r="9" fill="#EAF2F6" opacity="0.62" stroke="#CFE0E8" stroke-width="1"/>' +
+        '<circle cx="' + (cx - 37) + '" cy="' + (mesa - 12) + '" r="2.6" fill="#fff" opacity="0.85"/>' +
+        '<circle cx="' + (cx - 16) + '" cy="' + (mesa - 5) + '" r="6.4" fill="#EAF2F6" opacity="0.62" stroke="#CFE0E8" stroke-width="1"/></g>');
+    }
+
+    // ── Mariposas de cartón ──
+    if (tiene(extras, 'Mariposas')) {
+      [[-44, -30, 1], [-20, -44, 0.85], [8, -34, 0.7]].forEach(function (mp) {
+        o.push('<g transform="translate(' + (cx + mp[0]) + ',' + (mesa + mp[1]) + ') scale(' + mp[2] + ')">' +
+          '<path d="M0 0 C-11 -9 -13 2 0 5 C13 2 11 -9 0 0 Z" fill="#F2C9D4" stroke="#D9A2B2" stroke-width="0.7"/>' +
+          '<line x1="0" y1="2" x2="0" y2="' + (-mp[1] - 2) + '" stroke="#C9B9A6" stroke-width="0.6" opacity="0.7"/></g>');
+      });
+    }
+
+    // ── Letras de chocolate ──
+    if (tiene(extras, 'Letras Chocolate')) {
+      o.push('<text x="' + (cx - 10) + '" y="' + (mesa - 6) + '" text-anchor="middle" font-family="Playfair Display, serif" font-weight="600" font-size="17" fill="#4A2F23">abc</text>');
+    }
+
+    // ── Fruta ──
     if (tiene(extras, 'Cerezas')) {
-      o.push('<g><circle cx="' + (cx - 30) + '" cy="' + (mesa - 3) + '" r="6.2" fill="#C3283C"/>' +
-        '<circle cx="' + (cx - 30) + '" cy="' + (mesa - 5) + '" r="2" fill="#fff" opacity="0.3"/>' +
-        '<circle cx="' + (cx - 16) + '" cy="' + (mesa + 1) + '" r="5.2" fill="#A81F31"/>' +
-        '<path d="M' + (cx - 30) + ' ' + (mesa - 9) + ' q5 -8 13 -8" stroke="#6F8268" stroke-width="1.6" fill="none"/></g>');
+      o.push('<g><circle cx="' + (cx - 36) + '" cy="' + (mesa - 4) + '" r="6.4" fill="#C3283C"/>' +
+        '<circle cx="' + (cx - 38) + '" cy="' + (mesa - 7) + '" r="1.9" fill="#fff" opacity="0.4"/>' +
+        '<circle cx="' + (cx - 21) + '" cy="' + (mesa) + '" r="5.4" fill="#A81F31"/>' +
+        '<path d="M' + (cx - 36) + ' ' + (mesa - 10) + ' q6 -9 15 -8" stroke="#6F8268" stroke-width="1.7" fill="none"/></g>');
     }
     if (tiene(extras, 'Berries')) {
       var bs = '';
-      [[-34, 1, 5.2, '#B3324F'], [-19, -2, 4.4, '#55304B'], [-5, 0, 4.8, '#C13A54']].forEach(function (b2) {
+      [[-46, 1, 5.4, '#B3324F'], [-32, -3, 4.6, '#55304B'], [-18, 0, 5.0, '#C13A54'], [-6, -2, 4.2, '#45263E']].forEach(function (b2) {
         bs += '<circle cx="' + (cx + b2[0]) + '" cy="' + (mesa - 2 + b2[1]) + '" r="' + b2[2] + '" fill="' + b2[3] + '"/>';
       });
       o.push('<g>' + bs + '</g>');
     }
-    if (tiene(extras, 'Ferrero') || tiene(extras, 'Rafaello')) {
-      var dor = tiene(extras, 'Ferrero') ? '#B8893F' : '#F0E6D8';
-      o.push('<circle cx="' + (cx + 34) + '" cy="' + (mesa - 1) + '" r="6.2" fill="' + dor + '"/>' +
-             '<circle cx="' + (cx + 34) + '" cy="' + (mesa - 3) + '" r="2.2" fill="#fff" opacity="0.45"/>');
+    if (tiene(extras, 'Ferrero')) {
+      o.push('<g transform="translate(' + (cx - 48) + ',' + (mesa - 4) + ')">' +
+        '<circle r="6.6" fill="#B8893F"/><circle r="6.6" fill="url(#pGTapa)" opacity="0.15"/>' +
+        '<circle cx="-2" cy="-2.4" r="2.1" fill="#fff" opacity="0.5"/></g>');
+    }
+    if (tiene(extras, 'Rafaello')) {
+      o.push('<g transform="translate(' + (cx - 30) + ',' + (mesa - 2) + ')">' +
+        '<circle r="6.4" fill="#F4EDE2"/>' +
+        '<circle cx="-2.4" cy="-2" r="1" fill="#E0D4C0"/><circle cx="2.2" cy="1.6" r="1" fill="#E0D4C0"/>' +
+        '<circle cx="0" cy="-3" r="1" fill="#E0D4C0"/></g>');
     }
 
-    // ── Flor natural: ramo a la izquierda, para no pelear con las velas ──
+    // ── Flor natural: la variedad exacta ──
     if (flor && flor.value !== 'Sin flor') {
-      var v = flor.value, ramo;
-      if (v.indexOf('Tulipanes') > -1)      ramo = [['#E0607E', 5], ['#F2A7B8', 4.4], ['#C94B6B', 5]];
-      else if (v.indexOf('Anturios') > -1)  ramo = [['#C3283C', 5.4], ['#E06A58', 4.4]];
-      else if (v.indexOf('Mucha') > -1)     ramo = [['#E07A94', 5], ['#F2C14E', 4], ['#B7C4AB', 4.6], ['#D98CB0', 4], ['#E8A87C', 4.4]];
-      else                                  ramo = [['#E07A94', 6], ['#F2C14E', 5]];
-
-      var anchoRamo = (ramo.length - 1) * 16;
-      var inicio = cx - 26 - anchoRamo / 2;
+      var v = flor.value;
       var fl = '';
-      ramo.forEach(function (r2, idx) {
-        var fx2 = inicio + idx * 16;
-        var fy2 = mesa - 17 - (idx % 2) * 11;
-        fl += '<path d="M' + fx2 + ' ' + (mesa - 1) + ' Q' + (fx2 + 4) + ' ' + (fy2 + 8) + ' ' + fx2 + ' ' + fy2 +
-              '" stroke="#6F8268" stroke-width="2" fill="none" stroke-linecap="round"/>';
-        for (var pet = 0; pet < 5; pet++) {
-          var pa = (Math.PI * 2 / 5) * pet - Math.PI / 2;
-          fl += '<ellipse cx="' + (fx2 + Math.cos(pa) * r2[1] * 0.95).toFixed(1) +
-                '" cy="' + (fy2 + Math.sin(pa) * r2[1] * 0.95).toFixed(1) +
-                '" rx="' + (r2[1] * 0.82).toFixed(1) + '" ry="' + (r2[1] * 0.62).toFixed(1) +
-                '" fill="' + r2[0] + '" transform="rotate(' + (pet * 72) + ' ' +
-                (fx2 + Math.cos(pa) * r2[1] * 0.95).toFixed(1) + ' ' + (fy2 + Math.sin(pa) * r2[1] * 0.95).toFixed(1) + ')"/>';
-        }
-        fl += '<circle cx="' + fx2 + '" cy="' + fy2 + '" r="' + (r2[1] * 0.46).toFixed(1) + '" fill="#F4DFA8"/>';
-      });
+      // Con la muesca a la derecha, el ramo se ancla sobre la tapa que queda libre
+      var baseY = mesa + ry * 0.15;
+      var ponerTallo = function (fx2, fy2) {
+        return '<path d="M' + fx2 + ' ' + baseY + ' Q' + (fx2 + 4) + ' ' + ((baseY + fy2) / 2) + ' ' + fx2 + ' ' + fy2 +
+               '" stroke="#6F8268" stroke-width="2" fill="none" stroke-linecap="round"/>';
+      };
+
+      if (v.indexOf('Tulipanes') > -1) {
+        [[-52, -40, '#E0607E', '#F2A7B8'], [-34, -52, '#C94B6B', '#E0607E'], [-16, -36, '#F2A7B8', '#FBD3DC']].forEach(function (tp) {
+          var fx2 = cx + tp[0], fy2 = mesa + tp[1];
+          fl += ponerTallo(fx2, fy2 + 7);
+          fl += '<path d="M' + fx2 + ' ' + (fy2 + 10) + ' q-13 -4 -15 -17" stroke="#6F8268" stroke-width="2.4" fill="none" stroke-linecap="round" opacity="0.9"/>';
+          fl += '<g transform="translate(' + fx2 + ',' + fy2 + ')">' + florTulipan(tp[2], tp[3], 9) + '</g>';
+        });
+      } else if (v.indexOf('Anturios') > -1) {
+        [[-50, -34, 13], [-28, -48, 11], [-12, -30, 9]].forEach(function (an) {
+          var fx2 = cx + an[0], fy2 = mesa + an[1];
+          fl += ponerTallo(fx2, fy2 + 6);
+          fl += '<g transform="translate(' + fx2 + ',' + fy2 + ')">' + florAnturio('#C3283C', an[2]) + '</g>';
+        });
+        fl += '<g transform="translate(' + (cx - 60) + ',' + baseY + ')">' + espiga(44) + '</g>';
+      } else if (v.indexOf('Mucha') > -1) {
+        fl += ponerTallo(cx - 56, mesa - 32) + ponerTallo(cx - 40, mesa - 48) + ponerTallo(cx - 24, mesa - 30) + ponerTallo(cx - 10, mesa - 42);
+        fl += '<g transform="translate(' + (cx - 56) + ',' + (mesa - 36) + ')">' + florRosa('#E07A94', '#C45A74', 10) + '</g>';
+        fl += '<g transform="translate(' + (cx - 40) + ',' + (mesa - 52) + ')">' + florGerbera('#E8549A', 10) + '</g>';
+        fl += '<g transform="translate(' + (cx - 24) + ',' + (mesa - 34) + ')">' + florMargarita(9) + '</g>';
+        fl += '<g transform="translate(' + (cx - 10) + ',' + (mesa - 46) + ')">' + florRosa('#F2C14E', '#D9A42F', 8) + '</g>';
+        fl += '<g transform="translate(' + (cx - 68) + ',' + baseY + ')">' + espiga(38) + '</g>';
+      } else {
+        fl += ponerTallo(cx - 44, mesa - 32) + ponerTallo(cx - 26, mesa - 44);
+        fl += '<g transform="translate(' + (cx - 44) + ',' + (mesa - 36) + ')">' + florRosa('#E07A94', '#C45A74', 10) + '</g>';
+        fl += '<g transform="translate(' + (cx - 26) + ',' + (mesa - 48) + ')">' + florMargarita(9) + '</g>';
+      }
       o.push('<g>' + fl + '</g>');
     }
 
-    // ── Velas: a la derecha ──
+    // ── Velas ──
     if (vela && vela.value !== 'Sin vela') {
       var bengala = vela.value.indexOf('engala') > -1;
-      var cuantas = vela.value.indexOf('úmero') > -1 ? 2 : 3;
-      var centroVelas = cx + 30;
+      var numero = vela.value.indexOf('úmero') > -1;
+      var cuantas = numero ? 2 : 3;
+      var centroVelas = cx + 4;
       var vel = '';
       for (var c2 = 0; c2 < cuantas; c2++) {
         var vx = centroVelas - (cuantas - 1) * 15 / 2 + c2 * 15;
-        var alto = 30 + (c2 % 2) * 4;
+        var alto = 32 + (c2 % 2) * 5;
         var vTop = mesa - alto;
-        vel += '<rect x="' + (vx - 2.1) + '" y="' + vTop + '" width="4.2" height="' + alto + '" rx="2.1" fill="#FBF3E6" stroke="' + oscurecer(base, 0.18) + '" stroke-width="0.7"/>';
-        vel += '<rect x="' + (vx - 2.1) + '" y="' + (vTop + alto * 0.34) + '" width="4.2" height="3" fill="' + colorElegido.borde + '" opacity="0.5"/>';
+        if (numero) {
+          vel += '<text x="' + vx + '" y="' + (vTop + 13) + '" text-anchor="middle" font-family="Playfair Display, serif" font-weight="600" font-size="19" fill="#E8B04B">' + (c2 === 0 ? '1' : '5') + '</text>' +
+                 '<line x1="' + vx + '" y1="' + (vTop + 16) + '" x2="' + vx + '" y2="' + (mesa - 1) + '" stroke="#D9C2A8" stroke-width="1.4"/>';
+        } else {
+          vel += '<rect x="' + (vx - 2.2) + '" y="' + vTop + '" width="4.4" height="' + alto + '" rx="2.2" fill="#FBF3E6" stroke="' + oscurecer(base, 0.18) + '" stroke-width="0.7"/>';
+          vel += '<rect x="' + (vx - 2.2) + '" y="' + (vTop + alto * 0.3) + '" width="4.4" height="3.2" fill="' + colorElegido.borde + '" opacity="0.55"/>';
+        }
         if (bengala) {
-          for (var ch = 0; ch < 8; ch++) {
-            var ca = -Math.PI / 2 + (Math.PI / 7) * (ch - 3.5);
-            vel += '<line x1="' + vx + '" y1="' + (vTop - 1) + '" x2="' + (vx + Math.cos(ca) * 12).toFixed(1) +
-                   '" y2="' + (vTop - 1 + Math.sin(ca) * 12).toFixed(1) +
+          for (var ch = 0; ch < 9; ch++) {
+            var ca = -Math.PI / 2 + (Math.PI / 7) * (ch - 4);
+            vel += '<line x1="' + vx + '" y1="' + (vTop - 1) + '" x2="' + (vx + Math.cos(ca) * 13).toFixed(1) +
+                   '" y2="' + (vTop - 1 + Math.sin(ca) * 13).toFixed(1) +
                    '" stroke="#E8B04B" stroke-width="1.4" stroke-linecap="round" opacity="0.92"/>';
           }
-          vel += '<circle cx="' + vx + '" cy="' + (vTop - 1) + '" r="2.2" fill="#FBE3A2"/>';
-        } else {
-          vel += '<ellipse cx="' + vx + '" cy="' + (vTop - 5) + '" rx="2.7" ry="4.6" fill="#F2A93B"/>' +
-                 '<ellipse cx="' + vx + '" cy="' + (vTop - 4) + '" rx="1.2" ry="2.3" fill="#FBE3A2"/>';
+          vel += '<circle cx="' + vx + '" cy="' + (vTop - 1) + '" r="2.4" fill="#FBE3A2"/>';
+        } else if (!numero) {
+          vel += '<ellipse cx="' + vx + '" cy="' + (vTop - 5) + '" rx="2.8" ry="4.8" fill="#F2A93B"/>' +
+                 '<ellipse cx="' + vx + '" cy="' + (vTop - 4) + '" rx="1.2" ry="2.4" fill="#FBE3A2"/>';
         }
       }
       o.push('<g>' + vel + '</g>');
     }
 
-    // ── Topper al centro, por encima de todo ──
-    if (toppers.length) {
+    // ── Topper ──
+    if (toppers.filter(function (t2) { return t2.indexOf('Joyas') === -1; }).length) {
       var acrilico = tiene(toppers, 'Acrílico');
       var cart = tiene(toppers, 'Cartoncillo');
       var texto = ($('#topperDetailInput') ? $('#topperDetailInput').value : '').trim();
       if (!texto) texto = tiene(toppers, 'Cruz') ? '✝' : (cart ? 'Feliz día' : 'Tu texto');
       if (texto.length > 16) texto = texto.slice(0, 16) + '…';
       var tintaTop = acrilico ? '#A98247' : (cart ? '#8C3344' : '#7A5C42');
-      var yTexto = mesa - 56;
+      var yTexto = mesa - 62;
       o.push('<line x1="' + cx + '" y1="' + (mesa - 2) + '" x2="' + cx + '" y2="' + (yTexto + 7) + '" stroke="' + tintaTop + '" stroke-width="1.6"/>');
+      if (acrilico) {
+        o.push('<rect x="' + (cx - 36) + '" y="' + (yTexto - 19) + '" width="72" height="27" rx="13" fill="#F6EFE4" opacity="0.5" stroke="' + tintaTop + '" stroke-width="0.8"/>');
+      }
       o.push('<text x="' + cx + '" y="' + yTexto + '" text-anchor="middle" font-family="Great Vibes, cursive" font-size="23" fill="' + tintaTop + '">' +
              escapeHtml(texto) + '</text>');
     }
 
-    // ── Macarons al pie ──
+    // ── Macarons ──
     var macs = getMacaronQty();
     if (macs > 0) {
       var mc = ['#F2C9D4', '#F6DDA8', '#C9DCC2', '#E8C3A8', '#D9C2E0', '#F2B8A8'];
       var mm = '';
-      for (var m2 = 0; m2 < macs; m2++) {
-        var mx = cx - (macs - 1) * 21 / 2 + m2 * 21;
-        mm += '<g transform="translate(' + mx.toFixed(1) + ',' + (suelo + 6) + ')">' +
-              '<ellipse rx="9" ry="5.6" cy="-5" fill="' + mc[m2 % mc.length] + '"/>' +
+      for (var m3 = 0; m3 < macs; m3++) {
+        var mx = cx - (macs - 1) * 21 / 2 + m3 * 21;
+        mm += '<g transform="translate(' + mx.toFixed(1) + ',' + (suelo + 7) + ')">' +
+              '<ellipse rx="9" ry="5.6" cy="-5" fill="' + mc[m3 % mc.length] + '"/>' +
+              '<ellipse rx="7.4" ry="2.4" cy="-7" fill="#fff" opacity="0.25"/>' +
               '<rect x="-9" y="-2.8" width="18" height="3.2" rx="1.2" fill="#FBF3E6"/>' +
-              '<ellipse rx="9" ry="5.6" cy="2.6" fill="' + mc[m2 % mc.length] + '"/></g>';
+              '<ellipse rx="9" ry="5.6" cy="2.6" fill="' + mc[m3 % mc.length] + '"/></g>';
       }
       o.push('<g>' + mm + '</g>');
     }
@@ -1460,15 +1725,73 @@
     lienzo.innerHTML =
       '<svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + o.join('') + '</svg>';
 
-    // Resumen en texto: también es el alt para lectores de pantalla
+    // Resumen, que también es el alt
     var partes = [];
     if (size) partes.push('Pastel ' + size.value.toLowerCase());
     partes.push('betún ' + colorElegido.nombre.toLowerCase());
     if (betun.length) partes.push(betun.join(' y ').toLowerCase());
-    if (flor && flor.value !== 'Sin flor') partes.push('con flor natural');
-    if (toppers.length) partes.push('con topper');
+    if (cremosoSel) partes.push('relleno de ' + cremosoSel.value.toLowerCase());
+    if (flor && flor.value !== 'Sin flor') partes.push('con ' + flor.value.replace('Flor — ', '').toLowerCase());
     var res = $('#pastelResumen');
     if (res) res.textContent = size ? (partes.join(' · ') + '.') : 'Empieza eligiendo un tamaño';
+  }
+
+  /* ── Conchas piped para el borde ── */
+  function conchas(cx, cy, rx, ry, w, color, sombra, saltar, escala) {
+    var n = Math.max(8, Math.round(w / 11));
+    var s = '';
+    for (var i = 0; i <= n; i++) {
+      var t = (Math.PI / n) * i;
+      if (saltar && saltar(t)) continue;
+      var px = cx + Math.cos(t) * rx, py = cy + Math.sin(t) * ry;
+      var r = w * 0.034 * (escala || 1);
+      s += '<g transform="translate(' + px.toFixed(1) + ',' + py.toFixed(1) + ')">' +
+           '<path d="M' + (-r) + ' 0 Q' + (-r * 0.5) + ' ' + (-r * 1.25) + ' 0 ' + (-r * 0.35) +
+           ' Q' + (r * 0.5) + ' ' + (-r * 1.25) + ' ' + r + ' 0' +
+           ' Q' + (r * 0.5) + ' ' + (r * 1.1) + ' 0 ' + (r * 0.9) +
+           ' Q' + (-r * 0.5) + ' ' + (r * 1.1) + ' ' + (-r) + ' 0 Z" fill="' + color +
+           '" stroke="' + sombra + '" stroke-width="0.6" stroke-opacity="0.55"/>' +
+           '<path d="M0 ' + (-r * 0.3) + ' Q' + (r * 0.4) + ' ' + (r * 0.2) + ' 0 ' + (r * 0.8) +
+           '" stroke="' + sombra + '" stroke-width="0.8" fill="none" opacity="0.4"/></g>';
+    }
+    return '<g>' + s + '</g>';
+  }
+
+  /* ── Capas visibles en el corte ── */
+  function capasDelCorte(x, w, techo, suelo, h, pan, relleno, crujientes, luzF) {
+    var s = '';
+    var bandas = [
+      { tipo: 'pan',     alto: 0.25 },
+      { tipo: 'relleno', alto: 0.11 },
+      { tipo: 'pan',     alto: 0.26 },
+      { tipo: 'relleno', alto: 0.11 },
+      { tipo: 'pan',     alto: 0.27 }
+    ];
+    var y = techo;
+    bandas.forEach(function (b, idx) {
+      var alto = (suelo - techo) * b.alto;
+      var color = b.tipo === 'pan' ? pan.miga : relleno;
+      if (luzF < 1) color = oscurecer(color, 1 - luzF);
+      s += '<rect x="' + (x - 4) + '" y="' + y.toFixed(1) + '" width="' + (w + 8) + '" height="' + (alto + 0.6).toFixed(1) + '" fill="' + color + '"/>';
+      if (b.tipo === 'pan') {
+        // veta de la miga
+        s += '<rect x="' + (x - 4) + '" y="' + (y + alto * 0.5).toFixed(1) + '" width="' + (w + 8) + '" height="1" fill="' +
+             (luzF < 1 ? oscurecer(pan.veta, 1 - luzF) : pan.veta) + '" opacity="0.5"/>';
+      } else if (crujientes.length) {
+        // trocitos del relleno crujiente
+        crujientes.forEach(function (cr, ci) {
+          var col = CRUJIENTES[cr] || '#8A6240';
+          if (luzF < 1) col = oscurecer(col, 1 - luzF);
+          for (var g = 0; g < 7; g++) {
+            s += '<circle cx="' + (x + 8 + ((g * 37 + ci * 13 + idx * 7) % Math.max(1, w - 16))) +
+                 '" cy="' + (y + alto * (0.3 + (g % 3) * 0.22)).toFixed(1) +
+                 '" r="' + (1.3 + (g % 2) * 0.5) + '" fill="' + col + '"/>';
+          }
+        });
+      }
+      y += alto;
+    });
+    return s;
   }
 
 
