@@ -1586,3 +1586,257 @@ strong { font-weight: 600; }
   .anim .vitrina-grid > *, .anim .politica-grid > * { opacity: 1; transform: none; }
   .hero-cake { animation: none; }
 }
+
+
+/* ══════════════ 22. EL MOSTRADOR ══════════════
+   El pastel se arma a la vista y la cuenta se escribe sola,
+   al lado de los pasos. Mismo lenguaje que el resto: SVG,
+   crema, rosé y salvia — sin fotografía ni texturas ajenas.
+   ─────────────────────────────────────────────── */
+
+.cotizador-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: var(--e5);
+  align-items: start;
+}
+.cotizador-layout .wizard { max-width: none; margin: 0; }
+
+.mostrador {
+  position: sticky;
+  top: calc(var(--nav-alto) + var(--e4));
+  display: grid;
+  gap: var(--e4);
+  min-width: 0;
+}
+
+/* ── La escena del pastel ── */
+.pastel-escena {
+  margin: 0;
+  padding: var(--e5) var(--e4) var(--e4);
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--r-xl);
+  box-shadow: var(--sombra-1);
+  text-align: center;
+  background-image: radial-gradient(420px 220px at 50% 18%, var(--rose-velo), transparent 70%);
+}
+.pastel-lienzo svg { width: 100%; height: auto; max-height: 300px; display: block; }
+.pastel-lienzo svg * { transition: fill var(--t-medio); }
+
+.pastel-pie { display: grid; gap: 3px; margin-top: var(--e3); }
+.pastel-etiqueta {
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--salvia);
+}
+.pastel-resumen {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--tinta-2);
+  line-height: 1.4;
+}
+
+/* ── Colores de betún ── */
+.colores {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+  gap: var(--e2);
+}
+.color-opcion {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  padding: var(--e2) 4px;
+  border-radius: var(--r-m);
+  border: 1.5px solid transparent;
+  transition: border-color var(--t-rapido), background var(--t-rapido);
+}
+.color-opcion:hover { background: var(--superficie-2); }
+.color-opcion.activo { border-color: var(--rose-fuerte); background: var(--rose-velo); }
+.color-muestra {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid;
+  box-shadow: inset 0 -3px 6px rgba(44, 39, 36, 0.10);
+}
+.color-nombre {
+  font-size: 0.66rem;
+  line-height: 1.25;
+  color: var(--tinta-2);
+  text-align: center;
+}
+.color-opcion.activo .color-nombre { color: var(--rose-fuerte); font-weight: 600; }
+
+/* ── El ticket ── */
+.ticket {
+  padding: var(--e5);
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--r-l);
+  box-shadow: var(--sombra-1);
+  /* Orilla dentada, como un ticket de verdad */
+  -webkit-mask-image: radial-gradient(5px 5px at 5px 100%, transparent 96%, #000 100%);
+  mask-image: radial-gradient(5px 5px at 5px 100%, transparent 96%, #000 100%);
+  -webkit-mask-size: 14px 100%;
+  mask-size: 14px 100%;
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  padding-bottom: calc(var(--e5) + 6px);
+}
+
+.ticket-encabezado {
+  display: grid;
+  gap: 1px;
+  padding-bottom: var(--e3);
+  margin-bottom: var(--e3);
+  border-bottom: 1px dashed var(--linea-fuerte);
+  text-align: center;
+}
+.ticket-marca {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.ticket-sub {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--tinta-3);
+}
+
+.ticket-lineas { display: grid; gap: 7px; margin-bottom: var(--e4); }
+.ticket-linea {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--e3);
+  font-size: 0.83rem;
+  line-height: 1.4;
+  animation: entraLinea 260ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes entraLinea {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: none; }
+}
+.ticket-concepto { color: var(--tinta-2); min-width: 0; }
+.ticket-concepto small { color: var(--tinta-3); font-size: 0.74rem; }
+.ticket-precio {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+  color: var(--tinta);
+  font-weight: 500;
+}
+.ticket-incluido {
+  font-size: 0.74rem;
+  font-style: italic;
+  color: var(--salvia);
+  font-weight: 400;
+}
+.ticket-vacio {
+  font-size: 0.83rem;
+  font-style: italic;
+  color: var(--tinta-3);
+  text-align: center;
+  padding: var(--e4) 0;
+}
+
+.ticket-total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--e3);
+  padding-top: var(--e3);
+  border-top: 1px dashed var(--linea-fuerte);
+}
+.ticket-total .total-label {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tinta-2);
+}
+.ticket-nota {
+  margin: var(--e3) 0 var(--e4);
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: var(--tinta-3);
+}
+.ticket .btn-whatsapp { width: 100%; }
+
+/* ── Confirmación con deshacer ── */
+.confirma-barra {
+  position: fixed;
+  left: 50%;
+  bottom: var(--e6);
+  transform: translate(-50%, 150%);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  gap: var(--e3);
+  max-width: min(92vw, 420px);
+  padding: 10px 10px 10px var(--e5);
+  border-radius: var(--r-full);
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  box-shadow: var(--sombra-3);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform var(--t-medio), opacity var(--t-medio);
+}
+.confirma-barra.visible { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
+.confirma-texto {
+  font-size: 0.85rem;
+  color: var(--tinta);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.confirma-texto::before {
+  content: '✓';
+  color: var(--salvia);
+  font-weight: 700;
+  margin-right: 7px;
+}
+.confirma-deshacer {
+  flex: 0 0 auto;
+  padding: 6px 15px;
+  border-radius: var(--r-full);
+  background: var(--superficie-2);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--rose-fuerte);
+  transition: background var(--t-rapido);
+}
+.confirma-deshacer:hover { background: var(--rose-velo); }
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .cotizador-layout { grid-template-columns: 1fr; }
+  .mostrador {
+    position: static;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+@media (max-width: 768px) {
+  .mostrador { grid-template-columns: 1fr; gap: var(--e3); }
+  .pastel-escena { padding: var(--e4) var(--e3) var(--e3); }
+  .pastel-lienzo svg { max-height: 210px; }
+  .ticket { padding: var(--e4); padding-bottom: calc(var(--e4) + 6px); }
+  .colores { grid-template-columns: repeat(auto-fill, minmax(66px, 1fr)); }
+  .color-muestra { width: 30px; height: 30px; }
+  /* La barra de confirmación se sube para no chocar con la barra de acción */
+  .confirma-barra { bottom: 78px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticket-linea { animation: none; }
+  .pastel-lienzo svg * { transition: none; }
+}
