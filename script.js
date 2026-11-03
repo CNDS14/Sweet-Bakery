@@ -1436,6 +1436,8 @@
         for (var ji = 0; ji < n3; ji++) {
           var ang = Math.PI + (Math.PI / (n3 - 1)) * ji;   // arco frontal visible
           var jx = cx + Math.cos(ang) * rx * 0.97;
+          // Las que caerían sobre el corte no se dibujan: ahí ya no hay betún
+          if (enMuesca(Math.acos(Math.max(-1, Math.min(1, (jx - cx) / rx))))) continue;
           var jyy = techo + ry + (h - ry * 1.5) * ((fi + 0.55) / filas) + ((ji % 2) * 6);
           var col = joyas[(ji * 3 + fi) % joyas.length];
           var jr = 4.4 - fi * 0.3;
